@@ -11,7 +11,7 @@ class User {
     name = map[AppDbNames.name];
   }
 
-  Map toMap() {
+  Map<String, Object?> toMap() {
     Map<String, dynamic> map = {
       AppDbNames.img: img,
       AppDbNames.name: name,
