@@ -1,9 +1,11 @@
 import 'package:weic/core/config/app_dbnames.dart';
 
 class User {
-  int? id;
-  String? img;
-  String? name;
+  int id;
+  String img;
+  String name;
+
+  User();
 
   User.fromMap(Map map) {
     id = map[AppDbNames.id];
@@ -11,7 +13,7 @@ class User {
     name = map[AppDbNames.name];
   }
 
-  Map<String, Object?> toMap() {
+  Map toMap() {
     Map<String, dynamic> map = {
       AppDbNames.img: img,
       AppDbNames.name: name,
