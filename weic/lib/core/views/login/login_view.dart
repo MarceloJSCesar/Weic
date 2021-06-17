@@ -29,6 +29,7 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
     if (_form.validate()) {
       setState(() {
         _isLoading = true;
+        _form.save();
         _loginResponse.login(name, school);
       });
     }
