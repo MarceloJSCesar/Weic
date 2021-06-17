@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import '../models/user.dart';
-import '../config/app_dbnames.dart';
+import 'package:weic/core/config/app_dbnames.dart';
 
-class DbStorage {
-  static final DbStorage _instance = DbStorage.internal();
-  factory DbStorage() => _instance;
-  DbStorage.internal();
+class DatabaseHelper {
+  static final DatabaseHelper _instance = DatabaseHelper.internal();
+  factory DatabaseHelper() => _instance;
 
   Database _db;
 
@@ -20,58 +18,17 @@ class DbStorage {
     }
   }
 
+  DatabaseHelper.internal();
+
   Future<Database> initDb() async {
-    final databasePath = await getDatabasesPath();
-    final path = join(databasePath, 'weiceStorage.db');
+    final databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, 'dbStorage.db');
 
     return await openDatabase(path, version: 1,
-        onCreate: (dataB, newVersion) async {
-      await dataB.execute(
-          'CREATE TABLE ${AppDbNames.storageTable}(${AppDbNames.id} INTEGER PRIMARY KEY, ${AppDbNames.img} TEXT, ${AppDbNames.name} TEXT)');
+        onCreate: (database, newerVersion) async {
+      await database.execute(
+        'CREATE TABLE ${AppDbNames.storageTable}(${AppDbNames.id} INTEGER PRIMARY KEY, ${AppDbNames.img} TEXT, ${AppDbNames.name} TEXT, ${AppDbNames.school} TEXT)',
+      );
     });
-  }
-
-  Future<User> insert(User user) async {
-    Database database = await db;
-    user.id = await database.insert(
-      AppDbNames.storageTable,
-      user.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    return user;
-  }
-
-  Future<User> getUser(int id) async {
-    Database database = await db;
-    List<Map> maps = await database.query(AppDbNames.storageTable,
-        columns: [
-          AppDbNames.id,
-          AppDbNames.img,
-          AppDbNames.name,
-        ],
-        where: '${AppDbNames.id} = ?',
-        whereArgs: [id]);
-    if (maps.length > 0) {
-      return User.fromMap(maps.first);
-    } else {
-      return null;
-    }
-  }
-
-  Future<int> delete(int id) async {
-    Database database = await db;
-    return await database.delete(AppDbNames.storageTable,
-        where: '${AppDbNames.id} = ?', whereArgs: [id]);
-  }
-
-  Future<List> getAllContacts() async {
-    Database dbContact = await db;
-    List listMap =
-        await dbContact.rawQuery("SELECT * FROM ${AppDbNames.storageTable}");
-    List<User> listUser = [];
-    for (Map m in listMap) {
-      listUser.add(User.fromMap(m));
-    }
-    return listUser;
   }
 }

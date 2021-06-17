@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weic/core/models/user.dart';
-import 'package:weic/core/storage/db.dart';
+import 'package:weic/core/storage/db_storage.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key key}) : super(key: key);
@@ -22,32 +22,44 @@ class _LoginViewState extends State<LoginView> {
             ElevatedButton(
               child: Text('add'),
               onPressed: () async {
-                c.id = 2;
-                c.name = 'Marcelo2';
-                c.img = '/ome/j/';
-                await _dbStorage.insert(c);
+                c.id = 1;
+                c.name = 'Marcelo Cesar';
+                c.img = 'path/img/marcelo';
+                await _dbStorage.registerUser(c);
               },
             ),
             ElevatedButton(
               child: Text('print'),
               onPressed: () async {
-                await _dbStorage.getUser(c.id).then((value) => print(value));
+                if (c.id != null) {
+                  User user = await _dbStorage.getUser(c.id);
+                  if (user != null) {
+                    print(User.fromMap(user.toMap()));
+                  } else {
+                    print('user nao encontrado');
+                  }
+                } else {
+                  print('id invalido');
+                }
               },
             ),
             ElevatedButton(
               child: Text('get all'),
               onPressed: () async {
-                await _dbStorage.getAllContacts().then(
-                      (value) => print(
-                        value.cast(),
-                      ),
-                    );
+                await _dbStorage.getAllUsers().then(
+                  (value) {
+                    print(value);
+                    // for (var i = 0; i < value.length; i++) {
+                    //   (value[i] as dynamic).map((e) => print(e));
+                    // }
+                  },
+                );
               },
             ),
             ElevatedButton(
               child: Text('delete'),
               onPressed: () async {
-                await _dbStorage.delete(11);
+                await _dbStorage.delete(c.id);
               },
             ),
           ],
