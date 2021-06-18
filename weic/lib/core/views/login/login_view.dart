@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/core/config/app_decorations.dart';
 import 'package:weic/core/services/login_services.dart';
 import '../../models/user.dart';
 import '../../interfaces/auth_login/login_callback.dart';
@@ -57,17 +58,38 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
                 strokeWidth: 3.0,
               ),
             )
-          : SingleChildScrollView(
-              child: Container(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      ElevatedButton(
-                        onPressed: _submit,
-                        child: Text('Login'),
+          : Container(
+              decoration: AppDecorations.mainDecoration,
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _formKey,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Card(
+                            elevation: 8.0,
+                            shadowColor: Colors.black,
+                            color: Colors.black,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Column(
+                              children: <Widget>[
+                                TextFormField(),
+                                TextFormField(),
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text('Entrar'),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
