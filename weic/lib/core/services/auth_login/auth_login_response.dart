@@ -1,5 +1,5 @@
-import '../../interfaces/auth/login_callback.dart';
-import '../../services/auth/auth_login_request.dart';
+import '../../interfaces/auth_login/login_callback.dart';
+import '../../services/auth_login/auth_login_request.dart';
 
 class LoginResponse {
   LoginCallBack _loginCallBack;
@@ -11,6 +11,7 @@ class LoginResponse {
     _loginRequest
         .login(name, school)
         .then((user) => _loginCallBack.onLoginSucess(user))
-        .onError((error, stackTrace) => _loginCallBack.onLoginError(error));
+        .onError((error, stackTrace) =>
+            _loginCallBack.onLoginError(error.toString()));
   }
 }

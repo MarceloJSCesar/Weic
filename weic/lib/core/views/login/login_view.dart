@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:weic/core/services/login_services.dart';
 import '../../models/user.dart';
-import '../../interfaces/auth/login_callback.dart';
-import '../../services/auth/auth_login_response.dart';
+import '../../interfaces/auth_login/login_callback.dart';
+import '../../services/auth_login/auth_login_response.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key key}) : super(key: key);
@@ -12,6 +13,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> implements LoginCallBack {
   String name, school;
+  LoginServices _loginServices = LoginServices();
   LoginResponse _loginResponse;
 
   bool _isLoading = false;
@@ -37,7 +39,10 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
 
   void _showSnackBar(String text) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(text),
+      content: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Text(text),
+      ),
     ));
   }
 
@@ -71,11 +76,22 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   }
 
   @override
-  void onLoginSucess(User user) {
+  void onLoginSucess(User user) async {
     if (user != null) {
-      // save data throught sharedPrefrences
+      bool savingDataValue =
+          await _loginServices.saveCacheData(user.id, user.name);
+      if (savingDataValue == true) {
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        _showSnackBar('error when saving your data, re-open the app');
+        setState(() {
+          _isLoading = false;
+        });
+      }
     } else {
-      _showSnackBar('email or password invalid!!');
+      _showSnackBar('email and password invalid');
       setState(() {
         _isLoading = false;
       });
