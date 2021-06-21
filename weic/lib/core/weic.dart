@@ -9,6 +9,10 @@ class Weic extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginView(),
+      theme: ThemeData(
+        primarySwatch: Colors.grey,
+        primaryColor: Colors.white,
+      ),
     );
   }
 }
