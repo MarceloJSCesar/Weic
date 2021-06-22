@@ -28,6 +28,7 @@ class User {
   Map toMap() {
     Map<String, dynamic> map = {
       AppDbNames.name: name,
+      AppDbNames.email: email,
       AppDbNames.school: school,
       AppDbNames.sexuality: sexuality,
       AppDbNames.password: password

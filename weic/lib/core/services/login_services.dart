@@ -1,11 +1,11 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginServices {
-  Future<bool> saveCacheData(String email, String name) async {
+  Future saveCacheData(String email, String password) async {
     SharedPreferences storage = await SharedPreferences.getInstance();
-    bool nameSaved = await storage.setString('NAME', name);
-    bool idSaved = await storage.setString('EMAIL', email);
-    if (nameSaved == true && idSaved == true) {
+    bool emailSaved = await storage.setString('EMAIL', email);
+    bool passwordSaved = await storage.setString('PASSWORD', password);
+    if (emailSaved == true && passwordSaved == true) {
       return true;
     } else {
       return false;

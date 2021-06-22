@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:weic/core/components/text_form_field_component.dart';
+// import 'package:weic/core/components/text_form_field_component.dart';
 import 'package:weic/core/storage/db_storage.dart';
 import '../../models/user.dart';
 import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
 import '../../config/app_assets_names.dart';
-import '../../services/register_services.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key key}) : super(key: key);
@@ -15,8 +14,7 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  String name, email, school, password, sexuality;
-  RegisterServices _registerServices = RegisterServices();
+  String name, email, school, password;
 
   bool _isLoading = false;
 
@@ -25,6 +23,8 @@ class _RegisterViewState extends State<RegisterView> {
 
   String sexualitySelected;
   List<String> sexualities = ['Masculino', 'Femenino'];
+
+  bool isPassword = false;
 
   void _submit() async {
     User user = User();
@@ -39,10 +39,9 @@ class _RegisterViewState extends State<RegisterView> {
         user.school = school;
         user.email = email;
         user.password = password;
-        user.sexuality = sexuality;
-        db.registerUser(user);
+        user.sexuality = sexualitySelected;
       });
-      await _registerServices.saveCacheData(email, name);
+      await db.registerUser(user);
       setState(() {
         _isLoading = false;
       });
@@ -125,24 +124,124 @@ class _RegisterViewState extends State<RegisterView> {
                                           );
                                         }).toList(),
                                       ),
-                                      TextFormFieldComponent(
-                                        value: name,
-                                        hintText: 'Seu Nome',
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: TextFormField(
+                                          onSaved: (val) {
+                                            name = val;
+                                            print(name);
+                                          },
+                                          onChanged: (val) => name = val,
+                                          style:
+                                              AppTextStyles.dropDownTextStyle,
+                                          textInputAction: isPassword
+                                              ? TextInputAction.next
+                                              : TextInputAction.done,
+                                          decoration: InputDecoration(
+                                            hintText: 'Seu Nome',
+                                            hintStyle:
+                                                AppTextStyles.hintTextStyle,
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                       Divider(),
-                                      TextFormFieldComponent(
-                                        value: school,
-                                        hintText: 'Nome Da Escola',
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: TextFormField(
+                                          onSaved: (val) {
+                                            school = val;
+                                            print(school);
+                                          },
+                                          onChanged: (val) => school = val,
+                                          style:
+                                              AppTextStyles.dropDownTextStyle,
+                                          textInputAction: isPassword
+                                              ? TextInputAction.next
+                                              : TextInputAction.done,
+                                          decoration: InputDecoration(
+                                            hintText: 'Nome da escola',
+                                            hintStyle:
+                                                AppTextStyles.hintTextStyle,
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                       Divider(),
-                                      TextFormFieldComponent(
-                                        value: email,
-                                        hintText: 'Email',
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: TextFormField(
+                                          onSaved: (val) {
+                                            email = val;
+                                            print(email);
+                                          },
+                                          onChanged: (val) => email = val,
+                                          style:
+                                              AppTextStyles.dropDownTextStyle,
+                                          textInputAction: isPassword
+                                              ? TextInputAction.next
+                                              : TextInputAction.done,
+                                          decoration: InputDecoration(
+                                            hintText: 'email',
+                                            hintStyle:
+                                                AppTextStyles.hintTextStyle,
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                       Divider(),
-                                      TextFormFieldComponent(
-                                        value: password,
-                                        hintText: 'Password',
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: TextFormField(
+                                          onSaved: (val) {
+                                            password = val;
+                                            print(password);
+                                          },
+                                          onChanged: (val) => password = val,
+                                          style:
+                                              AppTextStyles.dropDownTextStyle,
+                                          textInputAction: isPassword == true
+                                              ? TextInputAction.next
+                                              : TextInputAction.done,
+                                          decoration: InputDecoration(
+                                            hintText: 'password',
+                                            hintStyle:
+                                                AppTextStyles.hintTextStyle,
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                       SizedBox(
                                         height: 40,

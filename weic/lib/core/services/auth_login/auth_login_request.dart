@@ -23,7 +23,16 @@ class LoginRequest {
     userResult = await _dbStorage.loginUser(user);
     if (userResult != null) {
       print('well done');
-      return Future.value(User(email: email, password: password));
+      return Future.value(
+        User(
+          email: email,
+          password: password,
+          id: null,
+          name: null,
+          school: null,
+          sexuality: null,
+        ),
+      );
     } else {
       print('not well done');
       return null;

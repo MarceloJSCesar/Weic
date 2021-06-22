@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weic/core/components/text_form_field_component.dart';
+import 'package:weic/core/storage/db_storage.dart';
 import 'package:weic/core/views/home/home_view.dart';
 import '../../models/user.dart';
 import '../../config/app_textstyles.dart';
@@ -26,8 +27,8 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String _sexualitySelected;
-  final _sexualities = ['Masculino', 'Femenino'];
+  bool isPassword = false;
+
   _LoginViewState() {
     _loginResponse = LoginResponse(this);
   }
@@ -51,6 +52,14 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
         child: Text(text),
       ),
     ));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DbStorage db = DbStorage();
+    db.getAllUsers();
   }
 
   @override
@@ -93,16 +102,52 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
                             ),
                             child: Column(
                               children: <Widget>[
-                                TextFormFieldComponent(
-                                  hintText: 'Email',
-                                  value: email,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: TextFormField(
+                                    onSaved: (val) {
+                                      email = val;
+                                    },
+                                    onChanged: (val) => email = val,
+                                    style: AppTextStyles.dropDownTextStyle,
+                                    textInputAction: !isPassword
+                                        ? TextInputAction.next
+                                        : TextInputAction.done,
+                                    decoration: InputDecoration(
+                                      hintText: 'Email',
+                                      hintStyle: AppTextStyles.hintTextStyle,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                TextFormFieldComponent(
-                                  hintText: 'Password',
-                                  value: password,
+                                Divider(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: TextFormField(
+                                    onSaved: (val) {
+                                      password = val;
+                                    },
+                                    onChanged: (val) => password = val,
+                                    style: AppTextStyles.dropDownTextStyle,
+                                    textInputAction: !isPassword == true
+                                        ? TextInputAction.next
+                                        : TextInputAction.done,
+                                    decoration: InputDecoration(
+                                      hintText: 'password',
+                                      hintStyle: AppTextStyles.hintTextStyle,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -145,7 +190,7 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   void onLoginSucess(User user) async {
     if (user != null) {
       bool savingDataValue =
-          await _loginServices.saveCacheData(user.email, user.name);
+          await _loginServices.saveCacheData(user.email, user.password);
       if (savingDataValue == true) {
         setState(() {
           _isLoading = false;
@@ -169,6 +214,7 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   @override
   void onLoginError(String errorText) {
     _showSnackBar(errorText);
+    print(errorText);
     setState(() {
       _isLoading = false;
     });

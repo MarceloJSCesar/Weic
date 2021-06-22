@@ -11,7 +11,7 @@ class LoginResponse {
     _loginRequest
         .login(email, password)
         .then((user) => _loginCallBack.onLoginSucess(user))
-        .catchError((error, stackTrace) =>
+        .onError((error, stackTrace) =>
             _loginCallBack.onLoginError(error.toString()));
   }
 }

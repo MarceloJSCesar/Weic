@@ -20,30 +20,25 @@ class DbStorage {
 
   Future<User> loginUser(User user) async {
     print("Select User");
-    print(user.id);
-    print(user.name);
-    print(user.school);
     Database database = await db;
     List<Map> maps = await database.query(AppDbNames.storageTable,
         columns: [
-          AppDbNames.id,
           AppDbNames.email,
           AppDbNames.password,
         ],
         where: '${AppDbNames.email} = ? and ${AppDbNames.password} = ?',
         whereArgs: [user.email, user.password]);
     if (maps.length > 0) {
-      print('user exist');
       return user;
     } else {
       return null;
     }
   }
 
-  Future<int> delete(User user) async {
+  Future<int> delete(int id) async {
     Database database = await db;
     return await database.delete(AppDbNames.storageTable,
-        where: '${AppDbNames.id} = ?', whereArgs: [user.id]);
+        where: '${AppDbNames.id} = ?', whereArgs: [id]);
   }
 
   Future<List> getAllUsers() async {
@@ -54,6 +49,7 @@ class DbStorage {
     for (Map user in usersFound) {
       users.add(User.fromMap(user));
     }
+    print('getallusers users: $users');
     return users;
   }
 }
