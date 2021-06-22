@@ -4,9 +4,29 @@ import '../../models/user.dart';
 import '../../storage/db_storage.dart';
 
 class LoginRequest {
-  DbStorage _dbStorage = DbStorage();
-  Future<User> login(String name, String school) async {
-    User user = await _dbStorage.loginUser(name, school);
-    return user;
+  Future<User> login(String email, String password) async {
+    User user = new User(
+      email: email,
+      name: null,
+      password: password,
+      school: null,
+      sexuality: null,
+    );
+    DbStorage _dbStorage = DbStorage();
+    User userResult = new User(
+      email: null,
+      name: null,
+      password: null,
+      school: null,
+      sexuality: null,
+    );
+    userResult = await _dbStorage.loginUser(user);
+    if (userResult != null) {
+      print('well done');
+      return Future.value(User(email: email, password: password));
+    } else {
+      print('not well done');
+      return null;
+    }
   }
 }

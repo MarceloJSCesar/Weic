@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:weic/core/config/app_assets_names.dart';
+import 'package:weic/core/components/text_form_field_component.dart';
+import 'package:weic/core/views/home/home_view.dart';
 import '../../models/user.dart';
 import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
+import '../../config/app_assets_names.dart';
 import '../../services/login_services.dart';
 import '../../interfaces/auth_login/login_callback.dart';
 import '../../services/auth_login/auth_login_response.dart';
@@ -15,7 +17,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> implements LoginCallBack {
-  String name, school;
+  String email, password;
   LoginServices _loginServices = LoginServices();
   LoginResponse _loginResponse;
 
@@ -37,7 +39,7 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
       setState(() {
         _isLoading = true;
         _form.save();
-        _loginResponse.login(name, school);
+        _loginResponse.login(email, password);
       });
     }
   }
@@ -66,91 +68,72 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
               decoration: AppDecorations.mainDecoration,
               alignment: Alignment.topCenter,
               child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: <Widget>[
-                      ClipOval(
-                        child: Image(
-                          width: 300,
-                          image: AssetImage(AppAssetsNames.logoImageUrl),
-                        ),
-                      ),
-                      Card(
-                        elevation: 10.0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        color: Colors.black,
-                        shadowColor: Colors.black,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 40,
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    hintText: 'Seu Nome',
-                                    hintStyle: AppTextStyles.hintTextStyle,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    hintText: 'Nome Da Escola',
-                                    hintStyle: AppTextStyles.hintTextStyle,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                    Colors.blue,
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: Text('Entrar'),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              GestureDetector(
-                                child: Text(
-                                  'Nao tenho uma conta, Registrar',
-                                  style: AppTextStyles.hintTextStyle,
-                                ),
-                                onTap: () => Navigator.of(context)
-                                    .pushReplacementNamed('/register'),
-                              ),
-                            ],
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: <Widget>[
+                        ClipOval(
+                          child: Image(
+                            width: 300,
+                            image: AssetImage(AppAssetsNames.logoImageUrl),
                           ),
                         ),
-                      ),
-                    ],
+                        Card(
+                          elevation: 10.0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          color: Colors.black,
+                          shadowColor: Colors.black,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 40,
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                TextFormFieldComponent(
+                                  hintText: 'Email',
+                                  value: email,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormFieldComponent(
+                                  hintText: 'Password',
+                                  value: password,
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                ),
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                      Colors.blue,
+                                    ),
+                                  ),
+                                  onPressed: _submit,
+                                  child: Text('Entrar'),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                GestureDetector(
+                                  child: Text(
+                                    'Nao tenho uma conta, Registrar',
+                                    style: AppTextStyles.hintTextStyle,
+                                  ),
+                                  onTap: () => Navigator.of(context)
+                                      .pushReplacementNamed('/register'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -162,11 +145,13 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   void onLoginSucess(User user) async {
     if (user != null) {
       bool savingDataValue =
-          await _loginServices.saveCacheData(user.id, user.name);
+          await _loginServices.saveCacheData(user.email, user.name);
       if (savingDataValue == true) {
         setState(() {
           _isLoading = false;
         });
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => HomeView()));
       } else {
         _showSnackBar('error when saving your data, re-open the app');
         setState(() {

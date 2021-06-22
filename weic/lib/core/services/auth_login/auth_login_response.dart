@@ -7,9 +7,9 @@ class LoginResponse {
 
   LoginResponse(this._loginCallBack);
 
-  login(String name, String school) {
+  login(String email, String password) {
     _loginRequest
-        .login(name, school)
+        .login(email, password)
         .then((user) => _loginCallBack.onLoginSucess(user))
         .catchError((error, stackTrace) =>
             _loginCallBack.onLoginError(error.toString()));

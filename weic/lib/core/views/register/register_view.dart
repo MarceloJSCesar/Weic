@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:weic/core/components/register/widgets/register_card_widget.dart';
-import 'package:weic/core/services/register_services.dart';
+import 'package:weic/core/components/text_form_field_component.dart';
+import 'package:weic/core/storage/db_storage.dart';
 import '../../models/user.dart';
+import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
-import '../../services/register_services.dart';
 import '../../config/app_assets_names.dart';
-import '../../interfaces/auth_login/login_callback.dart';
-import '../../services/auth_register/auth_register_response.dart';
+import '../../services/register_services.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key key}) : super(key: key);
@@ -15,26 +14,21 @@ class RegisterView extends StatefulWidget {
   _RegisterViewState createState() => _RegisterViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> implements LoginCallBack {
-  User user;
-
-  String name, school, sexualitiy;
-  RegisterResponse _registerResponse;
+class _RegisterViewState extends State<RegisterView> {
+  String name, email, school, password, sexuality;
   RegisterServices _registerServices = RegisterServices();
 
   bool _isLoading = false;
 
-  // String _sexualitySelected;
-  // final _sexualities = ['Masculino', 'Femenino'];
-
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  _RegisterViewState() {
-    _registerResponse = RegisterResponse();
-  }
+  String sexualitySelected;
+  List<String> sexualities = ['Masculino', 'Femenino'];
 
-  void _submit() {
+  void _submit() async {
+    User user = User();
+    DbStorage db = DbStorage();
     final _form = _formKey.currentState;
 
     if (_form.validate()) {
@@ -43,8 +37,16 @@ class _RegisterViewState extends State<RegisterView> implements LoginCallBack {
         _isLoading = true;
         user.name = name;
         user.school = school;
-        _registerResponse.register(user);
+        user.email = email;
+        user.password = password;
+        user.sexuality = sexuality;
+        db.registerUser(user);
       });
+      await _registerServices.saveCacheData(email, name);
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pushReplacementNamed('/login');
     }
   }
 
@@ -74,42 +76,125 @@ class _RegisterViewState extends State<RegisterView> implements LoginCallBack {
                 child: SingleChildScrollView(
                   child: Form(
                     key: _formKey,
-                    child: RegisterBody(),
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            children: <Widget>[
+                              ClipOval(
+                                child: Image(
+                                  width: 300,
+                                  image:
+                                      AssetImage(AppAssetsNames.logoImageUrl),
+                                ),
+                              ),
+                              Card(
+                                elevation: 10.0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                color: Colors.black,
+                                shadowColor: Colors.black,
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 30,
+                                  ),
+                                  child: Column(
+                                    children: <Widget>[
+                                      DropdownButton(
+                                        icon: Icon(Icons.arrow_drop_down),
+                                        dropdownColor: Colors.black,
+                                        value: sexualitySelected,
+                                        style: AppTextStyles.dropDownTextStyle,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            sexualitySelected = val;
+                                          });
+                                        },
+                                        hint: Text(
+                                          'Seleciona seu sexo',
+                                          style:
+                                              AppTextStyles.dropDownTextStyle,
+                                        ),
+                                        items: sexualities.map((value) {
+                                          return DropdownMenuItem(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                      ),
+                                      TextFormFieldComponent(
+                                        value: name,
+                                        hintText: 'Seu Nome',
+                                      ),
+                                      Divider(),
+                                      TextFormFieldComponent(
+                                        value: school,
+                                        hintText: 'Nome Da Escola',
+                                      ),
+                                      Divider(),
+                                      TextFormFieldComponent(
+                                        value: email,
+                                        hintText: 'Email',
+                                      ),
+                                      Divider(),
+                                      TextFormFieldComponent(
+                                        value: password,
+                                        hintText: 'Password',
+                                      ),
+                                      SizedBox(
+                                        height: 40,
+                                      ),
+                                      ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                            Colors.blue,
+                                          ),
+                                        ),
+                                        onPressed: _submit,
+                                        child: Text(
+                                          'Registrar',
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      GestureDetector(
+                                        child: Text(
+                                          'Ja tenho uma conta, Login',
+                                          style: AppTextStyles.hintTextStyle,
+                                        ),
+                                        onTap: () => Navigator.of(context)
+                                            .pushReplacementNamed('/login'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 485,
+                          left: MediaQuery.of(context).size.width / 2.3,
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundImage: AssetImage(
+                              sexualitySelected == 'Masculino'
+                                  ? AppAssetsNames.boyImageUrl
+                                  : AppAssetsNames.womanImageUrl,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
     );
-  }
-
-  @override
-  void onLoginSucess(User user) async {
-    if (user != null) {
-      bool savingDataValue =
-          await _registerServices.saveCacheData(user.id, user.name);
-      if (savingDataValue == true) {
-        setState(() {
-          _isLoading = false;
-        });
-      } else {
-        _showSnackBar('ocorreu um erro salvando seus dados, tente novamente');
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    } else {
-      _showSnackBar('email and password invalid');
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  @override
-  void onLoginError(String errorText) {
-    _showSnackBar(errorText);
-    setState(() {
-      _isLoading = false;
-    });
   }
 }
