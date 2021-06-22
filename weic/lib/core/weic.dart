@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './views/login/login_view.dart';
+import './views/register/register_view.dart';
 
 class Weic extends StatelessWidget {
   const Weic({Key key}) : super(key: key);
@@ -13,6 +14,10 @@ class Weic extends StatelessWidget {
         primarySwatch: Colors.grey,
         primaryColor: Colors.white,
       ),
+      routes: {
+        '/login': (_) => LoginView(),
+        '/register': (_) => RegisterView()
+      },
     );
   }
 }

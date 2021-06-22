@@ -27,7 +27,7 @@ class DatabaseHelper {
     return await openDatabase(path, version: 1,
         onCreate: (database, newerVersion) async {
       await database.execute(
-        'CREATE TABLE ${AppDbNames.storageTable}(${AppDbNames.id} INTEGER PRIMARY KEY, ${AppDbNames.img} TEXT, ${AppDbNames.name} TEXT, ${AppDbNames.school} TEXT)',
+        'CREATE TABLE ${AppDbNames.storageTable}(${AppDbNames.id} INTEGER PRIMARY KEY, ${AppDbNames.name} TEXT, ${AppDbNames.school} TEXT)',
       );
     });
   }

@@ -32,12 +32,7 @@ class DbStorage {
   Future<User> getUser(int id) async {
     Database database = await db;
     List<Map> maps = await database.query(AppDbNames.storageTable,
-        columns: [
-          AppDbNames.id,
-          AppDbNames.img,
-          AppDbNames.name,
-          AppDbNames.school
-        ],
+        columns: [AppDbNames.id, AppDbNames.name, AppDbNames.school],
         where: '${AppDbNames.id} = ?',
         whereArgs: [id]);
     if (maps.length > 0) {

@@ -1,4 +1,5 @@
 class AppAssetsNames {
+  static final String logoImageUrl = 'assets/logo/weic.png';
   static final String boyImageUrl =
       'assets/user-profile/boy-user-photo-profile.png';
   static final String womanImageUrl =
