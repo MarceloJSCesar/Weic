@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weic/core/components/text_form_field_component.dart';
+import 'package:weic/core/config/app_colors.dart';
 import 'package:weic/core/controllers/auth_services/auth_service.dart';
 // import 'package:weic/core/components/text_form_field_component.dart';
 import 'package:weic/core/storage/db_storage.dart';
@@ -25,6 +26,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   AuthService _auth = AuthService();
 
+  bool fieldsValidate = true;
   String sexualitySelected;
   List<String> sexualities = ['Masculino', 'Femenino'];
 
@@ -34,7 +36,7 @@ class _RegisterViewState extends State<RegisterView> {
     // implement validation with _formKey after
     final _form = _formKey.currentState;
 
-    if (_form.validate()) {
+    if (_form.validate() && sexualitySelected != null) {
       setState(() {
         _form.save();
         _isLoading = true;
@@ -43,12 +45,24 @@ class _RegisterViewState extends State<RegisterView> {
         user.email = email;
         user.password = password;
         user.sexuality = sexualitySelected;
+        fieldsValidate = true;
       });
       await db.registerUser(user);
       setState(() {
         _isLoading = false;
       });
       Navigator.of(context).pushReplacementNamed('/login');
+    } else {
+      if (sexualitySelected == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('seleciona seu sexo'),
+          ),
+        );
+      }
+      setState(() {
+        fieldsValidate = false;
+      });
     }
   }
 
@@ -136,7 +150,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       Divider(),
                                       TextFormFieldComponent(
                                         hintText:
-                                            'Email, ex: devmarcelocesar@gmail.com',
+                                            'Email, ex: marcelo@gmail.com',
                                         saveValue: (val) => email = val,
                                         isPasswordField: false,
                                         isEmailField: true,
@@ -170,7 +184,7 @@ class _RegisterViewState extends State<RegisterView> {
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all<Color>(
-                                            Colors.blue,
+                                            AppColors.mainPrefixColor,
                                           ),
                                         ),
                                         onPressed: _submit,
@@ -196,18 +210,31 @@ class _RegisterViewState extends State<RegisterView> {
                             ],
                           ),
                         ),
-                        Positioned(
-                          bottom: 485,
-                          left: MediaQuery.of(context).size.width / 2.3,
-                          child: CircleAvatar(
-                            radius: 30,
-                            backgroundImage: AssetImage(
-                              sexualitySelected == 'Masculino'
-                                  ? AppAssetsNames.boyImageUrl
-                                  : AppAssetsNames.womanImageUrl,
-                            ),
-                          ),
-                        ),
+                        fieldsValidate
+                            ? Positioned(
+                                bottom: 485,
+                                left: MediaQuery.of(context).size.width / 2.3,
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: AssetImage(
+                                    sexualitySelected == 'Masculino'
+                                        ? AppAssetsNames.boyImageUrl
+                                        : AppAssetsNames.womanImageUrl,
+                                  ),
+                                ),
+                              )
+                            : Positioned(
+                                bottom: 505,
+                                left: MediaQuery.of(context).size.width / 200,
+                                child: CircleAvatar(
+                                  radius: 24,
+                                  backgroundImage: AssetImage(
+                                    sexualitySelected == 'Masculino'
+                                        ? AppAssetsNames.boyImageUrl
+                                        : AppAssetsNames.womanImageUrl,
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ),

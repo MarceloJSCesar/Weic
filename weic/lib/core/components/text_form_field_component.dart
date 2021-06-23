@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:weic/core/config/app_colors.dart';
 import '../config/app_textstyles.dart';
 
 class TextFormFieldComponent extends StatelessWidget {
@@ -22,6 +23,17 @@ class TextFormFieldComponent extends StatelessWidget {
     this.validateField,
     this.isPasswordField,
   }) : super(key: key);
+
+  IconData get showIcon {
+    if (isEmailField == true) {
+      return Icons.email;
+    } else if (isPasswordField == true) {
+      return Icons.security;
+    } else {
+      return Icons.person;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,6 +52,7 @@ class TextFormFieldComponent extends StatelessWidget {
         textInputAction:
             isPasswordField ? TextInputAction.done : TextInputAction.next,
         decoration: InputDecoration(
+          prefixIcon: Icon(showIcon, color: AppColors.mainPrefixColor),
           suffixIcon: isPasswordField
               ? IconButton(
                   icon: Icon(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weic/core/controllers/auth_services/auth_service.dart';
 import '../../models/user.dart';
 import '../../storage/db_storage.dart';
 import '../../views/home/home_view.dart';
@@ -7,9 +6,11 @@ import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
 import '../../config/app_assets_names.dart';
 import '../../services/login_services.dart';
+import '../../../core/config/app_colors.dart';
 import '../../components/text_form_field_component.dart';
 import '../../interfaces/auth_login/login_callback.dart';
 import '../../services/auth_login/auth_login_response.dart';
+import '../../../core/controllers/auth_services/auth_service.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key key}) : super(key: key);
@@ -43,8 +44,6 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
         _form.save();
         _loginResponse.login(email, password);
       });
-    } else {
-      return null;
     }
   }
 
@@ -60,8 +59,8 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   @override
   void initState() {
     super.initState();
-    DbStorage db = DbStorage();
-    db.getAllUsers();
+    // DbStorage db = DbStorage();
+    // db.getAllUsers();
   }
 
   @override
@@ -139,10 +138,10 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
                                   style: ButtonStyle(
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
-                                      Colors.blue,
+                                      AppColors.mainPrefixColor,
                                     ),
                                   ),
-                                  onPressed: _submit != null ? _submit : null,
+                                  onPressed: _submit,
                                   child: Text('Entrar'),
                                 ),
                                 SizedBox(

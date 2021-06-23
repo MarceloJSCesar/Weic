@@ -11,7 +11,6 @@ abstract class AuthServiceBase with Store {
   @action
   void viewPasswordValue() {
     viewPassword = !viewPassword;
-    print(viewPassword);
   }
 
   String validateEmail(String email) {
@@ -39,7 +38,7 @@ abstract class AuthServiceBase with Store {
   }
 
   String validateSchool(String school) {
-    if (school.isEmpty) {
+    if (school.isEmpty && school.length < 2) {
       return 'nome da escola invalido';
     } else {
       return null;
