@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weic/core/components/text_form_field_component.dart';
+import 'package:weic/core/controllers/auth_services/auth_service.dart';
 // import 'package:weic/core/components/text_form_field_component.dart';
 import 'package:weic/core/storage/db_storage.dart';
 import '../../models/user.dart';
@@ -22,14 +23,15 @@ class _RegisterViewState extends State<RegisterView> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  AuthService _auth = AuthService();
+
   String sexualitySelected;
   List<String> sexualities = ['Masculino', 'Femenino'];
-
-  bool isPasswordHiden = true;
 
   void _submit() async {
     User user = User();
     DbStorage db = DbStorage();
+    // implement validation with _formKey after
     final _form = _formKey.currentState;
 
     if (_form.validate()) {
@@ -48,15 +50,6 @@ class _RegisterViewState extends State<RegisterView> {
       });
       Navigator.of(context).pushReplacementNamed('/login');
     }
-  }
-
-  void _showSnackBar(String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Text(text),
-      ),
-    ));
   }
 
   @override
@@ -108,11 +101,9 @@ class _RegisterViewState extends State<RegisterView> {
                                         dropdownColor: Colors.black,
                                         value: sexualitySelected,
                                         style: AppTextStyles.dropDownTextStyle,
-                                        onChanged: (val) {
-                                          setState(() {
-                                            sexualitySelected = val;
-                                          });
-                                        },
+                                        onChanged: (val) => setState(() {
+                                          sexualitySelected = val;
+                                        }),
                                         hint: Text(
                                           'Seleciona seu sexo',
                                           style:
@@ -129,12 +120,18 @@ class _RegisterViewState extends State<RegisterView> {
                                         hintText: 'Nome, ex: Marcelo Cesar',
                                         saveValue: (val) => name = val,
                                         isPasswordField: false,
+                                        isEmailField: false,
+                                        validateField: (val) =>
+                                            _auth.validateName(val),
                                       ),
                                       Divider(),
                                       TextFormFieldComponent(
                                         hintText: 'Nome da Escola, ex: Esad',
                                         saveValue: (val) => school = val,
                                         isPasswordField: false,
+                                        isEmailField: false,
+                                        validateField: (val) =>
+                                            _auth.validateSchool(val),
                                       ),
                                       Divider(),
                                       TextFormFieldComponent(
@@ -142,12 +139,29 @@ class _RegisterViewState extends State<RegisterView> {
                                             'Email, ex: devmarcelocesar@gmail.com',
                                         saveValue: (val) => email = val,
                                         isPasswordField: false,
+                                        isEmailField: true,
+                                        validateField: (val) =>
+                                            _auth.validateEmail(val),
                                       ),
                                       Divider(),
                                       TextFormFieldComponent(
                                         hintText: 'Password',
                                         saveValue: (val) => password = val,
                                         isPasswordField: true,
+                                        isEmailField: false,
+                                        validateField: (val) =>
+                                            _auth.validatePassword(val),
+                                        showPassword: () => setState(() {
+                                          _auth.viewPasswordValue();
+                                        }),
+                                        obscureText: () {
+                                          if (_auth.viewPassword == true) {
+                                            return true;
+                                          } else {
+                                            return false;
+                                          }
+                                        },
+                                        viewPassword: _auth.viewPassword,
                                       ),
                                       SizedBox(
                                         height: 40,

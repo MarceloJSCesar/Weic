@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:weic/core/config/app_textstyles.dart';
+import 'package:flutter/services.dart';
+import '../config/app_textstyles.dart';
 
-// ignore: must_be_immutable
 class TextFormFieldComponent extends StatelessWidget {
   final String hintText;
+  final bool isEmailField;
+  final Function showPassword;
   final Function saveValue;
   final bool isPasswordField;
+  final Function obscureText;
+  final bool viewPassword;
+  final Function validateField;
   TextFormFieldComponent({
     Key key,
     this.hintText,
+    this.viewPassword,
+    this.obscureText,
     this.saveValue,
+    this.showPassword,
+    this.isEmailField,
+    this.validateField,
     this.isPasswordField,
   }) : super(key: key);
   @override
@@ -20,22 +30,21 @@ class TextFormFieldComponent extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: TextFormField(
+        validator: (val) => validateField(val),
         onSaved: (val) => saveValue(val),
         onChanged: (val) => saveValue(val),
-        obscureText: isPasswordField
-            ? true
-                ? true
-                : false
-            : false,
+        obscureText: isPasswordField ? obscureText() : false,
         style: AppTextStyles.dropDownTextStyle,
-        textInputAction: TextInputAction.next,
+        keyboardType:
+            isEmailField ? TextInputType.emailAddress : TextInputType.text,
+        textInputAction:
+            isPasswordField ? TextInputAction.done : TextInputAction.next,
         decoration: InputDecoration(
           suffixIcon: isPasswordField
               ? IconButton(
                   icon: Icon(
-                    true ? Icons.visibility_off : Icons.visibility,
-                  ),
-                  onPressed: () {})
+                      viewPassword ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () => showPassword())
               : null,
           hintText: hintText,
           hintStyle: AppTextStyles.hintTextStyle,

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:weic/core/components/text_form_field_component.dart';
-import 'package:weic/core/storage/db_storage.dart';
-import 'package:weic/core/views/home/home_view.dart';
+import 'package:weic/core/controllers/auth_services/auth_service.dart';
 import '../../models/user.dart';
+import '../../storage/db_storage.dart';
+import '../../views/home/home_view.dart';
 import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
 import '../../config/app_assets_names.dart';
 import '../../services/login_services.dart';
+import '../../components/text_form_field_component.dart';
 import '../../interfaces/auth_login/login_callback.dart';
 import '../../services/auth_login/auth_login_response.dart';
 
@@ -21,9 +22,9 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   String email, password;
   LoginServices _loginServices = LoginServices();
   LoginResponse _loginResponse;
+  AuthService _auth = AuthService();
 
   bool _isLoading = false;
-  bool isPassword = false;
 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -33,9 +34,10 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   }
 
   _submit() {
+    // implement validation after
     final _form = _formKey.currentState;
 
-    if (_form.validate()) {
+    if (_form.validate() && email.length > 10 && password.length > 8) {
       setState(() {
         _isLoading = true;
         _form.save();
@@ -106,12 +108,29 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
                                   hintText: 'Email',
                                   saveValue: (val) => email = val,
                                   isPasswordField: false,
+                                  isEmailField: true,
+                                  validateField: (val) =>
+                                      _auth.validateEmail(val),
                                 ),
                                 Divider(),
                                 TextFormFieldComponent(
                                   hintText: 'Password',
                                   saveValue: (val) => password = val,
                                   isPasswordField: true,
+                                  isEmailField: false,
+                                  validateField: (val) =>
+                                      _auth.validatePassword(val),
+                                  showPassword: () => setState(() {
+                                    _auth.viewPasswordValue();
+                                  }),
+                                  obscureText: () {
+                                    if (_auth.viewPassword == true) {
+                                      return true;
+                                    } else {
+                                      return false;
+                                    }
+                                  },
+                                  viewPassword: _auth.viewPassword,
                                 ),
                                 SizedBox(
                                   height: 40,
