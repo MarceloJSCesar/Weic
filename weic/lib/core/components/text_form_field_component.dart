@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:weic/core/config/app_textstyles.dart';
 
 // ignore: must_be_immutable
-class TextFormFieldComponent extends StatefulWidget {
+class TextFormFieldComponent extends StatelessWidget {
   final String hintText;
   final Function saveValue;
-  var isPasswordField;
+  final bool isPasswordField;
   TextFormFieldComponent({
     Key key,
     this.hintText,
     this.saveValue,
     this.isPasswordField,
   }) : super(key: key);
-
-  @override
-  _TextFormFieldComponentState createState() => _TextFormFieldComponentState();
-}
-
-class _TextFormFieldComponentState extends State<TextFormFieldComponent> {
-  bool viewPassword = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,24 +20,24 @@ class _TextFormFieldComponentState extends State<TextFormFieldComponent> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: TextFormField(
-        onSaved: (val) => widget.saveValue(val),
-        onChanged: (val) => widget.saveValue(val),
-        obscureText: viewPassword,
+        onSaved: (val) => saveValue(val),
+        onChanged: (val) => saveValue(val),
+        obscureText: isPasswordField
+            ? true
+                ? true
+                : false
+            : false,
         style: AppTextStyles.dropDownTextStyle,
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          suffixIcon: widget.isPasswordField
+          suffixIcon: isPasswordField
               ? IconButton(
                   icon: Icon(
-                    viewPassword ? Icons.visibility_off : Icons.visibility,
+                    true ? Icons.visibility_off : Icons.visibility,
                   ),
-                  onPressed: () => setState(() {
-                    viewPassword = !viewPassword;
-                    print(viewPassword);
-                  }),
-                )
+                  onPressed: () {})
               : null,
-          hintText: widget.hintText,
+          hintText: hintText,
           hintStyle: AppTextStyles.hintTextStyle,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
