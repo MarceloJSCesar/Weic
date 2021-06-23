@@ -22,7 +22,6 @@ class LoginRequest {
     );
     userResult = await _dbStorage.loginUser(user);
     if (userResult != null) {
-      print('well done');
       return Future.value(
         User(
           email: email,

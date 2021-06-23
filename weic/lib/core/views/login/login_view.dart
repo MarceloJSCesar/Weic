@@ -23,17 +23,16 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   LoginResponse _loginResponse;
 
   bool _isLoading = false;
+  bool isPassword = false;
 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  bool isPassword = false;
 
   _LoginViewState() {
     _loginResponse = LoginResponse(this);
   }
 
-  void _submit() {
+  _submit() {
     final _form = _formKey.currentState;
 
     if (_form.validate()) {
@@ -42,6 +41,8 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
         _form.save();
         _loginResponse.login(email, password);
       });
+    } else {
+      return null;
     }
   }
 
@@ -56,7 +57,6 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     DbStorage db = DbStorage();
     db.getAllUsers();
@@ -102,52 +102,16 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
                             ),
                             child: Column(
                               children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: TextFormField(
-                                    onSaved: (val) {
-                                      email = val;
-                                    },
-                                    onChanged: (val) => email = val,
-                                    style: AppTextStyles.dropDownTextStyle,
-                                    textInputAction: !isPassword
-                                        ? TextInputAction.next
-                                        : TextInputAction.done,
-                                    decoration: InputDecoration(
-                                      hintText: 'Email',
-                                      hintStyle: AppTextStyles.hintTextStyle,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                    ),
-                                  ),
+                                TextFormFieldComponent(
+                                  hintText: 'Email',
+                                  saveValue: (val) => email = val,
+                                  isPasswordField: false,
                                 ),
                                 Divider(),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: TextFormField(
-                                    onSaved: (val) {
-                                      password = val;
-                                    },
-                                    onChanged: (val) => password = val,
-                                    style: AppTextStyles.dropDownTextStyle,
-                                    textInputAction: !isPassword == true
-                                        ? TextInputAction.next
-                                        : TextInputAction.done,
-                                    decoration: InputDecoration(
-                                      hintText: 'password',
-                                      hintStyle: AppTextStyles.hintTextStyle,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                    ),
-                                  ),
+                                TextFormFieldComponent(
+                                  hintText: 'Password',
+                                  saveValue: (val) => password = val,
+                                  isPasswordField: true,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -159,7 +123,7 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
                                       Colors.blue,
                                     ),
                                   ),
-                                  onPressed: _submit,
+                                  onPressed: _submit != null ? _submit : null,
                                   child: Text('Entrar'),
                                 ),
                                 SizedBox(
@@ -204,7 +168,7 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
         });
       }
     } else {
-      _showSnackBar('email and password invalid');
+      _showSnackBar('email and password invalido');
       setState(() {
         _isLoading = false;
       });

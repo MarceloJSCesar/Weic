@@ -20,6 +20,7 @@ class User {
   User.fromMap(Map map) {
     id = map[AppDbNames.id];
     name = map[AppDbNames.name];
+    email = map[AppDbNames.email];
     school = map[AppDbNames.school];
     password = map[AppDbNames.password];
     sexuality = map[AppDbNames.sexuality];

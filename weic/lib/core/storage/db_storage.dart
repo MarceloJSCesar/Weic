@@ -49,7 +49,6 @@ class DbStorage {
     for (Map user in usersFound) {
       users.add(User.fromMap(user));
     }
-    print('getallusers users: $users');
     return users;
   }
 }
