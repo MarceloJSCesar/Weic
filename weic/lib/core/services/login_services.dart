@@ -1,25 +1,15 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginServices {
-  Future saveCacheData(String email, String password) async {
-    SharedPreferences storage = await SharedPreferences.getInstance();
-    bool emailSaved = await storage.setString('EMAIL', email);
-    bool passwordSaved = await storage.setString('PASSWORD', password);
-    if (emailSaved == true && passwordSaved == true) {
-      return true;
-    } else {
-      return false;
-    }
+  Future saveUserId(int userId) async {
+    SharedPreferences cache = await SharedPreferences.getInstance();
+    await cache.setInt('UserID', userId);
   }
 
-  Future<bool> deleteCacheData() async {
-    SharedPreferences storage = await SharedPreferences.getInstance();
-    bool nameDeleted = await storage.remove('NAME');
-    bool idRemoved = await storage.remove('EMAIL');
-    if (nameDeleted == true && idRemoved == true) {
-      return true;
-    } else {
-      return false;
-    }
+  Future<int> getUserId() async {
+    SharedPreferences cache = await SharedPreferences.getInstance();
+    int userId = cache.getInt('UserID');
+    print('getid: $userId');
+    return userId;
   }
 }

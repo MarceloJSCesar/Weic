@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:weic/core/components/text_form_field_component.dart';
-import 'package:weic/core/storage/db_storage.dart';
-import 'package:weic/core/views/home/home_view.dart';
+import 'package:weic/core/services/login_services.dart';
 import '../../models/user.dart';
+import '../../storage/db_storage.dart';
+import '../../views/home/home_view.dart';
 import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
 import '../../config/app_assets_names.dart';
-import '../../services/login_services.dart';
+import '../../../core/config/app_colors.dart';
+import '../../components/text_form_field_component.dart';
 import '../../interfaces/auth_login/login_callback.dart';
 import '../../services/auth_login/auth_login_response.dart';
+import '../../../core/controllers/auth_services/auth_service.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key key}) : super(key: key);
@@ -19,29 +21,30 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> implements LoginCallBack {
   String email, password;
-  LoginServices _loginServices = LoginServices();
   LoginResponse _loginResponse;
+  AuthService _auth = AuthService();
 
   bool _isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  bool isPassword = false;
-
   _LoginViewState() {
     _loginResponse = LoginResponse(this);
   }
 
-  void _submit() {
+  _submit() {
+    // implement validation after
     final _form = _formKey.currentState;
-
     if (_form.validate()) {
       setState(() {
         _isLoading = true;
         _form.save();
         _loginResponse.login(email, password);
+        print('OKAY');
       });
+    } else {
+      return null;
     }
   }
 
@@ -56,7 +59,6 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     DbStorage db = DbStorage();
     db.getAllUsers();
@@ -102,52 +104,33 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
                             ),
                             child: Column(
                               children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: TextFormField(
-                                    onSaved: (val) {
-                                      email = val;
-                                    },
-                                    onChanged: (val) => email = val,
-                                    style: AppTextStyles.dropDownTextStyle,
-                                    textInputAction: !isPassword
-                                        ? TextInputAction.next
-                                        : TextInputAction.done,
-                                    decoration: InputDecoration(
-                                      hintText: 'Email',
-                                      hintStyle: AppTextStyles.hintTextStyle,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                    ),
-                                  ),
+                                TextFormFieldComponent(
+                                  hintText: 'Email',
+                                  saveValue: (val) => email = val,
+                                  isPasswordField: false,
+                                  isEmailField: true,
+                                  validateField: (val) =>
+                                      _auth.validateEmail(val),
                                 ),
                                 Divider(),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: TextFormField(
-                                    onSaved: (val) {
-                                      password = val;
-                                    },
-                                    onChanged: (val) => password = val,
-                                    style: AppTextStyles.dropDownTextStyle,
-                                    textInputAction: !isPassword == true
-                                        ? TextInputAction.next
-                                        : TextInputAction.done,
-                                    decoration: InputDecoration(
-                                      hintText: 'password',
-                                      hintStyle: AppTextStyles.hintTextStyle,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                    ),
-                                  ),
+                                TextFormFieldComponent(
+                                  hintText: 'Password',
+                                  saveValue: (val) => password = val,
+                                  isPasswordField: true,
+                                  isEmailField: false,
+                                  validateField: (val) =>
+                                      _auth.validatePassword(val),
+                                  showPassword: () => setState(() {
+                                    _auth.viewPasswordValue();
+                                  }),
+                                  obscureText: () {
+                                    if (_auth.viewPassword == true) {
+                                      return true;
+                                    } else {
+                                      return false;
+                                    }
+                                  },
+                                  viewPassword: _auth.viewPassword,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -156,7 +139,7 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
                                   style: ButtonStyle(
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
-                                      Colors.blue,
+                                      AppColors.mainPrefixColor,
                                     ),
                                   ),
                                   onPressed: _submit,
@@ -189,25 +172,22 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   @override
   void onLoginSucess(User user) async {
     if (user != null) {
-      bool savingDataValue =
-          await _loginServices.saveCacheData(user.email, user.password);
-      if (savingDataValue == true) {
-        setState(() {
+      setState(
+        () {
           _isLoading = false;
-        });
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => HomeView()));
-      } else {
-        _showSnackBar('error when saving your data, re-open the app');
-        setState(() {
-          _isLoading = false;
-        });
-      }
+        },
+      );
+      int id = await LoginServices().getUserId();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => HomeView(userId: id),
+        ),
+      );
     } else {
-      _showSnackBar('email and password invalid');
       setState(() {
         _isLoading = false;
       });
+      _showSnackBar('email or password invalido');
     }
   }
 

@@ -1,77 +1,71 @@
-// import 'package:flutter/material.dart';
-// import 'package:weic/core/config/app_textstyles.dart';
-// import 'package:weic/core/models/user.dart';
-// import 'package:weic/core/storage/db_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:weic/core/config/app_colors.dart';
+import '../config/app_textstyles.dart';
 
-// // ignore: must_be_immutable
-// class TextFormFieldComponent extends StatefulWidget {
-//   var value;
-//   var isLoading;
-//   final String hintText;
-//   final bool isPassword;
-//   final formkey;
-//   TextFormFieldComponent({
-//     Key key,
-//     this.value,
-//     this.hintText,
-//     this.formkey,
-//     this.isPassword,
-//   }) : super(key: key);
+class TextFormFieldComponent extends StatelessWidget {
+  final String hintText;
+  final bool isEmailField;
+  final Function showPassword;
+  final Function saveValue;
+  final bool isPasswordField;
+  final Function obscureText;
+  final bool viewPassword;
+  final Function validateField;
+  TextFormFieldComponent({
+    Key key,
+    this.hintText,
+    this.viewPassword,
+    this.obscureText,
+    this.saveValue,
+    this.showPassword,
+    this.isEmailField,
+    this.validateField,
+    this.isPasswordField,
+  }) : super(key: key);
 
-//   @override
-//   _TextFormFieldComponentState createState() => _TextFormFieldComponentState();
-// }
+  IconData get showIcon {
+    if (isEmailField == true) {
+      return Icons.email;
+    } else if (isPasswordField == true) {
+      return Icons.security;
+    } else {
+      return Icons.person;
+    }
+  }
 
-// class _TextFormFieldComponentState extends State<TextFormFieldComponent> {
-//   void _submit() async {
-//     User user = User();
-//     DbStorage db = DbStorage();
-//     final _form = widget.formkey.currentState;
-
-//     if (_form.validate()) {
-//       setState(() {
-//         _form.save();
-//         widget.isLoading = true;
-//         user.name = name;
-//         user.school = school;
-//         user.email = email;
-//         user.password = password;
-//         user.sexuality = sexuality;
-//       });
-//       print(user.toString());
-//       await db.registerUser(user);
-//       await _registerServices.saveCacheData(user.email, user.name);
-//       setState(() {
-//         _isLoading = false;
-//       });
-//       Navigator.of(context).pushReplacementNamed('/login');
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         border: Border.all(color: Colors.grey),
-//         borderRadius: BorderRadius.circular(20),
-//       ),
-//       child: TextFormField(
-//         onSaved: (val) {
-//           value = val;
-//           print(widget.value);
-//         },
-//         onChanged: (val) => value = val,
-//         style: AppTextStyles.dropDownTextStyle,
-//         textInputAction:
-//             !widget.isPassword ? TextInputAction.next : TextInputAction.done,
-//         decoration: InputDecoration(
-//           hintText: widget.hintText,
-//           hintStyle: AppTextStyles.hintTextStyle,
-//           border: OutlineInputBorder(
-//             borderRadius: BorderRadius.circular(20),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: TextFormField(
+        validator: (val) => validateField(val),
+        onSaved: (val) => saveValue(val),
+        onChanged: (val) => saveValue(val),
+        obscureText: isPasswordField ? obscureText() : false,
+        style: AppTextStyles.dropDownTextStyle,
+        keyboardType:
+            isEmailField ? TextInputType.emailAddress : TextInputType.text,
+        textInputAction:
+            isPasswordField ? TextInputAction.done : TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: Icon(showIcon, color: AppColors.mainPrefixColor),
+          suffixIcon: isPasswordField
+              ? IconButton(
+                  icon: Icon(
+                      viewPassword ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () => showPassword())
+              : null,
+          hintText: hintText,
+          hintStyle: AppTextStyles.hintTextStyle,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
+import 'package:weic/core/services/login_services.dart';
 import '../storage/db.dart';
 import '../models/user.dart';
 import '../config/app_dbnames.dart';
@@ -15,6 +16,8 @@ class DbStorage {
       user.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    print('userId: $userId');
+    await LoginServices().saveUserId(userId);
     return userId;
   }
 
@@ -49,7 +52,28 @@ class DbStorage {
     for (Map user in usersFound) {
       users.add(User.fromMap(user));
     }
-    print('getallusers users: $users');
+    print(users);
     return users;
+  }
+
+  Future<User> getUser(int id) async {
+    Database database = await db;
+    List<Map> map = await database.query(AppDbNames.storageTable,
+        columns: [
+          AppDbNames.id,
+          AppDbNames.email,
+          AppDbNames.name,
+          AppDbNames.school,
+          AppDbNames.sexuality,
+          AppDbNames.password
+        ],
+        where: '${AppDbNames.id} = ?',
+        whereArgs: [id]);
+    print('mapfirst: ${map.first}');
+    if (map.length > 0) {
+      return User.fromMap(map.first);
+    } else {
+      return null;
+    }
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:weic/core/components/text_form_field_component.dart';
+import 'package:weic/core/components/text_form_field_component.dart';
+import 'package:weic/core/config/app_colors.dart';
+import 'package:weic/core/controllers/auth_services/auth_service.dart';
 import 'package:weic/core/storage/db_storage.dart';
 import '../../models/user.dart';
 import '../../config/app_textstyles.dart';
@@ -21,17 +23,19 @@ class _RegisterViewState extends State<RegisterView> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  AuthService _auth = AuthService();
+
+  bool fieldsValidate = true;
   String sexualitySelected;
   List<String> sexualities = ['Masculino', 'Femenino'];
-
-  bool isPassword = false;
 
   void _submit() async {
     User user = User();
     DbStorage db = DbStorage();
+    // implement validation with _formKey after
     final _form = _formKey.currentState;
 
-    if (_form.validate()) {
+    if (_form.validate() && sexualitySelected != null) {
       setState(() {
         _form.save();
         _isLoading = true;
@@ -40,22 +44,25 @@ class _RegisterViewState extends State<RegisterView> {
         user.email = email;
         user.password = password;
         user.sexuality = sexualitySelected;
+        fieldsValidate = true;
       });
       await db.registerUser(user);
       setState(() {
         _isLoading = false;
       });
       Navigator.of(context).pushReplacementNamed('/login');
+    } else {
+      if (sexualitySelected == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('seleciona seu sexo'),
+          ),
+        );
+      }
+      setState(() {
+        fieldsValidate = false;
+      });
     }
-  }
-
-  void _showSnackBar(String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Text(text),
-      ),
-    ));
   }
 
   @override
@@ -107,11 +114,9 @@ class _RegisterViewState extends State<RegisterView> {
                                         dropdownColor: Colors.black,
                                         value: sexualitySelected,
                                         style: AppTextStyles.dropDownTextStyle,
-                                        onChanged: (val) {
-                                          setState(() {
-                                            sexualitySelected = val;
-                                          });
-                                        },
+                                        onChanged: (val) => setState(() {
+                                          sexualitySelected = val;
+                                        }),
                                         hint: Text(
                                           'Seleciona seu sexo',
                                           style:
@@ -124,124 +129,52 @@ class _RegisterViewState extends State<RegisterView> {
                                           );
                                         }).toList(),
                                       ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: TextFormField(
-                                          onSaved: (val) {
-                                            name = val;
-                                            print(name);
-                                          },
-                                          onChanged: (val) => name = val,
-                                          style:
-                                              AppTextStyles.dropDownTextStyle,
-                                          textInputAction: isPassword
-                                              ? TextInputAction.next
-                                              : TextInputAction.done,
-                                          decoration: InputDecoration(
-                                            hintText: 'Seu Nome',
-                                            hintStyle:
-                                                AppTextStyles.hintTextStyle,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                          ),
-                                        ),
+                                      TextFormFieldComponent(
+                                        hintText: 'Nome, ex: Marcelo Cesar',
+                                        saveValue: (val) => name = val,
+                                        isPasswordField: false,
+                                        isEmailField: false,
+                                        validateField: (val) =>
+                                            _auth.validateName(val),
                                       ),
                                       Divider(),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: TextFormField(
-                                          onSaved: (val) {
-                                            school = val;
-                                            print(school);
-                                          },
-                                          onChanged: (val) => school = val,
-                                          style:
-                                              AppTextStyles.dropDownTextStyle,
-                                          textInputAction: isPassword
-                                              ? TextInputAction.next
-                                              : TextInputAction.done,
-                                          decoration: InputDecoration(
-                                            hintText: 'Nome da escola',
-                                            hintStyle:
-                                                AppTextStyles.hintTextStyle,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                          ),
-                                        ),
+                                      TextFormFieldComponent(
+                                        hintText: 'Nome da Escola, ex: Esad',
+                                        saveValue: (val) => school = val,
+                                        isPasswordField: false,
+                                        isEmailField: false,
+                                        validateField: (val) =>
+                                            _auth.validateSchool(val),
                                       ),
                                       Divider(),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: TextFormField(
-                                          onSaved: (val) {
-                                            email = val;
-                                            print(email);
-                                          },
-                                          onChanged: (val) => email = val,
-                                          style:
-                                              AppTextStyles.dropDownTextStyle,
-                                          textInputAction: isPassword
-                                              ? TextInputAction.next
-                                              : TextInputAction.done,
-                                          decoration: InputDecoration(
-                                            hintText: 'email',
-                                            hintStyle:
-                                                AppTextStyles.hintTextStyle,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                          ),
-                                        ),
+                                      TextFormFieldComponent(
+                                        hintText:
+                                            'Email, ex: marcelo@gmail.com',
+                                        saveValue: (val) => email = val,
+                                        isPasswordField: false,
+                                        isEmailField: true,
+                                        validateField: (val) =>
+                                            _auth.validateEmail(val),
                                       ),
                                       Divider(),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: TextFormField(
-                                          onSaved: (val) {
-                                            password = val;
-                                            print(password);
-                                          },
-                                          onChanged: (val) => password = val,
-                                          style:
-                                              AppTextStyles.dropDownTextStyle,
-                                          textInputAction: isPassword == true
-                                              ? TextInputAction.next
-                                              : TextInputAction.done,
-                                          decoration: InputDecoration(
-                                            hintText: 'password',
-                                            hintStyle:
-                                                AppTextStyles.hintTextStyle,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                          ),
-                                        ),
+                                      TextFormFieldComponent(
+                                        hintText: 'Password',
+                                        saveValue: (val) => password = val,
+                                        isPasswordField: true,
+                                        isEmailField: false,
+                                        validateField: (val) =>
+                                            _auth.validatePassword(val),
+                                        showPassword: () => setState(() {
+                                          _auth.viewPasswordValue();
+                                        }),
+                                        obscureText: () {
+                                          if (_auth.viewPassword == true) {
+                                            return true;
+                                          } else {
+                                            return false;
+                                          }
+                                        },
+                                        viewPassword: _auth.viewPassword,
                                       ),
                                       SizedBox(
                                         height: 40,
@@ -250,7 +183,7 @@ class _RegisterViewState extends State<RegisterView> {
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all<Color>(
-                                            Colors.blue,
+                                            AppColors.mainPrefixColor,
                                           ),
                                         ),
                                         onPressed: _submit,
@@ -276,18 +209,31 @@ class _RegisterViewState extends State<RegisterView> {
                             ],
                           ),
                         ),
-                        Positioned(
-                          bottom: 485,
-                          left: MediaQuery.of(context).size.width / 2.3,
-                          child: CircleAvatar(
-                            radius: 30,
-                            backgroundImage: AssetImage(
-                              sexualitySelected == 'Masculino'
-                                  ? AppAssetsNames.boyImageUrl
-                                  : AppAssetsNames.womanImageUrl,
-                            ),
-                          ),
-                        ),
+                        fieldsValidate
+                            ? Positioned(
+                                bottom: 485,
+                                left: MediaQuery.of(context).size.width / 2.3,
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: AssetImage(
+                                    sexualitySelected == 'Masculino'
+                                        ? AppAssetsNames.boyImageUrl
+                                        : AppAssetsNames.womanImageUrl,
+                                  ),
+                                ),
+                              )
+                            : Positioned(
+                                bottom: 505,
+                                left: MediaQuery.of(context).size.width / 200,
+                                child: CircleAvatar(
+                                  radius: 24,
+                                  backgroundImage: AssetImage(
+                                    sexualitySelected == 'Masculino'
+                                        ? AppAssetsNames.boyImageUrl
+                                        : AppAssetsNames.womanImageUrl,
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ),
