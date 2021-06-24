@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:weic/core/components/text_form_field_component.dart';
 import 'package:weic/core/config/app_colors.dart';
 import 'package:weic/core/controllers/auth_services/auth_service.dart';
-// import 'package:weic/core/components/text_form_field_component.dart';
 import 'package:weic/core/storage/db_storage.dart';
 import '../../models/user.dart';
 import '../../config/app_textstyles.dart';

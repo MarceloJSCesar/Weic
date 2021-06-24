@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:weic/core/services/login_services.dart';
 import '../../models/user.dart';
 import '../../storage/db_storage.dart';
 import '../../views/home/home_view.dart';
 import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
 import '../../config/app_assets_names.dart';
-import '../../services/login_services.dart';
 import '../../../core/config/app_colors.dart';
 import '../../components/text_form_field_component.dart';
 import '../../interfaces/auth_login/login_callback.dart';
@@ -21,7 +21,6 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> implements LoginCallBack {
   String email, password;
-  LoginServices _loginServices = LoginServices();
   LoginResponse _loginResponse;
   AuthService _auth = AuthService();
 
@@ -44,6 +43,8 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
         _loginResponse.login(email, password);
         print('OKAY');
       });
+    } else {
+      return null;
     }
   }
 
@@ -171,25 +172,22 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   @override
   void onLoginSucess(User user) async {
     if (user != null) {
-      bool savingDataValue =
-          await _loginServices.saveCacheData(user.email, user.password);
-      if (savingDataValue == true) {
-        setState(() {
+      setState(
+        () {
           _isLoading = false;
-        });
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => HomeView()));
-      } else {
-        _showSnackBar('error when saving your data, re-open the app');
-        setState(() {
-          _isLoading = false;
-        });
-      }
+        },
+      );
+      int id = await LoginServices().getUserId();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => HomeView(userId: id),
+        ),
+      );
     } else {
-      _showSnackBar('email and password invalido');
       setState(() {
         _isLoading = false;
       });
+      _showSnackBar('email or password invalido');
     }
   }
 
