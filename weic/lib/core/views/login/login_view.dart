@@ -37,12 +37,12 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   _submit() {
     // implement validation after
     final _form = _formKey.currentState;
-
-    if (_form.validate() && email.length > 10 && password.length > 8) {
+    if (_form.validate()) {
       setState(() {
         _isLoading = true;
         _form.save();
         _loginResponse.login(email, password);
+        print('OKAY');
       });
     }
   }
@@ -59,8 +59,8 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
   @override
   void initState() {
     super.initState();
-    // DbStorage db = DbStorage();
-    // db.getAllUsers();
+    DbStorage db = DbStorage();
+    db.getAllUsers();
   }
 
   @override
