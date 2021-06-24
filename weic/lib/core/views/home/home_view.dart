@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/core/components/home/appbar_component.dart';
 import 'package:weic/core/config/app_textstyles.dart';
 import 'package:weic/core/models/user.dart';
 import 'package:weic/core/services/login_services.dart';
@@ -18,6 +19,8 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   User user;
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<User> getUserData() async {
     User userData = await DbStorage().getUser(widget.userId);
@@ -39,17 +42,17 @@ class _HomeViewState extends State<HomeView> {
                 strokeWidth: 3.0,
               ),
             );
-          case ConnectionState.active:
-          case ConnectionState.done:
-            return Center(
-                child: Text(
-              user.name.toString(),
-              style: AppTextStyles.hintTextStyle,
-            ));
           default:
             if (snapshot.hasData) {
-              return Center(
-                  child: Text(user.name, style: AppTextStyles.hintTextStyle));
+              return Scaffold(
+                key: _scaffoldKey,
+                appBar: AppBarComponent(
+                  user: user,
+                  context: context,
+                  scaffoldKey: _scaffoldKey,
+                ),
+                drawer: Drawer(),
+              );
             } else {
               return LoginView();
             }
