@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/core/components/home/calculus/trimestre/calculus_trimestre.dart';
 import './views/home/home_view.dart';
 import './views/login/login_view.dart';
 import './services/login_services.dart';
@@ -27,6 +28,7 @@ class Weic extends StatelessWidget {
         '/login': (_) => LoginView(),
         '/register': (_) => RegisterView(),
         '/home/drawer_about': (_) => DrawerAbout(),
+        '/home/calculus/trimestre': (_) => CalculusTrimestre()
       },
       home: FutureBuilder(
         future: _loginServices.getUserEmail(),

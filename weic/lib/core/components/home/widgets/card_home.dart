@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weic/core/components/home/widgets/card_home_options.dart';
-import 'package:weic/core/config/app_decorations.dart';
-import 'package:weic/core/config/app_textstyles.dart';
+import '../../../config/app_decorations.dart';
+import '../../../components/home/widgets/card_home_options.dart';
 
 class CardHome extends StatelessWidget {
   const CardHome({Key key}) : super(key: key);
@@ -23,7 +22,8 @@ class CardHome extends StatelessWidget {
             children: <Widget>[
               CardHomeOptions(
                 title: 'Calcular nota do trimestre',
-                onTap: () {},
+                onTap: () =>
+                    Navigator.of(context).pushNamed('/home/calculus/trimestre'),
               ),
               SizedBox(
                 width: 20,

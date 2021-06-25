@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weic/core/config/app_decorations.dart';
-import 'package:weic/core/config/app_textstyles.dart';
+import '../../../config/app_textstyles.dart';
 
 class CardHomeOptions extends StatelessWidget {
   final Function onTap;
@@ -10,7 +9,7 @@ class CardHomeOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap,
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
