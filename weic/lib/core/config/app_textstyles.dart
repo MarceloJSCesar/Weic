@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyles {
-  static final TextStyle dropDownTextStyle = TextStyle(
+  static final TextStyle dropDownTextStyle = GoogleFonts.notoSans(
     color: Colors.white,
     fontSize: 15,
   );
-  static final TextStyle hintTextStyle = TextStyle(
+  static final TextStyle hintTextStyle = GoogleFonts.notoSans(
     color: Colors.grey,
     fontSize: 15,
   );

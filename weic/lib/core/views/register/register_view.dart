@@ -41,8 +41,8 @@ class _RegisterViewState extends State<RegisterView> {
         _isLoading = true;
         user.name = name;
         user.school = school;
-        user.email = email;
-        user.password = password;
+        user.email = email.trim();
+        user.password = password.trim();
         user.sexuality = sexualitySelected;
         fieldsValidate = true;
       });

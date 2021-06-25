@@ -46,13 +46,13 @@ class DrawerBody extends StatelessWidget {
           Column(
             children: <Widget>[
               DrawerFeatures(
-                title: 'About',
+                title: 'Sobre o aplicativo',
                 onTap: () => Navigator.of(context).pushNamed(
                   '/home/drawer_about',
                 ),
               ),
               DrawerFeatures(
-                title: 'Logout',
+                title: 'Sair',
                 onTap: () async {
                   await LoginServices().logout();
                   Navigator.of(context).pushReplacementNamed('/login');

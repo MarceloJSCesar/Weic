@@ -14,7 +14,7 @@ abstract class AuthServiceBase with Store {
   }
 
   String validateEmail(String email) {
-    if (email.isEmpty || email.length <= 10) {
+    if (email.trim().isEmpty || email.trim().length <= 10) {
       return 'email invalido';
     } else {
       return null;
@@ -30,7 +30,7 @@ abstract class AuthServiceBase with Store {
   }
 
   String validatePassword(String password) {
-    if (password.isEmpty || password.length < 8) {
+    if (password.trim().isEmpty || password.trim().length < 8) {
       return 'password invalido, pelo menos 8 caracteres';
     } else {
       return null;

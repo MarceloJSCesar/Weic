@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/core/components/home/home_body.dart';
 import '../../models/user.dart';
 import '../../storage/db_storage.dart';
 import '../../views/login/login_view.dart';
@@ -55,6 +56,7 @@ class _HomeViewState extends State<HomeView> {
                     user: user,
                   ),
                 ),
+                body: HomeBody(),
               );
             } else {
               return LoginView();

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:weic/core/services/login_services.dart';
 import '../../models/user.dart';
 import '../../storage/db_storage.dart';
 import '../../views/home/home_view.dart';
 import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
+import '../../services/login_services.dart';
 import '../../config/app_assets_names.dart';
 import '../../../core/config/app_colors.dart';
 import '../../components/text_form_field_component.dart';
@@ -40,10 +40,10 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
       setState(() {
         _isLoading = true;
         _form.save();
-        _loginResponse.login(email, password);
+        _loginResponse.login(email.trim(), password.trim());
         print('OKAY');
       });
-      await LoginServices().saveUserEmail(email);
+      await LoginServices().saveUserEmail(email.trim());
     } else {
       return null;
     }

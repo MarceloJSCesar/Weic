@@ -6,9 +6,9 @@ import '../../storage/db_storage.dart';
 class LoginRequest {
   Future<User> login(String email, String password) async {
     User user = new User(
-      email: email,
+      email: email.trim(),
       name: null,
-      password: password,
+      password: password.trim(),
       school: null,
       sexuality: null,
     );
@@ -24,8 +24,8 @@ class LoginRequest {
     if (userResult != null) {
       return Future.value(
         User(
-          email: email,
-          password: password,
+          email: email.trim(),
+          password: password.trim(),
           id: null,
           name: null,
           school: null,

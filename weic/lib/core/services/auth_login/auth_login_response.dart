@@ -9,7 +9,7 @@ class LoginResponse {
 
   login(String email, String password) {
     _loginRequest
-        .login(email, password)
+        .login(email.trim(), password.trim())
         .then((user) => _loginCallBack.onLoginSucess(user))
         .catchError((error, stackTrace) =>
             _loginCallBack.onLoginError(error.toString()));
