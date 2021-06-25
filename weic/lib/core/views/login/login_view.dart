@@ -33,7 +33,7 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
     _loginResponse = LoginResponse(this);
   }
 
-  _submit() {
+  _submit() async {
     // implement validation after
     final _form = _formKey.currentState;
     if (_form.validate()) {
@@ -43,6 +43,7 @@ class _LoginViewState extends State<LoginView> implements LoginCallBack {
         _loginResponse.login(email, password);
         print('OKAY');
       });
+      await LoginServices().saveUserEmail(email);
     } else {
       return null;
     }
