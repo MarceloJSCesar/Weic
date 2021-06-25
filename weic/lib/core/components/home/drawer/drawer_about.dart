@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/core/config/app_text.dart';
 import '../../../config/app_textstyles.dart';
 import '../../../config/app_decorations.dart';
 import '../../../config/app_assets_names.dart';
@@ -52,6 +53,10 @@ class DrawerAbout extends StatelessWidget {
                       Text(
                         'Minha Turma ES-3',
                         style: AppTextStyles.blackTextStyle,
+                      ),
+                      Text(
+                        AppText.appInfText,
+                        style: AppTextStyles.hintTextStyle,
                       )
                     ],
                   ),
