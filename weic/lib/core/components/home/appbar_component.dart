@@ -49,7 +49,7 @@ class AppBarComponent extends PreferredSize {
                     children: [
                       Text.rich(
                         TextSpan(
-                          text: 'Hey, ',
+                          text: 'Bem Vindo, ',
                           style: AppTextStyles.title,
                           children: <TextSpan>[
                             TextSpan(

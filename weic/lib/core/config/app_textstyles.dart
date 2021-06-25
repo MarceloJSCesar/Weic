@@ -21,4 +21,9 @@ class AppTextStyles {
     fontSize: 18,
     fontWeight: FontWeight.w600,
   );
+  static final TextStyle blackTextStyle = GoogleFonts.amiri(
+    color: Colors.black,
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+  );
 }

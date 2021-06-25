@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:weic/core/components/home/appbar_component.dart';
-import 'package:weic/core/config/app_textstyles.dart';
-import 'package:weic/core/models/user.dart';
-import 'package:weic/core/services/login_services.dart';
-import 'package:weic/core/storage/db_storage.dart';
-import 'package:weic/core/views/login/login_view.dart';
+import '../../models/user.dart';
+import '../../storage/db_storage.dart';
+import '../../views/login/login_view.dart';
+import '../../components/home/appbar_component.dart';
+import '../../components/home/drawer/drawer_body.dart';
 
 class HomeView extends StatefulWidget {
   final int userId;
@@ -51,7 +50,11 @@ class _HomeViewState extends State<HomeView> {
                   context: context,
                   scaffoldKey: _scaffoldKey,
                 ),
-                drawer: Drawer(),
+                drawer: Drawer(
+                  child: DrawerBody(
+                    user: user,
+                  ),
+                ),
               );
             } else {
               return LoginView();

@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-import 'package:weic/core/services/login_services.dart';
 import '../storage/db.dart';
 import '../models/user.dart';
 import '../config/app_dbnames.dart';
+import '../services/login_services.dart';
 
 class DbStorage {
   DatabaseHelper dbHelper = DatabaseHelper();
@@ -17,7 +17,7 @@ class DbStorage {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     print('userId: $userId');
-    await LoginServices().saveUserId(userId);
+    await LoginServices().saveUserIdAndEmail(userId, user.email);
     return userId;
   }
 
