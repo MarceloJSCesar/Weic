@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'core/weic.dart';
+import 'src/weic.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(Weic());
+  runApp(const Weic());
 }
