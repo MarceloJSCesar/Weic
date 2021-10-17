@@ -11,7 +11,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final _formkey = GlobalKey<FormState>();
+  final _emailFormkey = GlobalKey<FormState>();
+  final _passwordFormkey = GlobalKey<FormState>();
   @override
   Scaffold build(BuildContext context) {
     return Scaffold(
@@ -23,23 +24,20 @@ class _LoginViewState extends State<LoginView> {
           margin: isLandScapeMode
               ? const EdgeInsets.symmetric(vertical: 20)
               : const EdgeInsets.symmetric(vertical: 20),
-          child: Form(
-            key: _formkey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(child: Container()),
-                LogoImage(isLandScapeMode: isLandScapeMode),
-                SizedBox(height: 20),
-                LoginField(formkey: _formkey, isEmailField: true),
-                SizedBox(height: 20),
-                LoginField(formkey: _formkey, isEmailField: false),
-                Expanded(child: Container()),
-                Text('Control.Weic'),
-                Text('Desenvolvido pelo Marcelo Cesar'),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(child: Container()),
+              LogoImage(isLandScapeMode: isLandScapeMode),
+              SizedBox(height: 20),
+              LoginField(formkey: _emailFormkey, isEmailField: true),
+              SizedBox(height: 20),
+              LoginField(formkey: _passwordFormkey, isEmailField: false),
+              Expanded(child: Container()),
+              Text('Control.Weic'),
+              Text('Desenvolvido pelo Marcelo Cesar'),
+            ],
           ),
         );
       }),
