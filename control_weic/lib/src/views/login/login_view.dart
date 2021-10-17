@@ -49,6 +49,19 @@ class _LoginViewState extends State<LoginView> {
                     isPasswordVisible: _loginController.isPasswordVisible,
                   );
                 }),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                      EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: 50,
+                      ),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Text('Login'),
+                ),
                 Expanded(child: Container()),
                 Text('Control.Weic'),
                 Text('Desenvolvido pelo Marcelo;}) Cesar'),
