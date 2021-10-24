@@ -1,6 +1,7 @@
 import 'package:control_weic/src/components/login/login_field.dart';
 import 'package:control_weic/src/components/login/logo_image.dart';
 import 'package:control_weic/src/config/app_asset_name.dart';
+import 'package:control_weic/src/config/app_textstyle.dart';
 import 'package:control_weic/src/controllers/login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -27,7 +28,10 @@ class _LoginViewState extends State<LoginView> {
             alignment: Alignment.center,
             margin: isLandScapeMode
                 ? const EdgeInsets.symmetric(vertical: 20)
-                : const EdgeInsets.symmetric(vertical: 20),
+                : const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 16,
+                  ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,7 +58,7 @@ class _LoginViewState extends State<LoginView> {
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
                       EdgeInsets.symmetric(
-                        vertical: 15,
+                        vertical: 10,
                         horizontal: 50,
                       ),
                     ),
@@ -63,8 +67,15 @@ class _LoginViewState extends State<LoginView> {
                   child: Text('Login'),
                 ),
                 Expanded(child: Container()),
-                Text('Control.Weic'),
-                Text('Desenvolvido pelo Marcelo;}) Cesar'),
+                Text(
+                  'Control.Weic',
+                  style: AppTextStyle().loginBottomTextStyle,
+                ),
+                Text(
+                  'Desenvolvido pelo Marcelo Cesar',
+                  style: AppTextStyle().loginBottomTextStyle,
+                ),
+                SizedBox(height: 10),
               ],
             ),
           );

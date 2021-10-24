@@ -25,6 +25,8 @@ class LoginField extends StatelessWidget with AppTextStyle {
         height: 70,
         width: 350,
         child: TextFormField(
+          textInputAction:
+              isEmailField ? TextInputAction.next : TextInputAction.done,
           obscureText: isEmailField
               ? false
               : isPasswordVisible
