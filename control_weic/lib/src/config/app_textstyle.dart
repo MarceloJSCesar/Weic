@@ -8,4 +8,9 @@ class AppTextStyle {
     color: Colors.black,
     fontWeight: FontWeight.w400,
   );
+  final TextStyle loginBottomTextStyle = GoogleFonts.poppins(
+    fontSize: 12,
+    color: Colors.grey,
+    fontWeight: FontWeight.w400,
+  );
 }
