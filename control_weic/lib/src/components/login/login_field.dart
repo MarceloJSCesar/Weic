@@ -1,8 +1,7 @@
-import 'package:control_weic/src/components/login/login_validation_field.dart';
-import 'package:control_weic/src/config/app_textstyle.dart';
-import 'package:control_weic/src/controllers/login/login_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import '../../config/app_textstyle.dart';
+import '../../controllers/login/login_controller.dart';
+import '../../components/login/login_validation_field.dart';
 
 class LoginField extends StatelessWidget with AppTextStyle {
   final bool isEmailField;

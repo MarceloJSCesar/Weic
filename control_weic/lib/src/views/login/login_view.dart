@@ -1,10 +1,9 @@
-import 'package:control_weic/src/components/login/login_field.dart';
-import 'package:control_weic/src/components/login/logo_image.dart';
-import 'package:control_weic/src/config/app_asset_name.dart';
-import 'package:control_weic/src/config/app_textstyle.dart';
-import 'package:control_weic/src/controllers/login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import '../../config/app_textstyle.dart';
+import '../../components/login/login_field.dart';
+import '../../components/login/logo_image.dart';
+import '../../controllers/login/login_controller.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
