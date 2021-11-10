@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "86541615754",
+    "project_id": "weic-d872c",
+    "storage_bucket": "weic-d872c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86541615754:android:e7d050ef3e6b556a426373",
+        "android_client_info": {
+          "package_name": "com.example.weic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "86541615754-hqtqj90cfcnahve4pbjlspg4kqkcm544.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.weic",
+            "certificate_hash": "547b2096a2a6701f0fa6fa2747471ac26fe89416"
+          }
+        },
+        {
+          "client_id": "86541615754-anmrmem6d91avqqvtidrmead71q4jgje.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl7sR1PlfBgfLxvghMNXW705f2tWMXF7E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86541615754-anmrmem6d91avqqvtidrmead71q4jgje.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
