@@ -8,10 +8,12 @@ class LoginField extends StatelessWidget with AppTextStyle {
   final bool isPasswordVisible;
   final GlobalKey<FormState>? formkey;
   final LoginController? loginController;
+  final TextEditingController controller;
   LoginField({
     Key? key,
     this.formkey,
     this.loginController,
+    required this.controller,
     required this.isEmailField,
     required this.isPasswordVisible,
   }) : super(key: key);
@@ -24,6 +26,7 @@ class LoginField extends StatelessWidget with AppTextStyle {
         height: 70,
         width: 350,
         child: TextFormField(
+          controller: controller,
           textInputAction:
               isEmailField ? TextInputAction.next : TextInputAction.done,
           obscureText: isEmailField

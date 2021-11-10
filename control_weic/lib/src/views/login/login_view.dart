@@ -5,6 +5,8 @@ import '../../components/login/login_field.dart';
 import '../../components/login/logo_image.dart';
 import '../../controllers/login/login_controller.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
@@ -16,6 +18,28 @@ class _LoginViewState extends State<LoginView> {
   final LoginController _loginController = LoginController();
   final _emailFormkey = GlobalKey<FormState>();
   final _passwordFormkey = GlobalKey<FormState>();
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  _login(String email, String password) async {
+    try {
+      UserCredential userCredential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      print('printting userCredencial: ${userCredential.user}');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Scaffold build(BuildContext context) {
     return Scaffold(
@@ -39,6 +63,7 @@ class _LoginViewState extends State<LoginView> {
                 LogoImage(isLandScapeMode: isLandScapeMode),
                 SizedBox(height: 20),
                 LoginField(
+                  controller: _emailController,
                   isEmailField: true,
                   formkey: _emailFormkey,
                   isPasswordVisible: _loginController.isPasswordVisible,
@@ -46,6 +71,7 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(height: 10),
                 Observer(builder: (_) {
                   return LoginField(
+                    controller: _passwordController,
                     isEmailField: false,
                     formkey: _passwordFormkey,
                     loginController: _loginController,
@@ -62,7 +88,8 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () async =>
+                      _login(_emailController.text, _passwordController.text),
                   child: Text('Login'),
                 ),
                 Expanded(child: Container()),
