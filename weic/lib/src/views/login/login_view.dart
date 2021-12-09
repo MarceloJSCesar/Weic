@@ -15,6 +15,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final _loginController = LoginController();
   final _formKey = GlobalKey<FormState>();
+  String? email;
+  String? password;
   @override
   Scaffold build(BuildContext context) {
     return Scaffold(

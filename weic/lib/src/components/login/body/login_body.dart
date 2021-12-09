@@ -7,7 +7,7 @@ import '../../../components/login/textfield/app_text_field_component.dart';
 
 class LoginBody extends StatelessWidget {
   final loginController;
-  const LoginBody({
+  LoginBody({
     Key? key,
     this.loginController,
   }) : super(key: key);
@@ -32,7 +32,7 @@ class LoginBody extends StatelessWidget {
               children: <Widget>[
                 TextFormFieldComponent(
                   hintText: 'Email',
-                  //saveValue: (val) => email = val,
+                  saveValue: (val) => loginController.saveValue(true, val),
                   isPasswordField: false,
                   isEmailField: true,
                   validateField: (val) => loginController.validateEmail(val),
@@ -40,12 +40,11 @@ class LoginBody extends StatelessWidget {
                 Divider(),
                 TextFormFieldComponent(
                   hintText: 'Password',
-                  //saveValue: (val) => password = val,
                   isPasswordField: true,
                   isEmailField: false,
+                  saveValue: (val) => loginController.saveValue(false, val),
                   validateField: (val) => loginController.validatePassword(val),
                   showPassword: () => loginController.viewPasswordValue(),
-
                   obscureText: () {
                     if (loginController.viewPassword == true) {
                       return true;
@@ -64,7 +63,10 @@ class LoginBody extends StatelessWidget {
                       AppColors.mainPrefixColor,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    print(
+                        'email: ${loginController.email}, password: ${loginController.password}');
+                  },
                   child: Text('Entrar'),
                 ),
                 SizedBox(

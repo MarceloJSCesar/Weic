@@ -6,7 +6,19 @@ class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
   @observable
+  String? email, password;
+
+  @observable
   bool viewPassword = true;
+
+  @action
+  saveValue(bool? isEmail, String? value) {
+    if (isEmail == true) {
+      email = value;
+    } else {
+      password = value;
+    }
+  }
 
   @action
   void viewPasswordValue() {
