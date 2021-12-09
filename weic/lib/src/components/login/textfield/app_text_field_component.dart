@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../config/app_colors.dart';
-import '../config/app_textstyles.dart';
+import '../../../config/app_colors.dart';
+import '../../../config/app_textstyles.dart';
 
 class TextFormFieldComponent extends StatelessWidget {
   final String? hintText;
