@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Weic extends StatelessWidget {
-  const Weic({Key key}) : super(key: key);
+  const Weic({Key? key}) : super(key: key);
 
   @override
   MaterialApp build(BuildContext context) {
