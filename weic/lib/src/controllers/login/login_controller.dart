@@ -33,25 +33,9 @@ abstract class _LoginControllerBase with Store {
     }
   }
 
-  String? validateName(String name) {
-    if (name.isEmpty || name.length < 8) {
-      return 'nome invalido';
-    } else {
-      return null;
-    }
-  }
-
   String? validatePassword(String password) {
     if (password.trim().isEmpty || password.trim().length < 8) {
       return 'password invalido, pelo menos 8 caracteres';
-    } else {
-      return null;
-    }
-  }
-
-  String? validateSchool(String school) {
-    if (school.isEmpty && school.length < 2) {
-      return 'nome da escola invalido';
     } else {
       return null;
     }

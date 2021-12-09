@@ -32,21 +32,21 @@ class _LoginViewState extends State<LoginView> {
               child: Form(
                 key: _formKey,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image(
-                      width: 200,
-                      fit: BoxFit.fill,
-                      image: AssetImage(AppAssetsNames.logoImageUrl),
-                    ),
                     LoginBody(
+                      formkey: _formKey,
                       loginController: _loginController,
                     ),
                     Expanded(
                       child: Container(),
                     ),
-                    Text(
-                      'Developed by Marcelo Cesar',
-                      style: AppTextStyles.blackTextStyle,
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        'Developed by Marcelo Cesar',
+                        style: AppTextStyles.blackTextStyle,
+                      ),
                     ),
                   ],
                 ),

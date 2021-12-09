@@ -4,11 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTextStyles {
   static final TextStyle dropDownTextStyle = GoogleFonts.notoSans(
     color: Colors.white,
-    fontSize: 15,
+    fontSize: 17,
   );
   static final TextStyle hintTextStyle = GoogleFonts.notoSans(
     color: Colors.grey,
-    fontSize: 15,
+    fontSize: 17,
   );
   static final TextStyle title = GoogleFonts.notoSans(
     color: Colors.white,

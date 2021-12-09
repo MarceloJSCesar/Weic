@@ -15,9 +15,9 @@ class TextFormFieldComponent extends StatelessWidget {
   TextFormFieldComponent({
     Key? key,
     this.hintText,
-    this.viewPassword,
-    this.obscureText,
     this.saveValue,
+    this.obscureText,
+    this.viewPassword,
     this.showPassword,
     this.isEmailField,
     this.validateField,
@@ -36,37 +36,51 @@ class TextFormFieldComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: TextFormField(
-        validator: (val) => validateField!(val),
-        onSaved: (val) => saveValue!(val),
-        onChanged: (val) => saveValue!(val),
-        obscureText: isPasswordField! ? obscureText!() : false,
-        style: AppTextStyles.dropDownTextStyle,
-        keyboardType:
-            isEmailField! ? TextInputType.emailAddress : TextInputType.text,
-        textInputAction:
-            isPasswordField! ? TextInputAction.done : TextInputAction.next,
-        decoration: InputDecoration(
-          prefixIcon: Icon(showIcon, color: AppColors.mainPrefixColor),
-          suffixIcon: isPasswordField!
-              ? IconButton(
-                  icon: Icon(
-                      viewPassword! ? Icons.visibility : Icons.visibility_off),
-                  onPressed: () => showPassword!(),
-                )
-              : null,
-          hintText: hintText,
-          hintStyle: AppTextStyles.hintTextStyle,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text('$hintText'),
+        SizedBox(height: 5),
+        Container(
+          height: 50,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: TextFormField(
+            // validator: (val) => validateField!(val),
+            cursorHeight: 20,
+            onSaved: (val) => saveValue!(val),
+            onChanged: (val) => saveValue!(val),
+            obscureText: isPasswordField! ? obscureText!() : false,
+            style: AppTextStyles.dropDownTextStyle,
+            keyboardType:
+                isEmailField! ? TextInputType.emailAddress : TextInputType.text,
+            textInputAction:
+                isPasswordField! ? TextInputAction.done : TextInputAction.next,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              prefixIcon: Icon(
+                showIcon,
+                color: AppColors.mainPrefixColor,
+                size: 20,
+              ),
+              suffixIcon: isPasswordField!
+                  ? IconButton(
+                      iconSize: 20,
+                      color: AppColors.mainPrefixColor,
+                      icon: Icon(viewPassword!
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                      onPressed: () => showPassword!(),
+                    )
+                  : null,
+              hintText: hintText,
+              hintStyle: AppTextStyles.hintTextStyle,
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

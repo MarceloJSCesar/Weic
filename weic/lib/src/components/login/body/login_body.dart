@@ -7,82 +7,88 @@ import '../../../components/login/textfield/app_text_field_component.dart';
 
 class LoginBody extends StatelessWidget {
   final loginController;
+  final formkey;
   LoginBody({
     Key? key,
+    this.formkey,
     this.loginController,
   }) : super(key: key);
+
+  bool? validateField() {
+    if (loginController.email.trim().isEmpty ||
+        loginController.email.trim().length <= 10 ||
+        loginController.password.trim().isEmpty ||
+        loginController.password.trim().length < 8) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        return Card(
-          clipBehavior: Clip.antiAlias,
-          elevation: 10.0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          color: Colors.black,
-          shadowColor: Colors.black,
-          child: Container(
-            margin: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 40,
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image(
+              width: 200,
+              fit: BoxFit.fill,
+              image: AssetImage(AppAssetsNames.logoImageUrl),
             ),
-            child: Column(
-              children: <Widget>[
-                TextFormFieldComponent(
-                  hintText: 'Email',
-                  saveValue: (val) => loginController.saveValue(true, val),
-                  isPasswordField: false,
-                  isEmailField: true,
-                  validateField: (val) => loginController.validateEmail(val),
+            SizedBox(height: 20),
+            TextFormFieldComponent(
+              hintText: 'Email',
+              saveValue: (val) => loginController.saveValue(true, val),
+              isPasswordField: false,
+              isEmailField: true,
+              // validateField: (val) => loginController.validateEmail(val),
+            ),
+            SizedBox(height: 20),
+            TextFormFieldComponent(
+              hintText: 'Password',
+              isPasswordField: true,
+              isEmailField: false,
+              saveValue: (val) => loginController.saveValue(false, val),
+              //  validateField: (val) => loginController.validatePassword(val),
+              showPassword: () => loginController.viewPasswordValue(),
+              obscureText: () {
+                if (loginController.viewPassword == true) {
+                  return true;
+                } else {
+                  return false;
+                }
+              },
+              viewPassword: loginController.viewPassword,
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                  EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 ),
-                Divider(),
-                TextFormFieldComponent(
-                  hintText: 'Password',
-                  isPasswordField: true,
-                  isEmailField: false,
-                  saveValue: (val) => loginController.saveValue(false, val),
-                  validateField: (val) => loginController.validatePassword(val),
-                  showPassword: () => loginController.viewPasswordValue(),
-                  obscureText: () {
-                    if (loginController.viewPassword == true) {
-                      return true;
-                    } else {
-                      return false;
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  AppColors.mainPrefixColor,
+                ),
+              ),
+              onPressed: () => validateField() == true
+                  ? {
+                      print(
+                          'email: ${loginController.email}, password: ${loginController.password}'),
                     }
-                  },
-                  viewPassword: loginController.viewPassword,
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      AppColors.mainPrefixColor,
-                    ),
-                  ),
-                  onPressed: () {
-                    print(
-                        'email: ${loginController.email}, password: ${loginController.password}');
-                  },
-                  child: Text('Entrar'),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  child: Text(
-                    'Nao tenho uma conta, Registrar',
-                    style: AppTextStyles.hintTextStyle,
-                  ),
-                  onTap: () =>
-                      Navigator.of(context).pushReplacementNamed('/register'),
-                ),
-              ],
+                  : {
+                      print('no validated'),
+                    },
+              child: Text(
+                'Entrar',
+                style: AppTextStyles.blackTextStyle,
+              ),
             ),
-          ),
+          ],
         );
       },
     );
