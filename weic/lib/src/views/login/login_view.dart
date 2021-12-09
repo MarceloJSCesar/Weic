@@ -3,6 +3,7 @@ import '../../config/app_colors.dart';
 import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
 import '../../config/app_assetsnames.dart';
+import '../../components/app_text_field_component.dart';
 
 class LoginView extends StatefulWidget {
   LoginView(Key? key) : super(key: key);
