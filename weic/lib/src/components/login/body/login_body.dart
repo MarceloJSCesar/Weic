@@ -14,10 +14,10 @@ class LoginBody extends StatelessWidget {
     this.loginController,
   }) : super(key: key);
 
-  bool? validateField() {
-    if (loginController.email.trim().isEmpty ||
+  bool? validateFields() {
+    if (loginController.email.isEmpty ||
         loginController.email.trim().length <= 10 ||
-        loginController.password.trim().isEmpty ||
+        loginController.password.isEmpty ||
         loginController.password.trim().length < 8) {
       return false;
     } else {
@@ -75,13 +75,22 @@ class LoginBody extends StatelessWidget {
                   AppColors.mainPrefixColor,
                 ),
               ),
-              onPressed: () => validateField() == true
+              onPressed: () => validateFields() == true
                   ? {
                       print(
                           'email: ${loginController.email}, password: ${loginController.password}'),
                     }
                   : {
-                      print('no validated'),
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: Duration(seconds: 2),
+                          backgroundColor: Colors.red,
+                          content: Text(
+                            'Usuário não encontrado',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
                     },
               child: Text(
                 'Entrar',

@@ -6,7 +6,7 @@ class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
   @observable
-  String? email, password;
+  String? email, password = '';
 
   @observable
   bool viewPassword = true;
