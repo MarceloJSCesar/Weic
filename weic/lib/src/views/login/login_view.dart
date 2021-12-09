@@ -18,24 +18,40 @@ class _LoginViewState extends State<LoginView> {
   @override
   Scaffold build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: AppDecorations.mainDecoration,
-        alignment: Alignment.topCenter,
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: <Widget>[
-                  LoginBody(
-                    loginController: _loginController,
-                  ),
-                ],
+      resizeToAvoidBottomInset: true,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              height: MediaQuery.of(context).size.height,
+              decoration: AppDecorations.mainDecoration,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    Image(
+                      width: 200,
+                      fit: BoxFit.fill,
+                      image: AssetImage(AppAssetsNames.logoImageUrl),
+                    ),
+                    LoginBody(
+                      loginController: _loginController,
+                    ),
+                    Expanded(
+                      child: Container(),
+                    ),
+                    Text(
+                      'Developed by Marcelo Cesar',
+                      style: AppTextStyles.blackTextStyle,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
