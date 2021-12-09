@@ -3,14 +3,17 @@ import '../../config/app_colors.dart';
 import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
 import '../../config/app_assetsnames.dart';
+import '../../controllers/login/login_controller.dart';
 import '../../components/app_text_field_component.dart';
 
 class LoginView extends StatefulWidget {
-  LoginView(Key? key) : super(key: key);
+  LoginView({Key? key}) : super(key: key);
   _LoginViewState createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
+  final _loginController = LoginController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Scaffold build(BuildContext context) {
     return Scaffold(
@@ -45,29 +48,31 @@ class _LoginViewState extends State<LoginView> {
                         children: <Widget>[
                           TextFormFieldComponent(
                             hintText: 'Email',
-                            saveValue: (val) => email = val,
+                            //saveValue: (val) => email = val,
                             isPasswordField: false,
                             isEmailField: true,
-                            validateField: (val) => _auth.validateEmail(val),
+                            validateField: (val) =>
+                                _loginController.validateEmail(val),
                           ),
                           Divider(),
                           TextFormFieldComponent(
                             hintText: 'Password',
-                            saveValue: (val) => password = val,
+                            //saveValue: (val) => password = val,
                             isPasswordField: true,
                             isEmailField: false,
-                            validateField: (val) => _auth.validatePassword(val),
+                            validateField: (val) =>
+                                _loginController.validatePassword(val),
                             showPassword: () => setState(() {
-                              _auth.viewPasswordValue();
+                              _loginController.viewPasswordValue();
                             }),
                             obscureText: () {
-                              if (_auth.viewPassword == true) {
+                              if (_loginController.viewPassword == true) {
                                 return true;
                               } else {
                                 return false;
                               }
                             },
-                            viewPassword: _auth.viewPassword,
+                            viewPassword: _loginController.viewPassword,
                           ),
                           SizedBox(
                             height: 40,
@@ -78,7 +83,7 @@ class _LoginViewState extends State<LoginView> {
                                 AppColors.mainPrefixColor,
                               ),
                             ),
-                            onPressed: _submit,
+                            onPressed: () {},
                             child: Text('Entrar'),
                           ),
                           SizedBox(
