@@ -19,13 +19,18 @@ class LoginBody extends StatelessWidget {
   }) : super(key: key);
 
   bool? validateFields() {
-    if (loginController.email.isEmpty ||
-        loginController.email.trim().length <= 10 ||
-        loginController.password.isEmpty ||
-        loginController.password.trim().length < 8) {
-      return false;
+    if (emailController!.text.length > 1 &&
+        passwordController!.text.length > 1) {
+      if (loginController.email.isEmpty ||
+          loginController.email.trim().length <= 10 ||
+          loginController.password.isEmpty ||
+          loginController.password.trim().length < 8) {
+        return false;
+      } else {
+        return true;
+      }
     } else {
-      return true;
+      return false;
     }
   }
 
@@ -81,26 +86,23 @@ class LoginBody extends StatelessWidget {
                   AppColors.mainPrefixColor,
                 ),
               ),
-              onPressed: () => emailController!.text.length > 1 &&
-                      passwordController!.text.length > 1
-                  ? validateFields() == true
-                      ? {
-                          print(
-                              'email: ${loginController.email}, password: ${loginController.password}'),
-                        }
-                      : {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              duration: Duration(seconds: 2),
-                              backgroundColor: Colors.red,
-                              content: Text(
-                                'Usuário não encontrado',
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
+              onPressed: () => validateFields() == true
+                  ? {
+                      print(
+                          'email: ${loginController.email}, password: ${loginController.password}'),
+                    }
+                  : {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: Duration(seconds: 2),
+                          backgroundColor: Colors.red,
+                          content: Text(
+                            'Usuário não encontrado',
+                            textAlign: TextAlign.center,
                           ),
-                        }
-                  : null,
+                        ),
+                      ),
+                    },
               child: Text(
                 'Entrar',
                 style: AppTextStyles.blackTextStyle,
