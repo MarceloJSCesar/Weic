@@ -19,20 +19,9 @@ class _LoginViewState extends State<LoginView> {
   String? email;
   String? password;
 
-  final _collection = FirebaseFirestore.instance.collection('user');
-
-  void storedata() async {
-    await _collection
-        .add({'name': 'Marcelo', 'idade': '19 anos'})
-        .then((value) => print('data stored $value'))
-        .catchError((value) => print('error occured $value'));
-  }
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    storedata();
   }
 
   @override
@@ -60,9 +49,9 @@ class _LoginViewState extends State<LoginView> {
                       child: Container(),
                     ),
                     GestureDetector(
-                      onTap: () async => storedata(),
+                      onTap: () {},
                       child: Container(
-                        margin: const EdgeInsets.only(bottom: 10),
+                        margin: const EdgeInsets.only(bottom: 5),
                         child: Text(
                           'Developed by Marcelo Cesar',
                           style: AppTextStyles.blackTextStyle,

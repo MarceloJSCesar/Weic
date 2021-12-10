@@ -69,7 +69,7 @@ class LoginBody extends StatelessWidget {
             ElevatedButton(
               style: ButtonStyle(
                 padding: MaterialStateProperty.all<EdgeInsets>(
-                  EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                 ),
                 backgroundColor: MaterialStateProperty.all<Color>(
                   AppColors.mainPrefixColor,
