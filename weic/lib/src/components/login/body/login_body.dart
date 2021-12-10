@@ -8,10 +8,12 @@ import '../../../components/login/textfield/app_text_field_component.dart';
 class LoginBody extends StatelessWidget {
   final formkey;
   final loginController;
+  final Function? login;
   final TextEditingController? emailController;
   final TextEditingController? passwordController;
   LoginBody({
     Key? key,
+    this.login,
     this.formkey,
     this.loginController,
     this.emailController,
@@ -86,10 +88,11 @@ class LoginBody extends StatelessWidget {
                   AppColors.mainPrefixColor,
                 ),
               ),
-              onPressed: () => validateFields() == true
+              onPressed: () async => validateFields() == true
                   ? {
                       print(
                           'email: ${loginController.email}, password: ${loginController.password}'),
+                      await login!().then((value) => print(value.toString())),
                     }
                   : {
                       ScaffoldMessenger.of(context).showSnackBar(

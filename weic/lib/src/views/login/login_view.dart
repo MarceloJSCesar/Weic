@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:weic/src/models/student.dart';
 import '../../config/app_colors.dart';
 import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
@@ -20,9 +21,38 @@ class _LoginViewState extends State<LoginView> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  void listenUserLogChanges() {
+    _auth.authStateChanges().listen((user) {
+      if (user == null) {
+        print('user is logged out');
+      } else {
+        print('user is logged in');
+      }
+    });
+  }
+
+  Future<Student?> login(String? email, String? password) async {
+    try {
+      UserCredential? _userCredential = await _auth.signInWithEmailAndPassword(
+          email: email!, password: password!);
+      return Student(
+          name: _userCredential.user!.displayName,
+          email: email,
+          password: password);
+    } on FirebaseException catch (errorMsg) {
+      if (errorMsg.code == 'weak-password') {
+        print('weak password');
+      } else if (errorMsg.code == 'email-already-in-use') {
+        print('email already in use');
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    listenUserLogChanges();
   }
 
   @override
@@ -44,6 +74,8 @@ class _LoginViewState extends State<LoginView> {
                   children: <Widget>[
                     LoginBody(
                       formkey: _formKey,
+                      login: () => login(
+                          _emailController.text, _passwordController.text),
                       emailController: _emailController,
                       loginController: _loginController,
                       passwordController: _passwordController,
