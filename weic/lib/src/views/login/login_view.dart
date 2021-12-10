@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../config/app_colors.dart';
 import '../../config/app_textstyles.dart';
@@ -16,8 +17,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final _loginController = LoginController();
   final _formKey = GlobalKey<FormState>();
-  String? email;
-  String? password;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -43,7 +44,9 @@ class _LoginViewState extends State<LoginView> {
                   children: <Widget>[
                     LoginBody(
                       formkey: _formKey,
+                      emailController: _emailController,
                       loginController: _loginController,
+                      passwordController: _passwordController,
                     ),
                     Expanded(
                       child: Container(),

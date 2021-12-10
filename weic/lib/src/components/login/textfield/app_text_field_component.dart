@@ -12,10 +12,12 @@ class TextFormFieldComponent extends StatelessWidget {
   final Function? obscureText;
   final bool? viewPassword;
   final Function? validateField;
+  final TextEditingController? controller;
   TextFormFieldComponent({
     Key? key,
     this.hintText,
     this.saveValue,
+    this.controller,
     this.obscureText,
     this.viewPassword,
     this.showPassword,
@@ -50,6 +52,7 @@ class TextFormFieldComponent extends StatelessWidget {
           child: TextFormField(
             // validator: (val) => validateField!(val),
             cursorHeight: 20,
+            controller: controller,
             onSaved: (val) => saveValue!(val),
             onChanged: (val) => saveValue!(val),
             obscureText: isPasswordField! ? obscureText!() : false,

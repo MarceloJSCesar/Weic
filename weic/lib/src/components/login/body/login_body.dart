@@ -6,12 +6,16 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../../components/login/textfield/app_text_field_component.dart';
 
 class LoginBody extends StatelessWidget {
-  final loginController;
   final formkey;
+  final loginController;
+  final TextEditingController? emailController;
+  final TextEditingController? passwordController;
   LoginBody({
     Key? key,
     this.formkey,
     this.loginController,
+    this.emailController,
+    this.passwordController,
   }) : super(key: key);
 
   bool? validateFields() {
@@ -40,6 +44,7 @@ class LoginBody extends StatelessWidget {
             ),
             SizedBox(height: 20),
             TextFormFieldComponent(
+              controller: emailController,
               hintText: 'Email',
               saveValue: (val) => loginController.saveValue(true, val),
               isPasswordField: false,
@@ -48,6 +53,7 @@ class LoginBody extends StatelessWidget {
             ),
             SizedBox(height: 20),
             TextFormFieldComponent(
+              controller: passwordController,
               hintText: 'Password',
               isPasswordField: true,
               isEmailField: false,
@@ -75,23 +81,26 @@ class LoginBody extends StatelessWidget {
                   AppColors.mainPrefixColor,
                 ),
               ),
-              onPressed: () => validateFields() == true
-                  ? {
-                      print(
-                          'email: ${loginController.email}, password: ${loginController.password}'),
-                    }
-                  : {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          duration: Duration(seconds: 2),
-                          backgroundColor: Colors.red,
-                          content: Text(
-                            'Usuário não encontrado',
-                            textAlign: TextAlign.center,
+              onPressed: () => emailController!.text.length > 1 &&
+                      passwordController!.text.length > 1
+                  ? validateFields() == true
+                      ? {
+                          print(
+                              'email: ${loginController.email}, password: ${loginController.password}'),
+                        }
+                      : {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: Duration(seconds: 2),
+                              backgroundColor: Colors.red,
+                              content: Text(
+                                'Usuário não encontrado',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    },
+                        }
+                  : null,
               child: Text(
                 'Entrar',
                 style: AppTextStyles.blackTextStyle,
