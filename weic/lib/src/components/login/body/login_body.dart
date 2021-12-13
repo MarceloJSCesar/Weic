@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/src/views/home/home_view.dart';
 import '../../../config/app_colors.dart';
 import '../../../config/app_textstyles.dart';
 import '../../../config/app_assetsnames.dart';
@@ -92,7 +93,30 @@ class LoginBody extends StatelessWidget {
                   ? {
                       print(
                           'email: ${loginController.email}, password: ${loginController.password}'),
-                      await login!().then((value) => print(value.toString())),
+                      await login!().then(
+                        (value) {
+                          if (value != null) {
+                            print('starting ...');
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (_) => HomeView(),
+                              ),
+                            );
+                            print('ending ...');
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: Duration(seconds: 2),
+                                backgroundColor: Colors.red,
+                                content: Text(
+                                  'Usuário não encontrado',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     }
                   : {
                       ScaffoldMessenger.of(context).showSnackBar(
