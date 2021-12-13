@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/src/components/login/widgets/login_bottom_text.dart';
 import 'package:weic/src/services/login/login_services.dart';
 import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
@@ -51,16 +52,7 @@ class _LoginViewState extends State<LoginView> {
                     Expanded(
                       child: Container(),
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        margin: const EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          'Developed by Marcelo Cesar',
-                          style: AppTextStyles.blackTextStyle,
-                        ),
-                      ),
-                    ),
+                    LoginBottomText(),
                   ],
                 ),
               ),
