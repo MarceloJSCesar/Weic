@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/models/student.dart';
+import '../../models/student.dart';
+import '../../components/home/body/home_body.dart';
+import '../../components/home/drawer/drawer_body.dart';
+import '../../components/home/widgets/app_bar_component.dart';
 
 class HomeView extends StatefulWidget {
   final Student student;
@@ -13,12 +16,19 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: Text(
-              'Email: ${widget.student.email} and Password: ${widget.student.password}')),
+      key: _scaffoldKey,
+      appBar: AppBarComponent(
+        context: context,
+        scaffoldKey: _scaffoldKey,
+      ),
+      drawer: Drawer(
+        child: DrawerBody(),
+      ),
+      body: HomeBody(),
     );
   }
 }
