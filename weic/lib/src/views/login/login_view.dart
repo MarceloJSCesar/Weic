@@ -48,6 +48,8 @@ class _LoginViewState extends State<LoginView> {
                       emailController: _emailController,
                       loginController: _loginController,
                       passwordController: _passwordController,
+                      showLoginErrorMsg: (context) =>
+                          _loginServices.showLoginMsgError(context: context),
                     ),
                     Expanded(
                       child: Container(),

@@ -10,6 +10,7 @@ class LoginBody extends StatelessWidget {
   final formkey;
   final loginController;
   final Function? login;
+  final Function? showLoginErrorMsg;
   final TextEditingController? emailController;
   final TextEditingController? passwordController;
   LoginBody({
@@ -18,6 +19,7 @@ class LoginBody extends StatelessWidget {
     this.formkey,
     this.loginController,
     this.emailController,
+    this.showLoginErrorMsg,
     this.passwordController,
   }) : super(key: key);
 
@@ -96,40 +98,18 @@ class LoginBody extends StatelessWidget {
                       await login!().then(
                         (value) {
                           if (value != null) {
-                            print('starting ...');
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (_) => HomeView(),
+                                builder: (_) => HomeView(student: value),
                               ),
                             );
-                            print('ending ...');
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                duration: Duration(seconds: 2),
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                  'Usuário não encontrado',
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            );
+                            showLoginErrorMsg!(context);
                           }
                         },
                       ),
                     }
-                  : {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          duration: Duration(seconds: 2),
-                          backgroundColor: Colors.red,
-                          content: Text(
-                            'Usuário não encontrado',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    },
+                  : () => showLoginErrorMsg!(context),
               child: Text(
                 'Entrar',
                 style: AppTextStyles.blackTextStyle,

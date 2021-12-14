@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import '../../models/student.dart';
 
 class LoginServices {
@@ -28,5 +29,18 @@ class LoginServices {
         print('email already in use');
       }
     }
+  }
+
+  void showLoginMsgError({required context}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.red,
+        content: Text(
+          'Usuário não encontrado',
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
   }
 }
