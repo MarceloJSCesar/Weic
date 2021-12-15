@@ -5,10 +5,10 @@ import '../../components/home/drawer/drawer_body.dart';
 import '../../components/home/widgets/app_bar_component.dart';
 
 class HomeView extends StatefulWidget {
-  final Student student;
+  final Student? student;
   const HomeView({
     Key? key,
-    required this.student,
+    this.student,
   }) : super(key: key);
 
   @override

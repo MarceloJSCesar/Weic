@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/views/home/home_view.dart';
+import '../../../views/app_view.dart';
 import '../../../config/app_colors.dart';
 import '../../../config/app_textstyles.dart';
 import '../../../config/app_assetsnames.dart';
@@ -100,7 +100,7 @@ class LoginBody extends StatelessWidget {
                           if (value != null) {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (_) => HomeView(student: value),
+                                builder: (_) => AppView(student: value),
                               ),
                             );
                           } else {

@@ -31,7 +31,7 @@ class HomeBody extends StatelessWidget {
           Expanded(
             child: Container(),
           ),
-          Text('WEIC version 0.1'),
+          Text('WEIC version 1'),
           Text(
             'Marcelo Cesar',
             style: AppTextStyles.blackTextStyle,
