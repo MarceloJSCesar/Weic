@@ -1,10 +1,25 @@
 import 'package:mobx/mobx.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 part 'login_controller.g.dart';
 
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  listenUserLogChanges() {
+    auth.authStateChanges().listen(
+      (user) {
+        if (user == null) {
+          print('user is logged out');
+        } else {
+          print('user is logged in');
+        }
+      },
+    );
+  }
+
   @observable
   String? email, password = '';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/src/config/app_decorations.dart';
 import '../../../config/app_text.dart';
 import '../../../config/app_textstyles.dart';
 
@@ -7,35 +8,19 @@ class HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+    return SafeArea(
       child: Column(
         children: <Widget>[
-          Divider(),
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Text(
-                AppText.appInfText,
-                style: AppTextStyles.dropDownTextStyle,
-              ),
-            ),
-          ),
-          Divider(),
-          //CardHome(),
           Expanded(
-            child: Container(),
+            flex: 2,
+            child: Container(
+              decoration: AppDecorations.homeviewDecoration,
+            ),
           ),
-          Text('WEIC version 1'),
-          Text(
-            'Marcelo Cesar',
-            style: AppTextStyles.blackTextStyle,
-          )
+          Expanded(
+            flex: 8,
+            child: Center(child: Text('2nd section')),
+          ),
         ],
       ),
     );

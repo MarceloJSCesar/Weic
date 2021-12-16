@@ -20,10 +20,12 @@ class AppDecorations {
         Colors.red,
       ],
     ),
+    /*
     borderRadius: BorderRadius.only(
       bottomLeft: Radius.circular(30),
       bottomRight: Radius.circular(30),
     ),
+    */
   );
   static final drawerFeaturesDecoration = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(20),

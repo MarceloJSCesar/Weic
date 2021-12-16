@@ -21,6 +21,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      /*
       appBar: AppBarComponent(
         context: context,
         scaffoldKey: _scaffoldKey,
@@ -28,6 +29,7 @@ class _HomeViewState extends State<HomeView> {
       drawer: Drawer(
         child: DrawerBody(),
       ),
+      */
       body: HomeBody(),
     );
   }
