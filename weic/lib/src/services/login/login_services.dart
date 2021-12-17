@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weic/src/controllers/login/login_controller.dart';
 import '../../models/student.dart';
 
@@ -34,5 +35,21 @@ class LoginServices {
         ),
       ),
     );
+  }
+
+  void saveLoginState(remenberMe) async {
+    final _quickStoraged = await SharedPreferences.getInstance();
+    await _quickStoraged.setBool('remenberMe', remenberMe);
+  }
+
+  void unsaveLoginState() async {
+    final _quickStoraged = await SharedPreferences.getInstance();
+    await _quickStoraged.remove('remenberMe');
+  }
+
+  Future<bool> getLoginState() async {
+    final _quickStoraged = await SharedPreferences.getInstance();
+    final remenberMe = _quickStoraged.getBool('remenberMe');
+    return remenberMe!;
   }
 }

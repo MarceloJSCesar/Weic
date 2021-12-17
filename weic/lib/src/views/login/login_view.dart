@@ -50,6 +50,9 @@ class _LoginViewState extends State<LoginView> {
                       passwordController: _passwordController,
                       showLoginErrorMsg: (context) =>
                           _loginServices.showLoginMsgError(context: context),
+                      saveLoginState: (remenberMe) =>
+                          _loginServices.saveLoginState(remenberMe),
+                      unsaveLoginState: () => _loginServices.unsaveLoginState(),
                     ),
                     Expanded(
                       child: Container(),

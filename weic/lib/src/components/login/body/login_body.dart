@@ -10,6 +10,8 @@ class LoginBody extends StatelessWidget {
   final formkey;
   final loginController;
   final Function? login;
+  final Function? saveLoginState;
+  final Function? unsaveLoginState;
   final Function? showLoginErrorMsg;
   final TextEditingController? emailController;
   final TextEditingController? passwordController;
@@ -17,8 +19,10 @@ class LoginBody extends StatelessWidget {
     Key? key,
     this.login,
     this.formkey,
+    this.saveLoginState,
     this.loginController,
     this.emailController,
+    this.unsaveLoginState,
     this.showLoginErrorMsg,
     this.passwordController,
   }) : super(key: key);
@@ -83,14 +87,20 @@ class LoginBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Checkbox(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(2),
-                    side: BorderSide(color: Colors.black),
-                  ),
-                  activeColor: AppColors.mainPrefixColor,
-                  value: loginController.remenberMe,
-                  onChanged: (value) => loginController.setRemenberMe(value),
-                ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(2),
+                      side: BorderSide(color: Colors.black),
+                    ),
+                    activeColor: AppColors.mainPrefixColor,
+                    value: loginController.remenberMe,
+                    onChanged: (value) {
+                      loginController.setRemenberMe(value);
+                      if (value == true) {
+                        saveLoginState!(loginController.remenberMe);
+                      } else {
+                        unsaveLoginState!();
+                      }
+                    }),
                 Text(
                   'Lembrar de mim',
                   style: AppTextStyles.blackTextStyle,
