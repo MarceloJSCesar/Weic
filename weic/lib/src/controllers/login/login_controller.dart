@@ -21,6 +21,19 @@ abstract class _LoginControllerBase with Store {
   }
 
   @observable
+  bool isLoading = false;
+
+  @action
+  setToLoad() {
+    isLoading = true;
+  }
+
+  @action
+  setToUnload() {
+    isLoading = false;
+  }
+
+  @observable
   bool remenberMe = false;
 
   @action

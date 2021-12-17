@@ -104,39 +104,53 @@ class LoginBody extends StatelessWidget {
             SizedBox(
               height: 40,
             ),
-            ElevatedButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(
-                  EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                ),
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  AppColors.mainPrefixColor,
-                ),
-              ),
-              onPressed: () async => validateFields() == true
-                  ? {
-                      print(
-                          'email: ${loginController.email}, password: ${loginController.password}'),
-                      await login!().then(
-                        (value) {
-                          if (value != null) {
-                            saveLoginState!(loginController.remenberMe);
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (_) => AppView(student: value),
-                              ),
-                            );
-                          } else {
-                            showLoginErrorMsg!(context);
-                          }
-                        },
-                      ),
-                    }
-                  : () => showLoginErrorMsg!(context),
-              child: Text(
-                'Entrar',
-                style: AppTextStyles.blackTextStyle,
-              ),
+            Observer(
+              builder: (_) {
+                return loginController.isLoading == false
+                    ? ElevatedButton(
+                        style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsets>(
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                          ),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            AppColors.mainPrefixColor,
+                          ),
+                        ),
+                        onPressed: () async => validateFields() == true
+                            ? {
+                                print(
+                                    'email: ${loginController.email}, password: ${loginController.password}'),
+                                loginController.setToLoad(),
+                                await login!().then(
+                                  (value) {
+                                    if (value != null) {
+                                      saveLoginState!(
+                                          loginController.remenberMe);
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              AppView(student: value),
+                                        ),
+                                      );
+                                    } else {
+                                      showLoginErrorMsg!(context);
+                                    }
+                                  },
+                                ),
+                                loginController.setToUnload(),
+                              }
+                            : () => showLoginErrorMsg!(context),
+                        child: Text(
+                          'Entrar',
+                          style: AppTextStyles.blackTextStyle,
+                        ))
+                    : CircularProgressIndicator(
+                        color: AppColors.mainPrefixColor,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            AppColors.mainPrefixColor),
+                        strokeWidth: 3.0,
+                      );
+              },
             ),
           ],
         );
