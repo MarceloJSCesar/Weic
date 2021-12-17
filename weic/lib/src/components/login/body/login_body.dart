@@ -87,20 +87,14 @@ class LoginBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Checkbox(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(2),
-                      side: BorderSide(color: Colors.black),
-                    ),
-                    activeColor: AppColors.mainPrefixColor,
-                    value: loginController.remenberMe,
-                    onChanged: (value) {
-                      loginController.setRemenberMe(value);
-                      if (value == true) {
-                        saveLoginState!(loginController.remenberMe);
-                      } else {
-                        unsaveLoginState!();
-                      }
-                    }),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2),
+                    side: BorderSide(color: Colors.black),
+                  ),
+                  activeColor: AppColors.mainPrefixColor,
+                  value: loginController.remenberMe,
+                  onChanged: (value) => loginController.setRemenberMe(value),
+                ),
                 Text(
                   'Lembrar de mim',
                   style: AppTextStyles.blackTextStyle,
@@ -126,6 +120,7 @@ class LoginBody extends StatelessWidget {
                       await login!().then(
                         (value) {
                           if (value != null) {
+                            saveLoginState!(loginController.remenberMe);
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (_) => AppView(student: value),

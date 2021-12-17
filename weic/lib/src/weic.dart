@@ -16,31 +16,20 @@ class Weic extends StatelessWidget {
       home: FutureBuilder(
         future: LoginServices().getLoginState(),
         builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return LoginView();
-            case ConnectionState.active:
+          if (_loginController.auth.currentUser == null) {
+            return LoginView();
+          } else {
+            if (snapshot.data == true &&
+                _loginController.auth.currentUser != null) {
               return AppView(
                 student: Student(
                   email: _loginController.auth.currentUser!.email,
                   password: _loginController.password,
                 ),
               );
-            default:
-              if (_loginController.auth.currentUser == null) {
-                return LoginView();
-              } else {
-                if (snapshot.data == true) {
-                  return AppView(
-                    student: Student(
-                      email: _loginController.auth.currentUser!.email,
-                      password: _loginController.password,
-                    ),
-                  );
-                }
-              }
-              return LoginView();
+            }
           }
+          return LoginView();
         },
       ),
     );
