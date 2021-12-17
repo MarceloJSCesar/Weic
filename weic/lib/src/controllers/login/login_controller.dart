@@ -21,6 +21,12 @@ abstract class _LoginControllerBase with Store {
   }
 
   @observable
+  bool remenberMe = false;
+
+  @action
+  void setRemenberMe(bool value) => remenberMe = value;
+
+  @observable
   String? email, password = '';
 
   @observable

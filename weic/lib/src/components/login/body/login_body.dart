@@ -79,6 +79,24 @@ class LoginBody extends StatelessWidget {
               },
               viewPassword: loginController.viewPassword,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Checkbox(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2),
+                    side: BorderSide(color: Colors.black),
+                  ),
+                  activeColor: AppColors.mainPrefixColor,
+                  value: loginController.remenberMe,
+                  onChanged: (value) => loginController.setRemenberMe(value),
+                ),
+                Text(
+                  'Lembrar de mim',
+                  style: AppTextStyles.blackTextStyle,
+                ),
+              ],
+            ),
             SizedBox(
               height: 40,
             ),
