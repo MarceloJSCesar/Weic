@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/models/student.dart';
-import 'package:weic/src/views/app_view.dart';
-import 'controllers/login/login_controller.dart';
-import 'services/login/login_services.dart';
+import 'models/student.dart';
+import 'views/app_view.dart';
 import 'views/login/login_view.dart';
+import 'services/login/login_services.dart';
+import 'controllers/login/login_controller.dart';
 
 class Weic extends StatelessWidget {
-  Weic({Key? key}) : super(key: key);
+  const Weic({Key? key}) : super(key: key);
 
   @override
   MaterialApp build(BuildContext context) {

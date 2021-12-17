@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'src/weic.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'src/weic.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(Weic());
+  runApp(const Weic());
 }
