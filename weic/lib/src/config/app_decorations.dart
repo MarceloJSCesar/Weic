@@ -14,10 +14,11 @@ class AppDecorations {
   static final homeviewDecoration = BoxDecoration(
     gradient: LinearGradient(
       begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
+      end: Alignment.topRight,
+      transform: GradientRotation(160),
       colors: <Color>[
-        Colors.grey,
         Colors.red,
+        Colors.grey,
       ],
     ),
     /*
