@@ -58,23 +58,27 @@ class _AppViewState extends State<AppView> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home,
-              size: 32,
+              CupertinoIcons.home,
+              size: 25,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.chat,
-              size: 28,
+              CupertinoIcons.chat_bubble,
+              size: 25,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.person,
-              size: 28,
+              CupertinoIcons.person,
+              size: 25,
             ),
           ),
         ],
+        border: Border(
+          top: BorderSide(color: Colors.transparent, width: 0.0),
+        ),
+        backgroundColor: Colors.transparent,
         activeColor: Colors.lightBlue,
         inactiveColor: Colors.black,
         currentIndex: _selectPageIndex!,

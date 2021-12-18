@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/config/app_decorations.dart';
 import '../../../config/app_text.dart';
 import '../../../config/app_textstyles.dart';
+import '../../../config/app_decorations.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({Key? key}) : super(key: key);
