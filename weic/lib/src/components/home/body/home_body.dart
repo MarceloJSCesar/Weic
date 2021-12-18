@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../../config/app_text.dart';
-import '../../../config/app_textstyles.dart';
+import 'package:weic/src/components/home/widgets/app_bar_component.dart';
 import '../../../config/app_decorations.dart';
 
 class HomeBody extends StatelessWidget {
-  const HomeBody({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  const HomeBody({
+    Key? key,
+    required this.scaffoldKey,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +18,10 @@ class HomeBody extends StatelessWidget {
             flex: 2,
             child: Container(
               decoration: AppDecorations.homeviewDecoration,
+              child: AppBarComponent(
+                context: context,
+                scaffoldKey: scaffoldKey,
+              ),
             ),
           ),
           Expanded(

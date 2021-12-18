@@ -12,23 +12,22 @@ class AppBarComponent extends PreferredSize {
           child: Container(
             decoration: AppDecorations.homeviewDecoration,
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: <Widget>[
                   SizedBox(
-                    height: 30,
+                    height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      IconButton(
-                        icon: Icon(
+                      GestureDetector(
+                        child: Icon(
                           Icons.menu,
                           size: 25,
+                          color: Colors.black,
                         ),
-                        color: Colors.black,
-                        onPressed: () =>
-                            scaffoldKey!.currentState!.openDrawer(),
+                        onTap: () => scaffoldKey!.currentState!.openDrawer(),
                       ),
                       CircleAvatar(
                         radius: 20,
@@ -37,7 +36,7 @@ class AppBarComponent extends PreferredSize {
                     ],
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

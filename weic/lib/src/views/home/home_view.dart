@@ -26,11 +26,11 @@ class _HomeViewState extends State<HomeView> {
         context: context,
         scaffoldKey: _scaffoldKey,
       ),
+      */
       drawer: Drawer(
         child: DrawerBody(),
       ),
-      */
-      body: HomeBody(),
+      body: HomeBody(scaffoldKey: _scaffoldKey),
     );
   }
 }

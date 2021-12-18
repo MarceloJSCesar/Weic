@@ -60,7 +60,7 @@ class DrawerBody extends StatelessWidget {
           ),
           ClipOval(
             child: Image(
-              width: 200,
+              width: 100,
               image: AssetImage(AppAssetsNames.logoImageUrl),
             ),
           ),
