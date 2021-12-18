@@ -78,7 +78,7 @@ class _AppViewState extends State<AppView> {
         border: Border(
           top: BorderSide(color: Colors.transparent, width: 0.0),
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         activeColor: Colors.lightBlue,
         inactiveColor: Colors.black,
         currentIndex: _selectPageIndex!,

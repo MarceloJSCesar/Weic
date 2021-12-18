@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../models/student.dart';
 import '../../components/home/body/home_body.dart';
 import '../../components/home/drawer/drawer_body.dart';
-import '../../components/home/widgets/app_bar_component.dart';
 
 class HomeView extends StatefulWidget {
   final Student? student;
@@ -21,12 +20,6 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      /*
-      appBar: AppBarComponent(
-        context: context,
-        scaffoldKey: _scaffoldKey,
-      ),
-      */
       drawer: Drawer(
         child: DrawerBody(),
       ),

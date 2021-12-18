@@ -12,23 +12,30 @@ class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: Container(
-              decoration: AppDecorations.homeviewDecoration,
+      child: Container(
+        decoration: AppDecorations.homeviewDecoration,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 2,
               child: AppBarComponent(
                 context: context,
                 scaffoldKey: scaffoldKey,
               ),
             ),
-          ),
-          Expanded(
-            flex: 8,
-            child: Center(child: Text('2nd section')),
-          ),
-        ],
+            Expanded(
+                flex: 8,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                    ),
+                  ),
+                )),
+          ],
+        ),
       ),
     );
   }

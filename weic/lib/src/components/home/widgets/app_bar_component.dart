@@ -10,7 +10,7 @@ class AppBarComponent extends PreferredSize {
       : super(
           preferredSize: Size.fromHeight(200),
           child: Container(
-            decoration: AppDecorations.homeviewDecoration,
+            // decoration: AppDecorations.homeviewDecoration,
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
@@ -47,13 +47,13 @@ class AppBarComponent extends PreferredSize {
                           style: AppTextStyles.title,
                           children: <TextSpan>[
                             TextSpan(
-                              text: 'Marcelo Cesar',
+                              text: 'null',
                               style: AppTextStyles.titleBold,
                             ),
                           ],
                         ),
                       ),
-                      Text('ESAD', style: AppTextStyles.title),
+                      Text('null', style: AppTextStyles.title),
                     ],
                   ),
                 ],
