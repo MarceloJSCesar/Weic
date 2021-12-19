@@ -41,33 +41,36 @@ class HomeBody extends StatelessWidget {
                           topRight: Radius.circular(16),
                         ),
                       ),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            height: MediaQuery.of(context).size.height - 220,
-                            width: MediaQuery.of(context).size.width,
-                            margin: const EdgeInsets.all(16),
-                            child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, index) {
-                                return Text(snapshot.data[index]['title']
-                                        ['short']
-                                    .toString());
-                              },
-                            ),
-                          ),
-
-                          /*
-                          Text(item[0]['title']['short'].toString()),
-                          Image(
-                            image: NetworkImage(
-                              item[0]['images']['square']['urlTemplate']
-                                  .toString(),
-                            ),
-                          ),
-                          */
-                        ],
+                      child: Container(
+                        height: MediaQuery.of(context).size.height - 220,
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.all(16),
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                if (index <= 10)
+                                  Text(
+                                    snapshot.data[index]['title']['short']
+                                        .toString(),
+                                  ),
+                                if (index <= 10)
+                                  Image(
+                                    image: NetworkImage(
+                                      snapshot.data[index]['images']['square']
+                                              ['urlTemplate']
+                                          .toString(),
+                                    ),
+                                  ),
+                                if (index >= 10)
+                                  Text(snapshot.data[index]['title']['short']
+                                      .toString()),
+                              ],
+                            );
+                          },
+                        ),
                       ),
                     );
                   } else {
