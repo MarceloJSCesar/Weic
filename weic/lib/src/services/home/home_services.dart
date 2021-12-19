@@ -1,0 +1,21 @@
+// api = https://newsapi.org/v2/top-headlines?sources=google-news-br&apiKey=198fc078a1cf4c17bf5a70678ffa3e68
+// api2 = https://eco.sapo.pt/wp-json/eco/v1/items
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../../models/news.dart';
+
+class HomeServices {
+  Future getSapoNews() async {
+    final sapoApi = Uri.parse('https://eco.sapo.pt/wp-json/eco/v1/items');
+    http.Response response = await http.get(sapoApi);
+    if (response.statusCode == 200) {
+      print('has a data');
+      final data = json.decode(response.body);
+      return data;
+    } else {
+      print('no data received');
+      return null;
+    }
+  }
+}
