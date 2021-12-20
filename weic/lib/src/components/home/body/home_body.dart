@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weic/src/components/home/widgets/app_bar_component.dart';
+import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/news.dart';
 import 'package:weic/src/services/home/home_services.dart';
 import '../../../config/app_decorations.dart';
@@ -28,57 +29,96 @@ class HomeBody extends StatelessWidget {
             ),
             Expanded(
               flex: 8,
-              child: FutureBuilder(
-                future: homeServices.getSapoNews(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16),
-                          topRight: Radius.circular(16),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
+                ),
+                child: Container(
+                  margin: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          'Noticias',
+                          style: AppTextStyles.homeNoticiasTitleTextStyle,
                         ),
                       ),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height - 220,
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.all(16),
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                if (index <= 10)
-                                  Text(
-                                    snapshot.data[index]['title']['short']
-                                        .toString(),
+                      Expanded(
+                        flex: 9,
+                        child: FutureBuilder(
+                          future: homeServices.getSapoNews(),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.none:
+                                return Center(
+                                  child: Text('no internet'),
+                                );
+                              case ConnectionState.waiting:
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.black),
+                                    strokeWidth: 3.0,
                                   ),
-                                if (index <= 10)
-                                  Image(
-                                    image: NetworkImage(
-                                      snapshot.data[index]['images']['square']
-                                              ['urlTemplate']
-                                          .toString(),
+                                );
+                              default:
+                                if (snapshot.hasData) {
+                                  return Container(
+                                    height: MediaQuery.of(context).size.height -
+                                        220,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: ListView.builder(
+                                      clipBehavior: Clip.antiAlias,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: snapshot.data.length,
+                                      itemBuilder: (context, index) {
+                                        return Column(
+                                          children: [
+                                            if (index <= 10)
+                                              Text(
+                                                snapshot.data[index]['title']
+                                                        ['short']
+                                                    .toString(),
+                                              ),
+                                            if (index <= 10)
+                                              Image(
+                                                image: NetworkImage(
+                                                  snapshot.data[index]['images']
+                                                          ['square']
+                                                          ['urlTemplate']
+                                                      .toString(),
+                                                ),
+                                              ),
+                                            if (index >= 10)
+                                              Text(
+                                                snapshot.data[index]['title']
+                                                        ['short']
+                                                    .toString(),
+                                              ),
+                                          ],
+                                        );
+                                      },
                                     ),
-                                  ),
-                                if (index >= 10)
-                                  Text(snapshot.data[index]['title']['short']
-                                      .toString()),
-                              ],
-                            );
+                                  );
+                                } else {
+                                  return Center(
+                                    child: Text('no internet'),
+                                  );
+                                }
+                            }
                           },
                         ),
                       ),
-                    );
-                  } else {
-                    return Center(
-                      child: Text('No data ... ${snapshot.data}'),
-                    );
-                  }
-                },
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

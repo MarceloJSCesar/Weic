@@ -26,4 +26,9 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     fontSize: 16,
   );
+  static final TextStyle homeNoticiasTitleTextStyle = GoogleFonts.notoSans(
+    fontSize: 20,
+    color: Colors.black,
+    fontWeight: FontWeight.w600,
+  );
 }
