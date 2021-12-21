@@ -4,9 +4,7 @@ import 'package:weic/src/models/news.dart';
 
 class NewsCard extends StatelessWidget {
   final News news;
-  final int index;
-  NewsCard({Key? key, required this.news, required this.index})
-      : super(key: key);
+  NewsCard({Key? key, required this.news}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,7 @@ class NewsCard extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.all(16),
             child: Text(
-              '${news.title.toString()} $index',
+              '${news.title}',
               textAlign: TextAlign.start,
               style: AppTextStyles.homeNoticiasCardTitleTextStyle,
             ),

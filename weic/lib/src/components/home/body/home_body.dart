@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weic/src/components/home/widgets/app_bar_component.dart';
 import 'package:weic/src/components/home/widgets/news_card.dart';
+import 'package:weic/src/components/home/widgets/news_card_only_title.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/news.dart';
 import 'package:weic/src/services/home/home_services.dart';
@@ -96,29 +97,9 @@ class HomeBody extends StatelessWidget {
                                         return Column(
                                           children: <Widget>[
                                             if (news.imageUrl != null)
-                                              NewsCard(
-                                                news: news,
-                                                index: index,
-                                              ),
+                                              NewsCard(news: news),
                                             if (news.imageUrl == null)
-                                              Container(
-                                                alignment: Alignment.center,
-                                                height: 80,
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                  borderRadius:
-                                                      BorderRadius.circular(16),
-                                                ),
-                                                child: Text(
-                                                  news.title.toString(),
-                                                  style: AppTextStyles
-                                                      .homeNoticiasCardTitleTextStyle,
-                                                ),
-                                              ),
+                                              NewsCardOnlyTitle(news: news)
                                           ],
                                         );
                                       },
