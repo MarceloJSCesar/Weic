@@ -50,6 +50,8 @@ class _AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        allowImplicitScrolling: true,
+        clipBehavior: Clip.antiAlias,
         controller: _pageController,
         children: _pages!,
         physics: NeverScrollableScrollPhysics(),
