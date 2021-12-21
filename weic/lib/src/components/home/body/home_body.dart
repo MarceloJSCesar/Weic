@@ -79,28 +79,30 @@ class HomeBody extends StatelessWidget {
                                       scrollDirection: Axis.vertical,
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (context, index) {
+                                        final data = snapshot.data;
+                                        final news = News(
+                                          title: data[index]['title']['short'],
+                                          imageUrl: data[index]['images']
+                                              ['square']['urlTemplate'],
+                                          description: data[index]['body'],
+                                          newsUrl: data[index]['links']
+                                              ['shortUrl'],
+                                        );
                                         return Column(
                                           children: [
                                             if (index <= 10)
                                               Text(
-                                                snapshot.data[index]['title']
-                                                        ['short']
-                                                    .toString(),
+                                                news.title.toString(),
                                               ),
                                             if (index <= 10)
                                               Image(
                                                 image: NetworkImage(
-                                                  snapshot.data[index]['images']
-                                                          ['square']
-                                                          ['urlTemplate']
-                                                      .toString(),
+                                                  news.imageUrl.toString(),
                                                 ),
                                               ),
                                             if (index >= 10)
                                               Text(
-                                                snapshot.data[index]['title']
-                                                        ['short']
-                                                    .toString(),
+                                                news.title.toString(),
                                               ),
                                           ],
                                         );
