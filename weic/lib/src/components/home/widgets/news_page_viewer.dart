@@ -17,19 +17,27 @@ class NewsPageViewer extends StatelessWidget {
           SliverAppBar(
             pinned: false,
             floating: true,
-            expandedHeight: 300,
+            expandedHeight: news.imageUrl != null ? 300 : 100,
             backgroundColor: Colors.transparent,
             flexibleSpace: Container(
-              height: 300,
+              height: news.imageUrl != null ? 300 : 100,
               width: MediaQuery.of(context).size.width,
               decoration: news.imageUrl != null
                   ? BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(16),
+                        bottomRight: Radius.circular(16),
+                      ),
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(news.imageUrl.toString()),
                       ),
                     )
                   : BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(16),
+                        bottomRight: Radius.circular(16),
+                      ),
                       color: Colors.black.withOpacity(0.5),
                     ),
               child: Container(
