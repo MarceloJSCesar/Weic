@@ -36,4 +36,14 @@ class AppTextStyles {
     color: Colors.white,
     fontWeight: FontWeight.w600,
   );
+  static final TextStyle homeViewerNoticiasTitleTextStyle =
+      GoogleFonts.notoSans(
+    fontSize: 17,
+    color: Colors.black,
+    fontWeight: FontWeight.w600,
+  );
+  static final TextStyle homeViewerNoticiasBodyTextStyle = GoogleFonts.notoSans(
+    fontSize: 16,
+    color: Colors.black.withOpacity(0.6),
+  );
 }

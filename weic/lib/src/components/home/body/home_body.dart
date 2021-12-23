@@ -84,6 +84,7 @@ class HomeBody extends StatelessWidget {
                                       itemBuilder: (context, index) {
                                         final data = snapshot.data;
                                         final news = News(
+                                          lead: data[index]['lead'],
                                           title: data[index]['title']['short'],
                                           imageUrl: data[index]['images']
                                                       ['square'] !=

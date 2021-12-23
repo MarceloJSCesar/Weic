@@ -57,6 +57,24 @@ class NewsPageViewer extends StatelessWidget {
               ),
             ),
           ),
+          SliverToBoxAdapter(
+            child: Container(
+                margin: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      '${news.lead}',
+                      style: AppTextStyles.homeViewerNoticiasTitleTextStyle,
+                    ),
+                    Divider(),
+                    Text(
+                      '${news.description}',
+                      style: AppTextStyles.homeViewerNoticiasBodyTextStyle,
+                    ),
+                  ],
+                )),
+          ),
         ],
       ),
     );
