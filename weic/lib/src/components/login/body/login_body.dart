@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
+import 'package:weic/src/models/student.dart';
 import '../../../views/app_view.dart';
 import '../../../config/app_colors.dart';
 import '../../../config/app_textstyles.dart';
@@ -45,6 +47,7 @@ class LoginBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final uuid = Uuid();
     return Observer(
       builder: (_) {
         return Column(
@@ -124,12 +127,19 @@ class LoginBody extends StatelessWidget {
                                 await login!().then(
                                   (value) {
                                     if (value != null) {
+                                      final Student student = Student(
+                                        id: uuid.v4(),
+                                        name: value['name'],
+                                        email: value['email'],
+                                        password: value['password'],
+                                        schoolName: 'ESAD',
+                                      );
                                       saveLoginState!(
                                           loginController.remenberMe);
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                           builder: (_) =>
-                                              AppView(student: value),
+                                              AppView(student: student),
                                         ),
                                       );
                                     } else {
