@@ -2,19 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weic/src/controllers/login/login_controller.dart';
-import '../../models/student.dart';
 
 class LoginServices {
   final _auth = LoginController();
 
-  Future<Student?> login(String? email, String? password) async {
+  Future<Map?> login(String? email, String? password) async {
     try {
       UserCredential? _userCredential = await _auth.auth
           .signInWithEmailAndPassword(email: email!, password: password!);
-      return Student(
-          name: _userCredential.user!.displayName,
-          email: email,
-          password: password);
+      return {
+        'email': email,
+        'password': password,
+        'name': _userCredential.user!.displayName,
+      };
     } on FirebaseException catch (errorMsg) {
       if (errorMsg.code == 'weak-password') {
         print('weak password');

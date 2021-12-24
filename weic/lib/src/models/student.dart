@@ -1,12 +1,20 @@
 class Student {
+  String? id;
   String? name;
   String? email;
   String? password;
+  String? schoolName;
 
-  Student({this.name, this.email, this.password});
+  Student({
+    this.id,
+    this.name,
+    this.email,
+    this.password,
+    this.schoolName,
+  });
 
   @override
   String toString() {
-    return 'Student{name: $name, email: $email, password: $password}';
+    return 'Student{id: $id, name: $name, email: $email, password: $password, schoolName: $schoolName}';
   }
 }
