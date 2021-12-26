@@ -19,39 +19,44 @@ class NewsPageViewer extends StatelessWidget {
             floating: true,
             expandedHeight: news.imageUrl != null ? 300 : 100,
             backgroundColor: Colors.transparent,
-            flexibleSpace: Container(
-              height: news.imageUrl != null ? 300 : 100,
-              width: MediaQuery.of(context).size.width,
-              decoration: news.imageUrl != null
-                  ? BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(16),
-                        bottomRight: Radius.circular(16),
-                      ),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(news.imageUrl.toString()),
-                      ),
-                    )
-                  : BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(16),
-                        bottomRight: Radius.circular(16),
-                      ),
-                      color: Colors.black.withOpacity(0.5),
-                    ),
+            flexibleSpace: SafeArea(
               child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                alignment: Alignment.bottomCenter,
+                height: news.imageUrl != null ? 300 : 100,
+                width: MediaQuery.of(context).size.width,
+                decoration: news.imageUrl != null
+                    ? BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(16),
+                          bottomRight: Radius.circular(16),
+                        ),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(news.imageUrl.toString()),
+                        ),
+                      )
+                    : BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(16),
+                          bottomRight: Radius.circular(16),
+                        ),
+                        color: Colors.black.withOpacity(0.5),
+                      ),
                 child: Container(
-                  margin: const EdgeInsets.all(16),
-                  child: Text(
-                    '${news.title}',
-                    textAlign: TextAlign.start,
-                    style: AppTextStyles.homeNoticiasCardTitleTextStyle,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.3),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(16),
+                    ),
+                  ),
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    margin: const EdgeInsets.all(16),
+                    child: Text(
+                      '${news.title}',
+                      textAlign: TextAlign.start,
+                      style: AppTextStyles.homeNoticiasCardTitleTextStyle,
+                    ),
                   ),
                 ),
               ),

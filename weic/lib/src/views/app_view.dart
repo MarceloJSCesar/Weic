@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -25,9 +26,14 @@ class _AppViewState extends State<AppView> {
   PageController? _pageController;
   String defaultLocale = Platform.localeName;
 
+  CollectionReference? studentCollection;
+
   @override
   void initState() {
     super.initState();
+    studentCollection = FirebaseFirestore.instance.collection('users');
+    studentCollection!.add(widget.student.toJson());
+    print('student: ' + widget.student.toString());
     _pages = [
       HomeView(student: widget.student),
       ChatView(),

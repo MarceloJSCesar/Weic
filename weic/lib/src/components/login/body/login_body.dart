@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:weic/src/models/student.dart';
@@ -7,6 +8,7 @@ import '../../../config/app_textstyles.dart';
 import '../../../config/app_assetsnames.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../../components/login/textfield/app_text_field_component.dart';
+import 'package:crypton/crypton.dart';
 
 class LoginBody extends StatelessWidget {
   final formkey;
@@ -47,7 +49,6 @@ class LoginBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final uuid = Uuid();
     return Observer(
       builder: (_) {
         return Column(
@@ -125,21 +126,15 @@ class LoginBody extends StatelessWidget {
                                     'email: ${loginController.email}, password: ${loginController.password}'),
                                 loginController.setToLoad(),
                                 await login!().then(
-                                  (value) {
+                                  (value) async {
                                     if (value != null) {
-                                      final Student student = Student(
-                                        id: uuid.v4(),
-                                        name: value['name'],
-                                        email: value['email'],
-                                        password: value['password'],
-                                        schoolName: 'ESAD',
-                                      );
+                                      print(value.toString());
                                       saveLoginState!(
                                           loginController.remenberMe);
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                           builder: (_) =>
-                                              AppView(student: student),
+                                              AppView(student: value),
                                         ),
                                       );
                                     } else {

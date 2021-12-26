@@ -101,12 +101,14 @@ class HomeBody extends StatelessWidget {
                                             if (news.imageUrl != null)
                                               GestureDetector(
                                                 onTap: () =>
-                                                    Navigator.of(context)
-                                                        .push(MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      NewsPageViewer(
-                                                          news: news),
-                                                )),
+                                                    Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        NewsPageViewer(
+                                                      news: news,
+                                                    ),
+                                                  ),
+                                                ),
                                                 child: NewsCard(news: news),
                                               ),
                                             if (news.imageUrl == null)

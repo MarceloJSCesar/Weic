@@ -13,6 +13,14 @@ class Student {
     this.schoolName,
   });
 
+  dynamic toJson() => {
+        'id': id,
+        'name': name,
+        'email': email,
+        'password': password,
+        'schoolName': schoolName,
+      };
+
   @override
   String toString() {
     return 'Student{id: $id, name: $name, email: $email, password: $password, schoolName: $schoolName}';
