@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Student {
   String? id;
   String? name;
@@ -20,6 +22,16 @@ class Student {
         'password': password,
         'schoolName': schoolName,
       };
+
+  factory Student.fromDocument(DocumentSnapshot document) {
+    return Student(
+      id: document['id'],
+      name: document['name'],
+      email: document['email'],
+      password: document['password'],
+      schoolName: document['schoolName'],
+    );
+  }
 
   @override
   String toString() {

@@ -151,7 +151,8 @@ class LoginBody extends StatelessWidget {
                     : CircularProgressIndicator(
                         color: AppColors.mainPrefixColor,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.mainPrefixColor),
+                          AppColors.mainPrefixColor,
+                        ),
                         strokeWidth: 3.0,
                       );
               },

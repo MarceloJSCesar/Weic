@@ -20,6 +20,22 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _studentCollection = FirebaseFirestore.instance.collection('users');
+
+  @override
+  void initState() {
+    super.initState();
+    _studentCollection.doc(widget.student!.id).get().then((value) {
+      print('value data: ${value.data()}');
+      if (value.data() == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Digite seu nome'),
+          ),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
