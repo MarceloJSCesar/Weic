@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:weic/src/views/news/news_view.dart';
 import '../models/student.dart';
 import '../views/chat/chat_view.dart';
 import '../views/home/home_view.dart';
@@ -32,6 +33,7 @@ class _AppViewState extends State<AppView> {
     _pages = [
       HomeView(student: widget.student),
       ChatView(),
+      NewsView(),
       ProfileView(),
     ];
     _selectPageIndex = 0;
@@ -68,6 +70,12 @@ class _AppViewState extends State<AppView> {
           BottomNavigationBarItem(
             icon: Icon(
               CupertinoIcons.chat_bubble,
+              size: 25,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.news,
               size: 25,
             ),
           ),

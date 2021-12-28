@@ -49,97 +49,11 @@ class HomeBody extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Text(
-                          'Noticias',
+                          'Posts',
                           style: AppTextStyles.homeNoticiasTitleTextStyle,
                         ),
                       ),
-                      Expanded(
-                        flex: 9,
-                        child: FutureBuilder(
-                          future: homeServices.getSapoNews(),
-                          builder: (context, AsyncSnapshot snapshot) {
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.none:
-                                return Center(
-                                  child: Text('no internet'),
-                                );
-                              case ConnectionState.waiting:
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.black),
-                                    strokeWidth: 3.0,
-                                  ),
-                                );
-                              default:
-                                if (snapshot.hasData) {
-                                  return Container(
-                                    height: MediaQuery.of(context).size.height -
-                                        220,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: ListView.builder(
-                                      clipBehavior: Clip.antiAlias,
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: snapshot.data.length,
-                                      itemBuilder: (context, index) {
-                                        final data = snapshot.data;
-                                        final news = News(
-                                          lead: data[index]['lead'],
-                                          title: data[index]['title']['short'],
-                                          imageUrl: data[index]['images']
-                                                      ['square'] !=
-                                                  null
-                                              ? data[index]['images']['square']
-                                                  ['urlTemplate']
-                                              : null,
-                                          description: data[index]['body'],
-                                          newsUrl: data[index]['links']
-                                              ['shortUrl'],
-                                        );
-                                        return Column(
-                                          children: <Widget>[
-                                            if (news.imageUrl != null)
-                                              GestureDetector(
-                                                onTap: () =>
-                                                    Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (_) =>
-                                                        NewsPageViewer(
-                                                      news: news,
-                                                    ),
-                                                  ),
-                                                ),
-                                                child: NewsCard(news: news),
-                                              ),
-                                            if (news.imageUrl == null)
-                                              GestureDetector(
-                                                onTap: () =>
-                                                    Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (_) =>
-                                                        NewsPageViewer(
-                                                      news: news,
-                                                    ),
-                                                  ),
-                                                ),
-                                                child: NewsCardOnlyTitle(
-                                                  news: news,
-                                                ),
-                                              ),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                  );
-                                } else {
-                                  return Center(
-                                    child: Text('no internet'),
-                                  );
-                                }
-                            }
-                          },
-                        ),
-                      ),
+                      Expanded(flex: 9, child: Text('posts')),
                     ],
                   ),
                 ),
