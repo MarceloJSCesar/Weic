@@ -122,13 +122,12 @@ class LoginBody extends StatelessWidget {
                         ),
                         onPressed: () async => validateFields() == true
                             ? {
+                                loginController.setToLoad(),
                                 print(
                                     'email: ${loginController.email}, password: ${loginController.password}'),
-                                loginController.setToLoad(),
                                 await login!().then(
                                   (value) async {
                                     if (value != null) {
-                                      print(value.toString());
                                       saveLoginState!(
                                           loginController.remenberMe);
                                       Navigator.of(context).pushReplacement(

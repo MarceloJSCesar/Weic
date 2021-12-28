@@ -26,14 +26,9 @@ class _AppViewState extends State<AppView> {
   PageController? _pageController;
   String defaultLocale = Platform.localeName;
 
-  CollectionReference? studentCollection;
-
   @override
   void initState() {
     super.initState();
-    studentCollection = FirebaseFirestore.instance.collection('users');
-    studentCollection!.add(widget.student.toJson());
-    print('student: ' + widget.student.toString());
     _pages = [
       HomeView(student: widget.student),
       ChatView(),

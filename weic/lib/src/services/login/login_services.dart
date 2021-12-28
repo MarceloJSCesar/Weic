@@ -8,18 +8,17 @@ import 'package:weic/src/models/student.dart';
 
 class LoginServices {
   final _auth = LoginController();
-
+  final uuid = Uuid();
+  RSAKeypair rsaKeypair = RSAKeypair.fromRandom();
   Future<Student?> login(String? email, String? password) async {
     try {
-      final uuid = Uuid();
-      RSAKeypair rsaKeypair = RSAKeypair.fromRandom();
       UserCredential? _userCredential = await _auth.auth
           .signInWithEmailAndPassword(email: email!, password: password!);
       return Student(
         email: email,
         id: uuid.v4(),
         schoolName: 'ESAD',
-        name: _userCredential.user!.displayName,
+        name: _userCredential.user!.displayName ?? 'no name',
         password: rsaKeypair.publicKey.encrypt(password),
       );
     } on FirebaseException catch (errorMsg) {
