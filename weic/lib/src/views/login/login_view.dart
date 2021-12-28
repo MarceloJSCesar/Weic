@@ -44,7 +44,9 @@ class _LoginViewState extends State<LoginView> {
                     LoginBody(
                       formkey: _formKey,
                       login: () => _loginServices.login(
-                          _emailController.text, _passwordController.text),
+                        _emailController.text,
+                        _passwordController.text,
+                      ),
                       emailController: _emailController,
                       loginController: _loginController,
                       passwordController: _passwordController,

@@ -1,13 +1,12 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:weic/src/views/news/news_view.dart';
 import '../models/student.dart';
-import '../views/chat/chat_view.dart';
 import '../views/home/home_view.dart';
+import '../views/chat/chat_view.dart';
 import '../views/profile/profile_view.dart';
 
 class AppView extends StatefulWidget {

@@ -28,7 +28,10 @@ class _HomeViewState extends State<HomeView> {
       drawer: Drawer(
         child: DrawerBody(),
       ),
-      body: HomeBody(scaffoldKey: _scaffoldKey),
+      body: HomeBody(
+        scaffoldKey: _scaffoldKey,
+        student: widget.student,
+      ),
     );
   }
 }

@@ -5,19 +5,21 @@ import 'package:weic/src/components/home/widgets/news_card_only_title.dart';
 import 'package:weic/src/components/home/widgets/news_page_viewer.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/news.dart';
+import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/home/home_services.dart';
 import '../../../config/app_decorations.dart';
 
 class HomeBody extends StatelessWidget {
+  final Student? student;
   final GlobalKey<ScaffoldState> scaffoldKey;
   const HomeBody({
     Key? key,
+    required this.student,
     required this.scaffoldKey,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final homeServices = HomeServices();
     return SafeArea(
       child: Container(
         decoration: AppDecorations.homeviewDecoration,
@@ -53,7 +55,7 @@ class HomeBody extends StatelessWidget {
                           style: AppTextStyles.homeNoticiasTitleTextStyle,
                         ),
                       ),
-                      Expanded(flex: 9, child: Text('posts')),
+                      Expanded(flex: 9, child: Text(student.toString())),
                     ],
                   ),
                 ),
