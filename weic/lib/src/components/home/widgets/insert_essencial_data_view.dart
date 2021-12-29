@@ -73,6 +73,9 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
           TextFormField(
             controller: _nameTextController,
             textCapitalization: TextCapitalization.words,
+            onChanged: (val) {
+              setState(() {});
+            },
             decoration: InputDecoration(
               labelText: 'Primeiro e Segundo nome',
               hintText: 'ex: Marcelo Cesar',
@@ -88,13 +91,19 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
           Container(
             alignment: Alignment.center,
             child: GestureDetector(
-              onTap: () {},
+              onTap: _imagePath!.path.length > 0 &&
+                      _nameTextController.text.length > 0
+                  ? () async {}
+                  : null,
               child: Container(
                 width: 120,
                 height: 40,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: _imagePath!.path.length > 0 &&
+                          _nameTextController.text.length > 2
+                      ? Colors.blue
+                      : Colors.grey,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     bottomRight: Radius.circular(16),
