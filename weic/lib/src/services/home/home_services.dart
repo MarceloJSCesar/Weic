@@ -22,9 +22,10 @@ class HomeServices {
   }
 
   Future sendEssentialStudentDataToFirebase({required Student student}) async {
-    var _studentCollection = FirebaseFirestore.instance.collection('users');
+    var _studentCollection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(student.id ?? '1234566');
     await _studentCollection
-        .doc(student.id ?? '1234566')
         .collection('students')
         .add(student.toJson())
         .then((value) => print('success'))
