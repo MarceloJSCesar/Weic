@@ -46,4 +46,6 @@ class AppTextStyles {
     fontSize: 16,
     color: Colors.black.withOpacity(0.6),
   );
+  static final TextStyle dadosEssenciaisButtonTextStyle =
+      GoogleFonts.notoSans(fontSize: 16, color: Colors.white);
 }

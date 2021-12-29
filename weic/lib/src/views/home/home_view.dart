@@ -49,9 +49,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(
-        child: DrawerBody(),
-      ),
+      drawer: Drawer(child: DrawerBody()),
       body: HomeBody(
         scaffoldKey: _scaffoldKey,
         student: widget.student,

@@ -13,50 +13,53 @@ class AppBarComponent extends PreferredSize {
             // decoration: AppDecorations.homeviewDecoration,
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      GestureDetector(
-                        child: Icon(
-                          Icons.menu,
-                          size: 25,
-                          color: Colors.black,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        GestureDetector(
+                          child: Icon(
+                            Icons.menu,
+                            size: 25,
+                            color: Colors.black,
+                          ),
+                          onTap: () => scaffoldKey!.currentState!.openDrawer(),
                         ),
-                        onTap: () => scaffoldKey!.currentState!.openDrawer(),
-                      ),
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundImage: AssetImage(AppAssetsNames.boyImageUrl),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text.rich(
-                        TextSpan(
-                          text: 'Bem Vindo, ',
-                          style: AppTextStyles.title,
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'null',
-                              style: AppTextStyles.titleBold,
-                            ),
-                          ],
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundImage:
+                              AssetImage(AppAssetsNames.boyImageUrl),
                         ),
-                      ),
-                      Text('null', style: AppTextStyles.title),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text.rich(
+                          TextSpan(
+                            text: 'Bem Vindo, ',
+                            style: AppTextStyles.title,
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'null',
+                                style: AppTextStyles.titleBold,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text('null', style: AppTextStyles.title),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

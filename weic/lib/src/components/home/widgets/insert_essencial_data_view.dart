@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weic/src/config/app_assetsnames.dart';
+import 'package:weic/src/config/app_textstyles.dart';
+import 'package:weic/src/services/home/dados_essencial/dados_essencial_services.dart';
 
 class InsertEssencialData extends StatefulWidget {
   const InsertEssencialData({Key? key}) : super(key: key);
@@ -10,6 +12,7 @@ class InsertEssencialData extends StatefulWidget {
 
 class _InsertEssencialDataState extends State<InsertEssencialData> {
   final _nameTextController = TextEditingController();
+  final _dadosEssenciasServices = DadosEssenciaisServices();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -34,12 +37,16 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  await _dadosEssenciasServices.takePhotoFromCamera();
+                },
                 icon: Text('Camera'),
                 label: Icon(Icons.camera),
               ),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  await _dadosEssenciasServices.pickPhotoFromGalery();
+                },
                 icon: Text('Galeria'),
                 label: Icon(Icons.photo_library),
               ),
@@ -77,8 +84,9 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                   ),
                 ),
                 child: Text(
-                  'Guarar',
+                  'Guardar',
                   textAlign: TextAlign.center,
+                  style: AppTextStyles.dadosEssenciaisButtonTextStyle,
                 ),
               ),
             ),
