@@ -36,7 +36,9 @@ class _HomeViewState extends State<HomeView> {
             builder: (_) {
               return AlertDialog(
                 title: Text('Dados Essenciais'),
-                content: InsertEssencialData(),
+                content: InsertEssencialData(
+                  student: widget.student as Student,
+                ),
               );
             },
           );
