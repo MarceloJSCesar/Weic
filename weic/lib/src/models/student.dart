@@ -6,6 +6,7 @@ class Student {
   String? email;
   String? password;
   String? schoolName;
+  String? profilePhoto;
 
   Student({
     this.id,
@@ -13,6 +14,7 @@ class Student {
     this.email,
     this.password,
     this.schoolName,
+    this.profilePhoto,
   });
 
   dynamic toJson() => {
@@ -21,6 +23,7 @@ class Student {
         'email': email,
         'password': password,
         'schoolName': schoolName,
+        'profilePhoto': profilePhoto,
       };
 
   factory Student.fromDocument(DocumentSnapshot document) {
@@ -30,11 +33,12 @@ class Student {
       email: document['email'],
       password: document['password'],
       schoolName: document['schoolName'],
+      profilePhoto: document['profilePhoto'],
     );
   }
 
   @override
   String toString() {
-    return 'Student{id: $id, name: $name, email: $email, password: $password, schoolName: $schoolName}';
+    return 'Student{id: $id, name: $name, email: $email, password: $password, schoolName: $schoolName, profilePhoto: $profilePhoto}';
   }
 }

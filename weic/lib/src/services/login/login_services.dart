@@ -15,10 +15,11 @@ class LoginServices {
       UserCredential? _userCredential = await _auth.auth
           .signInWithEmailAndPassword(email: email!, password: password!);
       return Student(
+        name: '',
         email: email,
         id: uuid.v4(),
+        profilePhoto: '',
         schoolName: 'ESAD',
-        name: _userCredential.user!.displayName ?? 'no name',
         password: rsaKeypair.publicKey.encrypt(password),
       );
     } on FirebaseException catch (errorMsg) {
