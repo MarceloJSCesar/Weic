@@ -22,8 +22,12 @@ class HomeServices {
   }
 
   Future sendEssentialStudentDataToFirebase({required Student student}) async {
-    CollectionReference _studentCollection =
-        FirebaseFirestore.instance.collection('users');
-    await _studentCollection.add(student.toJson());
+    var _studentCollection = FirebaseFirestore.instance.collection('users');
+    await _studentCollection
+        .doc(student.id ?? '1234566')
+        .collection('students')
+        .add(student.toJson())
+        .then((value) => print('success'))
+        .catchError((errorMsg) => print('errorMsg: $errorMsg'));
   }
 }
