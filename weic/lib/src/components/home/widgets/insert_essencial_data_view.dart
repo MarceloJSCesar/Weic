@@ -109,6 +109,7 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                             });
                             Student student = Student(
                               id: widget.student.id,
+                              email: widget.student.email,
                               name: _nameTextController.text,
                               profilePhoto: _imagePath!.path,
                               password: widget.student.password,

@@ -24,10 +24,11 @@ class HomeServices {
   Future sendEssentialStudentDataToFirebase({required Student student}) async {
     var _studentCollection = FirebaseFirestore.instance
         .collection('users')
-        .doc(student.id ?? '1234566');
+        .doc(student.id ?? '123456');
     await _studentCollection
         .collection('students')
-        .add(student.toJson())
+        .doc('student ${student.id ?? '123456'}')
+        .set(student.toJson())
         .then((value) => print('success'))
         .catchError((errorMsg) => print('errorMsg: $errorMsg'));
   }

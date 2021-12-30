@@ -27,7 +27,12 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    _studentCollection.doc(widget.student!.id).get().then(
+    _studentCollection
+        .doc(widget.student!.id)
+        .collection('students')
+        .doc('student ${widget.student!.id}')
+        .get()
+        .then(
       (value) {
         print('value data: ${value.data()}');
         if (value.data() == null) {
