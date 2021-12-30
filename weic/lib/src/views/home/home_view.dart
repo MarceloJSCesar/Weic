@@ -10,10 +10,10 @@ import '../../components/home/drawer/drawer_body.dart';
 import 'package:uuid/uuid.dart';
 
 class HomeView extends StatefulWidget {
-  final Student? student;
+  final Student student;
   const HomeView({
     Key? key,
-    this.student,
+    required this.student,
   }) : super(key: key);
 
   @override
@@ -21,28 +21,22 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final _homeServices = HomeServices();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _studentCollection = FirebaseFirestore.instance.collection('users');
 
   @override
   void initState() {
     super.initState();
-    _studentCollection
-        .doc(widget.student!.id)
-        .collection('students')
-        .doc('student ${widget.student!.id}')
-        .get()
-        .then(
+    _homeServices.getStudentEssentialData(student: widget.student).then(
       (value) {
-        print('value data: ${value.data()}');
-        if (value.data() == null) {
+        if (value == null) {
           showDialog(
             context: context,
             builder: (_) {
               return AlertDialog(
                 title: Text('Dados Essenciais'),
                 content: InsertEssencialData(
-                  student: widget.student as Student,
+                  student: widget.student,
                 ),
               );
             },
@@ -57,10 +51,16 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(child: DrawerBody()),
-      body: HomeBody(
-        scaffoldKey: _scaffoldKey,
-        student: widget.student,
-      ),
+      body: FutureBuilder(
+          future:
+              _homeServices.getStudentEssentialData(student: widget.student),
+          builder: (context, snapshot) {
+            print('snapshot data: ${snapshot.data}');
+            return HomeBody(
+              scaffoldKey: _scaffoldKey,
+              student: widget.student,
+            );
+          }),
     );
   }
 }

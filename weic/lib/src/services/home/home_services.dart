@@ -32,4 +32,14 @@ class HomeServices {
         .then((value) => print('success'))
         .catchError((errorMsg) => print('errorMsg: $errorMsg'));
   }
+
+  Future getStudentEssentialData({required Student student}) async {
+    var _studentCollection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(student.id)
+        .collection('students')
+        .doc('student ${student.id}');
+    final data = await _studentCollection.get();
+    return data;
+  }
 }
