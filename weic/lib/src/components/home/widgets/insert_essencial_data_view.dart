@@ -21,7 +21,7 @@ class InsertEssencialData extends StatefulWidget {
 }
 
 class _InsertEssencialDataState extends State<InsertEssencialData> {
-  File? _imagePath = File('');
+  File _imagePath = File('');
   bool isLoading = false;
   final _homeServices = HomeServices();
   final _nameTextController = TextEditingController();
@@ -37,10 +37,10 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
             alignment: Alignment.center,
             child: Column(
               children: <Widget>[
-                _imagePath!.path.length != 0
+                _imagePath.path.length != 0
                     ? CircleAvatar(
                         radius: 30,
-                        backgroundImage: FileImage(File(_imagePath!.path)),
+                        backgroundImage: FileImage(File(_imagePath.path)),
                       )
                     : CircleAvatar(
                         radius: 30,
@@ -101,18 +101,23 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
               ? Container(
                   alignment: Alignment.center,
                   child: GestureDetector(
-                    onTap: _imagePath!.path.length > 0 &&
+                    onTap: _imagePath.path.length > 0 &&
                             _nameTextController.text.length > 0
                         ? () async {
                             setState(() {
                               isLoading = true;
                             });
+                            final String _studentProfileImgUrl =
+                                await _dadosEssenciasServices.uploadPhoto(
+                              student: widget.student,
+                              file: _imagePath,
+                            );
                             Student student = Student(
                               id: widget.student.id,
                               email: widget.student.email,
                               name: _nameTextController.text,
-                              profilePhoto: _imagePath!.path,
                               password: widget.student.password,
+                              profilePhoto: _studentProfileImgUrl,
                               schoolName: widget.student.schoolName,
                             );
                             await _homeServices
@@ -130,7 +135,7 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                       height: 40,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: _imagePath!.path.length > 0 &&
+                        color: _imagePath.path.length > 0 &&
                                 _nameTextController.text.length > 2
                             ? Colors.blue
                             : Colors.grey,

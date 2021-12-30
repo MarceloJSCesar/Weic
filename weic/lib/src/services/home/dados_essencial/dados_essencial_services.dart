@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:weic/src/models/student.dart';
 
 class DadosEssenciaisServices {
   final ImagePicker _imagePicker = ImagePicker();
@@ -21,5 +22,18 @@ class DadosEssenciaisServices {
       maxWidth: 300,
     );
     return imageSource;
+  }
+
+  Future<String> uploadPhoto({
+    required Student student,
+    required File file,
+  }) async {
+    final _storageRef = FirebaseStorage.instance.ref();
+    final _uploadTask = await _storageRef
+        .child('studentsProfilePhotos')
+        .child('student ${student.id}')
+        .putFile(file);
+    final _photoUrl = await _uploadTask.ref.getDownloadURL();
+    return _photoUrl;
   }
 }
