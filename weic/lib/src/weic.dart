@@ -20,8 +20,8 @@ class Weic extends StatelessWidget {
             return LoginView();
           } else {
             print('snapshot.data: ${snapshot.data}');
-            bool remenberMe = snapshot.data?[0] as bool;
-            String studentID = snapshot.data?[1] as String;
+            bool remenberMe = snapshot.data![0] as bool;
+            String studentID = snapshot.data![1] as String;
             if (remenberMe == true &&
                 _loginController.auth.currentUser != null) {
               return AppView(

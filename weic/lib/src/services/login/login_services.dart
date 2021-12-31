@@ -12,12 +12,14 @@ class LoginServices {
   RSAKeypair rsaKeypair = RSAKeypair.fromRandom();
   Future<Student?> login(String? email, String? password) async {
     try {
+      final _prefs = await SharedPreferences.getInstance();
+      final studentID = _prefs.getString('STUDENT_ID') ?? null;
       UserCredential? _userCredential = await _auth.auth
           .signInWithEmailAndPassword(email: email!, password: password!);
       return Student(
         name: '',
         email: email,
-        id: uuid.v4(),
+        id: studentID != null ? studentID : uuid.v4(),
         profilePhoto: '',
         schoolName: 'ESAD',
         password: rsaKeypair.publicKey.encrypt(password),
