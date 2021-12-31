@@ -4,16 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:weic/src/components/home/widgets/insert_essencial_data_view.dart';
 import 'package:weic/src/config/app_assetsnames.dart';
 import 'package:weic/src/services/home/home_services.dart';
+import 'package:weic/src/views/login/login_view.dart';
 import '../../models/student.dart';
 import '../../components/home/body/home_body.dart';
 import '../../components/home/drawer/drawer_body.dart';
 import 'package:uuid/uuid.dart';
 
 class HomeView extends StatefulWidget {
-  final Student student;
+  final String studentID;
   const HomeView({
     Key? key,
-    required this.student,
+    required this.studentID,
   }) : super(key: key);
 
   @override
@@ -25,44 +26,38 @@ class _HomeViewState extends State<HomeView> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
-  void initState() {
-    super.initState();
-    _homeServices.getStudentEssentialData(student: widget.student).then(
-      (value) {
-        if (value == null) {
-          showDialog(
-            context: context,
-            builder: (_) {
-              return AlertDialog(
-                title: Text('Dados Essenciais'),
-                content: InsertEssencialData(
-                  student: widget.student,
-                ),
-              );
-            },
-          );
-        }
-      },
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(child: DrawerBody()),
       body: FutureBuilder(
-          future:
-              _homeServices.getStudentEssentialData(student: widget.student),
-          builder: (context, AsyncSnapshot snapshot) {
-            print('snapshot data: ${snapshot.data}');
-            final student = Student.fromDocument(snapshot.data);
-            print(student.toString());
-            return HomeBody(
-              scaffoldKey: _scaffoldKey,
-              student: student,
-            );
-          }),
+        future:
+            _homeServices.getStudentEssentialData(studentID: widget.studentID),
+        builder: (context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                  strokeWidth: 3.0,
+                ),
+              );
+
+            default:
+              if (snapshot.hasData) {
+                print('snapshot data: ${snapshot.data}');
+                final student = Student.fromDocument(snapshot.data);
+                print(student.toString());
+                return HomeBody(
+                  scaffoldKey: _scaffoldKey,
+                  student: student,
+                );
+              } else {
+                return LoginView();
+              }
+          }
+        },
+      ),
     );
   }
 }

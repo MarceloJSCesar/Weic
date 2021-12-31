@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+import 'package:weic/src/components/home/widgets/insert_essencial_data_view.dart';
 import 'package:weic/src/models/student.dart';
+import 'package:weic/src/services/home/home_services.dart';
+import 'package:weic/src/views/dados_essencial/dados_essencial_view.dart';
 import '../../../views/app_view.dart';
 import '../../../config/app_colors.dart';
 import '../../../config/app_textstyles.dart';
@@ -128,14 +132,36 @@ class LoginBody extends StatelessWidget {
                                 await login!().then(
                                   (value) async {
                                     if (value != null) {
+                                      final _prefs =
+                                          await SharedPreferences.getInstance();
+                                      await _prefs.setString(
+                                        'STUDENT_ID',
+                                        value.id,
+                                      );
                                       saveLoginState!(
                                           loginController.remenberMe);
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              AppView(student: value),
-                                        ),
-                                      );
+                                      await HomeServices()
+                                          .getStudentEssentialData(
+                                              studentID: value.id)
+                                          .then((data) {
+                                        if (data == null) {
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  DadosEssenciaisView(
+                                                student: value,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  AppView(studentID: value.id),
+                                            ),
+                                          );
+                                        }
+                                      });
                                     } else {
                                       showLoginErrorMsg!(context);
                                     }

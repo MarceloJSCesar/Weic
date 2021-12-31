@@ -15,17 +15,17 @@ class Weic extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
         future: LoginServices().getLoginState(),
-        builder: (context, snapshot) {
+        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (_loginController.auth.currentUser == null) {
             return LoginView();
           } else {
-            if (snapshot.data == true &&
+            print('snapshot.data: ${snapshot.data}');
+            bool remenberMe = snapshot.data?[0] as bool;
+            String studentID = snapshot.data?[1] as String;
+            if (remenberMe == true &&
                 _loginController.auth.currentUser != null) {
               return AppView(
-                student: Student(
-                  email: _loginController.auth.currentUser!.email,
-                  password: _loginController.password,
-                ),
+                studentID: studentID,
               );
             }
           }

@@ -33,12 +33,12 @@ class HomeServices {
         .catchError((errorMsg) => print('errorMsg: $errorMsg'));
   }
 
-  Future getStudentEssentialData({required Student student}) async {
+  Future getStudentEssentialData({required String studentID}) async {
     var _studentCollection = FirebaseFirestore.instance
         .collection('users')
-        .doc(student.id)
+        .doc(studentID)
         .collection('students')
-        .doc('student ${student.id}');
+        .doc('student $studentID');
     final data = await _studentCollection.get();
     return data.exists ? data.data() : null;
   }

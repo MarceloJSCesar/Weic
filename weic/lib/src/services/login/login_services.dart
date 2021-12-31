@@ -54,9 +54,12 @@ class LoginServices {
     await _quickStoraged.remove('remenberMe');
   }
 
-  Future<bool> getLoginState() async {
+  Future<List<dynamic>> getLoginState() async {
     final _quickStoraged = await SharedPreferences.getInstance();
-    final remenberMe = _quickStoraged.getBool('remenberMe');
-    return remenberMe!;
+    bool remenberMe = _quickStoraged.getBool('remenberMe') ?? false;
+    final studentID = _quickStoraged.getString('STUDENT_ID');
+    final list = [remenberMe, studentID];
+    print('list: ${list.cast()}');
+    return list;
   }
 }

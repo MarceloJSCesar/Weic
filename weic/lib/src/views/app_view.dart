@@ -10,10 +10,10 @@ import '../views/chat/chat_view.dart';
 import '../views/profile/profile_view.dart';
 
 class AppView extends StatefulWidget {
-  final Student student;
+  final String studentID;
   const AppView({
     Key? key,
-    required this.student,
+    required this.studentID,
   }) : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class _AppViewState extends State<AppView> {
   void initState() {
     super.initState();
     _pages = [
-      HomeView(student: widget.student),
+      HomeView(studentID: widget.studentID),
       ChatView(),
       NewsView(),
       ProfileView(),

@@ -3,11 +3,13 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weic/src/config/app_assetsnames.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/home/dados_essencial/dados_essencial_services.dart';
 import 'package:weic/src/services/home/home_services.dart';
+import 'package:weic/src/views/app_view.dart';
 
 class InsertEssencialData extends StatefulWidget {
   final Student student;
@@ -37,6 +39,8 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
             alignment: Alignment.center,
             child: Column(
               children: <Widget>[
+                Text('Dados Essenciais'),
+                SizedBox(height: 30),
                 _imagePath.path.length != 0
                     ? CircleAvatar(
                         radius: 30,
@@ -107,6 +111,9 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                             setState(() {
                               isLoading = true;
                             });
+                            final _prefs =
+                                await SharedPreferences.getInstance();
+                            final studentID = _prefs.getString('STUDENT_ID');
                             final String _studentProfileImgUrl =
                                 await _dadosEssenciasServices.uploadPhoto(
                               student: widget.student,
@@ -126,8 +133,14 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                             );
                             setState(() {
                               isLoading = false;
-                              Navigator.of(context).pop();
                             });
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (_) => AppView(
+                                  studentID: studentID as String,
+                                ),
+                              ),
+                            );
                           }
                         : null,
                     child: Container(
