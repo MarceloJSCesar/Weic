@@ -10,7 +10,7 @@ import 'package:weic/src/services/home/home_services.dart';
 import '../../../config/app_decorations.dart';
 
 class HomeBody extends StatelessWidget {
-  final Student? student;
+  final Student student;
   final GlobalKey<ScaffoldState> scaffoldKey;
   const HomeBody({
     Key? key,
@@ -30,6 +30,7 @@ class HomeBody extends StatelessWidget {
               child: AppBarComponent(
                 context: context,
                 scaffoldKey: scaffoldKey,
+                student: student,
               ),
             ),
             Expanded(

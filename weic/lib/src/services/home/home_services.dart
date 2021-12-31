@@ -40,6 +40,6 @@ class HomeServices {
         .collection('students')
         .doc('student ${student.id}');
     final data = await _studentCollection.get();
-    return data;
+    return data.exists ? data.data() : null;
   }
 }

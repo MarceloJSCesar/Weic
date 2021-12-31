@@ -54,11 +54,13 @@ class _HomeViewState extends State<HomeView> {
       body: FutureBuilder(
           future:
               _homeServices.getStudentEssentialData(student: widget.student),
-          builder: (context, snapshot) {
+          builder: (context, AsyncSnapshot snapshot) {
             print('snapshot data: ${snapshot.data}');
+            final student = Student.fromDocument(snapshot.data);
+            print(student.toString());
             return HomeBody(
               scaffoldKey: _scaffoldKey,
-              student: widget.student,
+              student: student,
             );
           }),
     );

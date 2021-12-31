@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 class Student {
   String? id;
@@ -26,9 +27,20 @@ class Student {
         'profilePhoto': profilePhoto,
       };
 
-  factory Student.fromDocument(DocumentSnapshot document) {
+  factory Student.fromSnapshot(AsyncSnapshot document) {
     return Student(
-      id: document['id'],
+      id: document.data['id'],
+      name: document.data['name'],
+      email: document.data['email'],
+      password: document.data['password'],
+      schoolName: document.data['schoolName'],
+      profilePhoto: document.data['profilePhoto'],
+    );
+  }
+
+  factory Student.fromDocument(Map<String, dynamic>? document) {
+    return Student(
+      id: document!['id'],
       name: document['name'],
       email: document['email'],
       password: document['password'],

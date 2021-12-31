@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:weic/src/models/student.dart';
 import '../../../config/app_textstyles.dart';
 import '../../../config/app_assetsnames.dart';
 import '../../../config/app_decorations.dart';
 
 class AppBarComponent extends PreferredSize {
+  final Student student;
   final BuildContext? context;
   final GlobalKey<ScaffoldState>? scaffoldKey;
-  AppBarComponent({this.scaffoldKey, this.context})
-      : super(
+  AppBarComponent({
+    this.scaffoldKey,
+    this.context,
+    required this.student,
+  }) : super(
           preferredSize: Size.fromHeight(200),
           child: Container(
             // decoration: AppDecorations.homeviewDecoration,
@@ -49,13 +54,14 @@ class AppBarComponent extends PreferredSize {
                             style: AppTextStyles.title,
                             children: <TextSpan>[
                               TextSpan(
-                                text: 'null',
+                                text: student.name ?? 'null',
                                 style: AppTextStyles.titleBold,
                               ),
                             ],
                           ),
                         ),
-                        Text('null', style: AppTextStyles.title),
+                        Text(student.schoolName ?? 'null',
+                            style: AppTextStyles.title),
                       ],
                     ),
                   ],
