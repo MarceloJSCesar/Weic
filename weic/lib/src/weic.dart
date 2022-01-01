@@ -15,21 +15,34 @@ class Weic extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
         future: LoginServices().getLoginState(),
-        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          if (_loginController.auth.currentUser == null) {
-            return LoginView();
-          } else {
-            print('snapshot.data: ${snapshot.data}');
-            bool remenberMe = snapshot.data![0] as bool;
-            String studentID = snapshot.data![1] as String;
-            if (remenberMe == true &&
-                _loginController.auth.currentUser != null) {
-              return AppView(
-                studentID: studentID,
+        builder: (context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return LoginView();
+            case ConnectionState.waiting:
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                    strokeWidth: 3.0,
+                  ),
+                ),
               );
-            }
+            default:
+              if (snapshot.hasError) {
+                return LoginView();
+              } else if (snapshot.data == null) {
+                return LoginView();
+              } else {
+                final bool remenberMe = snapshot.data['remenberMe'];
+                if (remenberMe == true) {
+                  final String studentID = snapshot.data['studentID'];
+                  return AppView(studentID: studentID);
+                } else {
+                  return LoginView();
+                }
+              }
           }
-          return LoginView();
         },
       ),
     );

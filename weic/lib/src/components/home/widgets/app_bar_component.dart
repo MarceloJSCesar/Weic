@@ -35,11 +35,17 @@ class AppBarComponent extends PreferredSize {
                           ),
                           onTap: () => scaffoldKey!.currentState!.openDrawer(),
                         ),
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundImage:
-                              AssetImage(AppAssetsNames.boyImageUrl),
-                        ),
+                        student.profilePhoto == null
+                            ? CircleAvatar(
+                                radius: 20,
+                                backgroundImage:
+                                    AssetImage(AppAssetsNames.boyImageUrl),
+                              )
+                            : CircleAvatar(
+                                radius: 20,
+                                backgroundImage: NetworkImage(
+                                    student.profilePhoto as String),
+                              )
                       ],
                     ),
                     SizedBox(
