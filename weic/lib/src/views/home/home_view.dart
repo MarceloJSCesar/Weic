@@ -29,11 +29,6 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(
-        child: DrawerBody(
-          studentID: widget.studentID,
-        ),
-      ),
       body: FutureBuilder(
         future:
             _homeServices.getStudentEssentialData(studentID: widget.studentID),
