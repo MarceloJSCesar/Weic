@@ -27,36 +27,36 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      body: FutureBuilder(
-        future:
-            _homeServices.getStudentEssentialData(studentID: widget.studentID),
-        builder: (context, AsyncSnapshot snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                  strokeWidth: 3.0,
-                ),
-              );
+    return FutureBuilder(
+      future:
+          _homeServices.getStudentEssentialData(studentID: widget.studentID),
+      builder: (context, AsyncSnapshot snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                strokeWidth: 3.0,
+              ),
+            );
 
-            default:
-              if (snapshot.hasData) {
-                print('snapshot data: ${snapshot.data}');
-                final student = Student.fromDocument(snapshot.data);
-                print(student.toString());
-                return HomeBody(
+          default:
+            if (snapshot.hasData) {
+              print('snapshot data: ${snapshot.data}');
+              final student = Student.fromDocument(snapshot.data);
+              print(student.toString());
+              return Scaffold(
+                key: _scaffoldKey,
+                body: HomeBody(
                   scaffoldKey: _scaffoldKey,
                   student: student,
-                );
-              } else {
-                return LoginView();
-              }
-          }
-        },
-      ),
+                ),
+              );
+            } else {
+              return LoginView();
+            }
+        }
+      },
     );
   }
 }

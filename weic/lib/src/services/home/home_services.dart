@@ -8,6 +8,7 @@ import 'dart:convert';
 import '../../models/news.dart';
 
 class HomeServices {
+  final String userCollectionDocID = '-1-2-22-weic-MarceloCesar-';
   Future getSapoNews() async {
     final sapoApi = Uri.parse('https://eco.sapo.pt/wp-json/eco/v1/items');
     http.Response response = await http.get(sapoApi);
@@ -22,12 +23,11 @@ class HomeServices {
   }
 
   Future sendEssentialStudentDataToFirebase({required Student student}) async {
-    var _studentCollection = FirebaseFirestore.instance
-        .collection('users')
-        .doc(student.id ?? '123456');
+    var _studentCollection =
+        FirebaseFirestore.instance.collection('users').doc(userCollectionDocID);
     await _studentCollection
         .collection('students')
-        .doc('student ${student.id ?? '123456'}')
+        .doc('student ${student.id}')
         .set(student.toJson())
         .then((value) => print('success'))
         .catchError((errorMsg) => print('errorMsg: $errorMsg'));
@@ -36,7 +36,7 @@ class HomeServices {
   Future getStudentEssentialData({required String studentID}) async {
     var _studentCollection = FirebaseFirestore.instance
         .collection('users')
-        .doc(studentID)
+        .doc(userCollectionDocID)
         .collection('students')
         .doc('student $studentID');
     final data = await _studentCollection.get();

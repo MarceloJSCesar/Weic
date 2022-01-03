@@ -142,7 +142,8 @@ class LoginBody extends StatelessWidget {
                                           loginController.remenberMe);
                                       await HomeServices()
                                           .getStudentEssentialData(
-                                              studentID: value.id)
+                                        studentID: value.id,
+                                      )
                                           .then((data) {
                                         if (data == null) {
                                           Navigator.of(context).pushReplacement(

@@ -19,10 +19,14 @@ class LoginServices {
       return Student(
         name: '',
         email: email,
-        id: studentID != null ? studentID : uuid.v4(),
         profilePhoto: '',
         schoolName: 'ESAD',
+        followers: <Student>[],
+        following: <Student>[],
+        isMemberOfCFESAD: false,
         password: rsaKeypair.publicKey.encrypt(password),
+        id: studentID != null ? studentID : _userCredential.user!.uid,
+        isProfileVerified: email == 'marcelobarbosa1511es3' ? true : false,
       );
     } on FirebaseException catch (errorMsg) {
       if (errorMsg.code == 'weak-password') {
