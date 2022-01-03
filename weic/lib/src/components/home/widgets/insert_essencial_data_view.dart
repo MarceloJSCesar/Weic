@@ -137,8 +137,14 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                                 email: widget.student.email,
                                 name: _nameTextController.text,
                                 password: widget.student.password,
+                                followers: widget.student.followers,
+                                following: widget.student.following,
                                 profilePhoto: _studentProfileImgUrl,
                                 schoolName: widget.student.schoolName,
+                                isMemberOfCFESAD:
+                                    widget.student.isMemberOfCFESAD,
+                                isProfileVerified:
+                                    widget.student.isProfileVerified,
                               );
                               await _homeServices
                                   .sendEssentialStudentDataToFirebase(
