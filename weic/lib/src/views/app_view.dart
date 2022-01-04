@@ -33,7 +33,7 @@ class _AppViewState extends State<AppView> {
       HomeView(studentID: widget.studentID),
       ChatView(),
       NewsView(),
-      ProfileView(),
+      ProfileView(studentID: widget.studentID),
     ];
     _selectPageIndex = 0;
     _pageController = PageController(

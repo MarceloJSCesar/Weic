@@ -42,9 +42,7 @@ class _HomeViewState extends State<HomeView> {
 
           default:
             if (snapshot.hasData) {
-              print('snapshot data: ${snapshot.data}');
               final student = Student.fromDocument(snapshot.data);
-              print(student.toString());
               return Scaffold(
                 key: _scaffoldKey,
                 body: HomeBody(
