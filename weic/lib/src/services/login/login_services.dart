@@ -26,7 +26,8 @@ class LoginServices {
         isMemberOfCFESAD: false,
         password: rsaKeypair.publicKey.encrypt(password),
         id: studentID != null ? studentID : _userCredential.user!.uid,
-        isProfileVerified: email == 'marcelobarbosa1511es3' ? true : false,
+        isProfileVerified:
+            email == 'marcelobarbosa1511es3@gmail.com' ? true : false,
       );
     } on FirebaseException catch (errorMsg) {
       if (errorMsg.code == 'weak-password') {

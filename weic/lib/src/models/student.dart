@@ -5,13 +5,13 @@ class Student {
   String? id;
   String? name;
   String? email;
+  List? following;
+  List? followers;
   String? password;
   String? schoolName;
   String? profilePhoto;
   bool? isMemberOfCFESAD;
   bool? isProfileVerified;
-  List<Student>? following;
-  List<Student>? followers;
 
   Student({
     this.id,
@@ -71,6 +71,6 @@ class Student {
 
   @override
   String toString() {
-    return 'Student{id: $id, name: $name, email: $email, password: $password, schoolName: $schoolName, profilePhoto: $profilePhoto}';
+    return 'Student{id: $id, name: $name, email: $email, password: $password, followers: $followers, following: $following, schoolName: $schoolName, profilePhoto: $profilePhoto, isMemberOfCFESAD: $isMemberOfCFESAD, isProfileVerified: $isProfileVerified}';
   }
 }
