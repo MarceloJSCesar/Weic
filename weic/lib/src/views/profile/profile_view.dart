@@ -39,22 +39,57 @@ class _ProfileViewState extends State<ProfileView> {
                   centerTitle: false,
                   backgroundColor: Colors.white,
                   title: student.isMemberOfCFESAD == true
-                      ? Container(
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              height: 27,
+                              width: 70,
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                'CFESAD',
+                                style: AppTextStyles.esadTextStyle,
+                              ),
+                            ),
+                            SizedBox(width: 6),
+                            Container(
+                              height: 27,
+                              width: 50,
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                student.schoolName as String,
+                                style: AppTextStyles.esadTextStyle,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(
                           height: 27,
-                          width: 70,
+                          width: 50,
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(2),
                           decoration: BoxDecoration(
-                            color: Colors.transparent,
+                            color: Colors.black,
                             border: Border.all(color: Colors.black),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            'CFESAD',
+                            student.schoolName as String,
                             style: AppTextStyles.esadTextStyle,
                           ),
-                        )
-                      : Container(),
+                        ),
                   actions: <Widget>[
                     IconButton(
                       iconSize: 27,
@@ -76,38 +111,30 @@ class _ProfileViewState extends State<ProfileView> {
                             backgroundImage:
                                 NetworkImage(student.profilePhoto as String),
                           ),
-                          SizedBox(height: 8),
-                          Container(
-                            height: 27,
-                            width: 50,
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(2),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              student.schoolName as String,
-                              style: AppTextStyles.esadTextStyle,
-                            ),
-                          ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 4),
                           student.isProfileVerified == true
                               ? Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    Text(student.name as String),
+                                    Text(
+                                      student.name as String,
+                                      style: AppTextStyles.studentNameTextStyle,
+                                    ),
                                     Image(
                                       height: 30,
                                       width: 30,
+                                      fit: BoxFit.fill,
                                       image: AssetImage(
                                         AppAssetsNames.verifiedLogoImageUrl,
                                       ),
                                     ),
                                   ],
                                 )
-                              : Text(student.name as String),
+                              : Text(
+                                  student.name as String,
+                                  style: AppTextStyles.studentNameTextStyle,
+                                ),
+                          SizedBox(height: 10),
                         ],
                       ),
                     ),

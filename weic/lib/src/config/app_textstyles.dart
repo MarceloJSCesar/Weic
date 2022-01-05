@@ -56,8 +56,13 @@ class AppTextStyles {
     fontSize: 16,
     color: Colors.white,
   );
+  // profile view
   static final TextStyle esadTextStyle = GoogleFonts.notoSans(
     fontSize: 16,
     color: AppColors.esadColor,
+  );
+  static final TextStyle studentNameTextStyle = GoogleFonts.notoSans(
+    fontSize: 16,
+    color: Colors.black,
   );
 }
