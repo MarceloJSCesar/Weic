@@ -92,12 +92,14 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                         ),
                   actions: <Widget>[
-                    IconButton(
-                      iconSize: 27,
-                      color: Colors.black,
-                      icon: Icon(Icons.menu),
-                      onPressed: () {},
-                    )
+                    student.id == widget.studentID
+                        ? IconButton(
+                            iconSize: 27,
+                            color: Colors.black,
+                            icon: Icon(Icons.menu),
+                            onPressed: () {},
+                          )
+                        : Container(),
                   ],
                 ),
                 backgroundColor: Colors.white,
@@ -137,7 +139,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                           SizedBox(height: 10),
                           Card(
-                            elevation: 2,
+                            elevation: 6,
                             color: Colors.black,
                             margin: const EdgeInsets.symmetric(horizontal: 16),
                             shape: RoundedRectangleBorder(
@@ -226,6 +228,59 @@ class _ProfileViewState extends State<ProfileView> {
                               ),
                             ),
                           ),
+                          SizedBox(height: 22),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Posts',
+                              style: AppTextStyles.profileTitleTextStyle,
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            alignment: Alignment.centerLeft,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: student.posts != null &&
+                                        student.posts!.length > 0
+                                    ? MainAxisAlignment.start
+                                    : MainAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(height: 16),
+                                  student.posts != null &&
+                                          student.posts!.length > 0
+                                      ? Container(
+                                          height: 100,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: student.posts!.length,
+                                            itemBuilder: (context, index) {
+                                              return Text(
+                                                '${student.posts![index]}',
+                                              );
+                                            },
+                                          ),
+                                        )
+                                      : Container(
+                                          alignment: Alignment.center,
+                                          child: Image(
+                                            height: 200,
+                                            fit: BoxFit.fill,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2,
+                                            image: AssetImage(AppAssetsNames
+                                                .noPostYetImageUrl),
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),

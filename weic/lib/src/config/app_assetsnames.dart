@@ -9,4 +9,5 @@ class AppAssetsNames {
   static final String classmateImageUrl = 'assets/school/classmate.jpg';
   static final String verifiedLogoImageUrl =
       'assets/user-profile/verified_logo.png';
+  static final String noPostYetImageUrl = 'assets/user-profile/no_post_yet.png';
 }

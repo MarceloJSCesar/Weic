@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 
 class Student {
   String? id;
+  List? posts;
+  List? guests;
   String? name;
   String? email;
   List? following;
@@ -16,7 +18,9 @@ class Student {
   Student({
     this.id,
     this.name,
+    this.posts,
     this.email,
+    this.guests,
     this.password,
     this.followers,
     this.following,
@@ -29,7 +33,10 @@ class Student {
   dynamic toJson() => {
         'id': id,
         'name': name,
+        'posts': posts,
+
         'email': email,
+        'guests': guests,
         'password': password,
         'followers': followers,
         'following': following,
@@ -43,7 +50,9 @@ class Student {
     return Student(
       id: document.data['id'],
       name: document.data['name'],
+      posts: document.data['posts'],
       email: document.data['email'],
+      guests: document.data['guests'],
       password: document.data['password'],
       followers: document.data['followers'],
       following: document.data['following'],
@@ -58,7 +67,9 @@ class Student {
     return Student(
       id: document!['id'],
       name: document['name'],
+      posts: document['posts'],
       email: document['email'],
+      guests: document['guests'],
       password: document['password'],
       followers: document['followers'],
       following: document['following'],
@@ -71,6 +82,6 @@ class Student {
 
   @override
   String toString() {
-    return 'Student{id: $id, name: $name, email: $email, password: $password, followers: $followers, following: $following, schoolName: $schoolName, profilePhoto: $profilePhoto, isMemberOfCFESAD: $isMemberOfCFESAD, isProfileVerified: $isProfileVerified}';
+    return 'Student{id: $id, name: $name, posts: $posts, email: $email, guests: $guests, password: $password, followers: $followers, following: $following, schoolName: $schoolName, profilePhoto: $profilePhoto, isMemberOfCFESAD: $isMemberOfCFESAD, isProfileVerified: $isProfileVerified}';
   }
 }

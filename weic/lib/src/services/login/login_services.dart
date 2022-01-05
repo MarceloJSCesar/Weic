@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:weic/src/controllers/login/login_controller.dart';
+import 'package:weic/src/models/post.dart';
 import 'package:weic/src/models/student.dart';
 
 class LoginServices {
@@ -19,8 +20,10 @@ class LoginServices {
       return Student(
         name: '',
         email: email,
+        posts: <Post>[],
         profilePhoto: '',
         schoolName: 'ESAD',
+        guests: <Student>[],
         followers: <Student>[],
         following: <Student>[],
         isMemberOfCFESAD:

@@ -74,4 +74,9 @@ class AppTextStyles {
     fontSize: 17,
     color: Colors.grey,
   );
+  static final TextStyle profileTitleTextStyle = GoogleFonts.notoSans(
+    fontSize: 20,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
 }
