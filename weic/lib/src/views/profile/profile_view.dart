@@ -179,7 +179,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       ),
                                     ],
                                   ),
-                                  student.id == widget.studentID
+                                  student.id != widget.studentID
                                       ? GestureDetector(
                                           onTap: () {
                                             setState(() {
