@@ -65,4 +65,13 @@ class AppTextStyles {
     fontSize: 16,
     color: Colors.black,
   );
+  static final TextStyle cardFollowsTextStyle = GoogleFonts.notoSans(
+    fontSize: 17,
+    color: Colors.white,
+    fontWeight: FontWeight.normal,
+  );
+  static final TextStyle cardNumFollowsTextStyle = GoogleFonts.notoSans(
+    fontSize: 17,
+    color: Colors.grey,
+  );
 }

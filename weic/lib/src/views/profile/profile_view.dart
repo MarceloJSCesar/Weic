@@ -15,6 +15,7 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   final _homeServices = HomeServices();
+  bool isYouFollowing = false;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -53,7 +54,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
-                                'CFESAD',
+                                'CF${student.schoolName}',
                                 style: AppTextStyles.esadTextStyle,
                               ),
                             ),
@@ -135,6 +136,96 @@ class _ProfileViewState extends State<ProfileView> {
                                   style: AppTextStyles.studentNameTextStyle,
                                 ),
                           SizedBox(height: 10),
+                          Card(
+                            elevation: 2,
+                            color: Colors.black,
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Column(
+                                    children: <Widget>[
+                                      Text(
+                                        'Seguidores',
+                                        style:
+                                            AppTextStyles.cardFollowsTextStyle,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        student.followers!.length.toString(),
+                                        style: AppTextStyles
+                                            .cardNumFollowsTextStyle,
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: <Widget>[
+                                      Text(
+                                        'Seguindo',
+                                        style:
+                                            AppTextStyles.cardFollowsTextStyle,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        student.following!.length.toString(),
+                                        style: AppTextStyles
+                                            .cardNumFollowsTextStyle,
+                                      ),
+                                    ],
+                                  ),
+                                  student.id == widget.studentID
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              isYouFollowing = !isYouFollowing;
+                                            });
+                                          },
+                                          child: Container(
+                                            height: 30,
+                                            width: 90,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                              color: isYouFollowing == true
+                                                  ? Colors.grey
+                                                  : Colors.blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              isYouFollowing == true
+                                                  ? 'Seguindo'
+                                                  : 'Seguir',
+                                              style: AppTextStyles
+                                                  .cardFollowsTextStyle,
+                                            ),
+                                          ),
+                                        )
+                                      : Column(
+                                          children: <Widget>[
+                                            Text(
+                                              'Visitantes',
+                                              style: AppTextStyles
+                                                  .cardFollowsTextStyle,
+                                            ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              student.following!.length
+                                                  .toString(),
+                                              style: AppTextStyles
+                                                  .cardNumFollowsTextStyle,
+                                            ),
+                                          ],
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
