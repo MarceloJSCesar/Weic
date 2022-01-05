@@ -58,12 +58,11 @@ flutter:
   assets:
     - assets/ca/
     - assets/logo/w.png
+    - assets/user-profile/
     - assets/school/me.jpg
     - assets/logo/weic.png
     - assets/school/diretor.jpg
     - assets/school/classmate.jpg
-    - assets/user-profile/boy-user-photo-profile.png
-    - assets/user-profile/woman-user-photo-profile.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

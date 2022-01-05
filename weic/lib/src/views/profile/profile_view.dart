@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/src/config/app_assetsnames.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/home/home_services.dart';
@@ -35,9 +36,28 @@ class _ProfileViewState extends State<ProfileView> {
               return Scaffold(
                 appBar: AppBar(
                   elevation: 0.0,
+                  centerTitle: false,
                   backgroundColor: Colors.white,
+                  title: student.isMemberOfCFESAD == true
+                      ? Container(
+                          height: 27,
+                          width: 70,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            'CFESAD',
+                            style: AppTextStyles.esadTextStyle,
+                          ),
+                        )
+                      : Container(),
                   actions: <Widget>[
                     IconButton(
+                      iconSize: 27,
                       color: Colors.black,
                       icon: Icon(Icons.menu),
                       onPressed: () {},
@@ -49,6 +69,7 @@ class _ProfileViewState extends State<ProfileView> {
                   slivers: <Widget>[
                     SliverToBoxAdapter(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           CircleAvatar(
                             radius: 60,
@@ -72,23 +93,21 @@ class _ProfileViewState extends State<ProfileView> {
                             ),
                           ),
                           SizedBox(height: 8),
-                          student.isMemberOfCFESAD == true
-                              ? Container(
-                                  height: 27,
-                                  width: 50,
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.all(2),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    border: Border.all(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Text(
-                                    'CFESAD',
-                                    style: AppTextStyles.esadTextStyle,
-                                  ),
+                          student.isProfileVerified == true
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(student.name as String),
+                                    Image(
+                                      height: 30,
+                                      width: 30,
+                                      image: AssetImage(
+                                        AppAssetsNames.verifiedLogoImageUrl,
+                                      ),
+                                    ),
+                                  ],
                                 )
-                              : Container(),
+                              : Text(student.name as String),
                         ],
                       ),
                     ),

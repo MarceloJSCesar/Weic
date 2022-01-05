@@ -7,4 +7,6 @@ class AppAssetsNames {
   static final String meImageUrl = 'assets/school/me.jpg';
   static final String diretorImageUrl = 'assets/school/diretor.jpg';
   static final String classmateImageUrl = 'assets/school/classmate.jpg';
+  static final String verifiedLogoImageUrl =
+      'assets/user-profile/verified_logo.png';
 }
