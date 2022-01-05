@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:weic/src/config/app_colors.dart';
 
 class AppTextStyles {
   static final TextStyle dropDownTextStyle = GoogleFonts.notoSans(
@@ -51,6 +52,12 @@ class AppTextStyles {
     fontSize: 16,
     color: Colors.black.withOpacity(0.6),
   );
-  static final TextStyle dadosEssenciaisButtonTextStyle =
-      GoogleFonts.notoSans(fontSize: 16, color: Colors.white);
+  static final TextStyle dadosEssenciaisButtonTextStyle = GoogleFonts.notoSans(
+    fontSize: 16,
+    color: Colors.white,
+  );
+  static final TextStyle esadTextStyle = GoogleFonts.notoSans(
+    fontSize: 16,
+    color: AppColors.esadColor,
+  );
 }

@@ -23,7 +23,8 @@ class LoginServices {
         schoolName: 'ESAD',
         followers: <Student>[],
         following: <Student>[],
-        isMemberOfCFESAD: false,
+        isMemberOfCFESAD:
+            email == 'marcelobarbosa1511es3@gmail.com' ? true : false,
         password: rsaKeypair.publicKey.encrypt(password),
         id: studentID != null ? studentID : _userCredential.user!.uid,
         isProfileVerified:

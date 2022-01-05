@@ -22,8 +22,8 @@ class Student {
     this.following,
     this.schoolName,
     this.profilePhoto,
-    this.isMemberOfCFESAD,
-    this.isProfileVerified,
+    this.isMemberOfCFESAD = false,
+    this.isProfileVerified = false,
   });
 
   dynamic toJson() => {
