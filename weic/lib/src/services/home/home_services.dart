@@ -23,6 +23,7 @@ class HomeServices {
   }
 
   Future sendEssentialStudentDataToFirebase({required Student student}) async {
+    List? body;
     var _instance = FirebaseFirestore.instance;
     await _instance
         .collection('users')
@@ -32,10 +33,19 @@ class HomeServices {
         .set(student.toJson())
         .then((value) => print('success'))
         .catchError((errorMsg) => print('errorMsg: $errorMsg'));
-    await _instance.collection('generalUsers').doc('GENERAL-USERS').set(
-      {
-        'users': <String>[student.id as String],
-      },
+    await _instance
+        .collection('generalUsers')
+        .doc('GENERAL-USERS')
+        .get()
+        .then((value) {
+      var data = value.data();
+      body = data!['users'];
+      print(body.toString());
+      body!.add(student.id);
+      print('body after: ${body.toString()}');
+    });
+    await _instance.collection('generalUsers').doc('GENERAL-USERS').update(
+      {'users': body},
     );
   }
 

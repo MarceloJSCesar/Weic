@@ -11,6 +11,7 @@ class Weic extends StatelessWidget {
   @override
   MaterialApp build(BuildContext context) {
     final _loginController = LoginController();
+    final _loginServices = LoginServices();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
@@ -39,6 +40,7 @@ class Weic extends StatelessWidget {
                   final String studentID = snapshot.data['studentID'];
                   return AppView(studentID: studentID);
                 } else {
+                  _loginServices.logoutUser();
                   return LoginView();
                 }
               }

@@ -74,4 +74,14 @@ class LoginServices {
     print('Map: ${map.cast()}');
     return map;
   }
+
+  Future logoutUser() async {
+    final _prefs = await SharedPreferences.getInstance();
+    try {
+      await _auth.auth.signOut();
+      await _prefs.remove('STUDENT_ID');
+    } catch (error) {
+      print('logout error $error');
+    }
+  }
 }
