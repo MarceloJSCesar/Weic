@@ -23,9 +23,10 @@ class LoginServices {
         posts: <Post>[],
         profilePhoto: '',
         schoolName: 'ESAD',
-        guests: <Student>[],
-        followers: <Student>[],
-        following: <Student>[],
+        guests: <
+            String>[], // if they want to see their guests their have to watch ads
+        followers: <String>[], // will be a list of students id
+        following: <String>[],
         isMemberOfCFESAD:
             email == 'marcelobarbosa1511es3@gmail.com' ? true : false,
         password: rsaKeypair.publicKey.encrypt(password),

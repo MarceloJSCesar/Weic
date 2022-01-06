@@ -79,4 +79,10 @@ class AppTextStyles {
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
+  // chat view
+  static final TextStyle chatTabTitleTextStyle = GoogleFonts.notoSans(
+    fontSize: 18,
+    color: Colors.grey,
+    fontWeight: FontWeight.bold,
+  );
 }

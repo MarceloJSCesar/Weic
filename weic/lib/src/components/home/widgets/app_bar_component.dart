@@ -25,8 +25,9 @@ class AppBarComponent extends PreferredSize {
                       height: 10,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
+                        /*
                         GestureDetector(
                           child: Icon(
                             Icons.menu,
@@ -35,6 +36,7 @@ class AppBarComponent extends PreferredSize {
                           ),
                           onTap: () => scaffoldKey!.currentState!.openDrawer(),
                         ),
+                        */
                         student.profilePhoto == null
                             ? CircleAvatar(
                                 radius: 20,
