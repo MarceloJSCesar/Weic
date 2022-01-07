@@ -85,4 +85,9 @@ class AppTextStyles {
     color: Colors.grey,
     fontWeight: FontWeight.bold,
   );
+  static final TextStyle studentCardButtonTextStyle = GoogleFonts.notoSans(
+    fontSize: 14,
+    color: Colors.white,
+    fontWeight: FontWeight.normal,
+  );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/src/components/chat/widgets/student_card.dart';
 import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
 
@@ -25,14 +26,7 @@ class StudentsBody extends StatelessWidget {
               return ListView.builder(
                 itemCount: students.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    child: Column(
-                      children: <Widget>[
-                        Text(students[index].name as String),
-                        Text(students[index].email as String),
-                      ],
-                    ),
-                  );
+                  return StudentCard(student: students[index]);
                 },
               );
             } else {
