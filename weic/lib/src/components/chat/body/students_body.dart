@@ -4,7 +4,11 @@ import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
 
 class StudentsBody extends StatelessWidget {
-  const StudentsBody({Key? key}) : super(key: key);
+  final String myId;
+  const StudentsBody({
+    Key? key,
+    required this.myId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class StudentsBody extends StatelessWidget {
               return ListView.builder(
                 itemCount: students.length,
                 itemBuilder: (context, index) {
-                  return StudentCard(student: students[index]);
+                  return StudentCard(student: students[index], myId: myId);
                 },
               );
             } else {

@@ -5,17 +5,23 @@ import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/home/home_services.dart';
 import 'package:weic/src/views/login/login_view.dart';
 
-class ProfileView extends StatefulWidget {
+class ProfileViewer extends StatefulWidget {
   final String studentID;
-  const ProfileView({Key? key, required this.studentID}) : super(key: key);
+  final String myID;
+  const ProfileViewer({
+    Key? key,
+    required this.myID,
+    required this.studentID,
+  }) : super(key: key);
 
   @override
-  _ProfileViewState createState() => _ProfileViewState();
+  State<ProfileViewer> createState() => _ProfileViewerState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
+class _ProfileViewerState extends State<ProfileViewer> {
   final _homeServices = HomeServices();
   bool isYouFollowing = false;
+  bool isProfileViewer = true;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -92,7 +98,7 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                         ),
                   actions: <Widget>[
-                    student.id == widget.studentID
+                    isProfileViewer == false
                         ? IconButton(
                             iconSize: 27,
                             color: Colors.black,
@@ -101,6 +107,11 @@ class _ProfileViewState extends State<ProfileView> {
                           )
                         : Container(),
                   ],
+                  leading: IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    color: Colors.black,
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
                 ),
                 backgroundColor: Colors.white,
                 body: CustomScrollView(
@@ -181,7 +192,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       ),
                                     ],
                                   ),
-                                  student.id != widget.studentID
+                                  student.id != widget.myID
                                       ? GestureDetector(
                                           onTap: () {
                                             setState(() {

@@ -31,7 +31,7 @@ class _AppViewState extends State<AppView> {
     super.initState();
     _pages = [
       HomeView(studentID: widget.studentID),
-      ChatView(),
+      ChatView(myId: widget.studentID),
       NewsView(),
       ProfileView(studentID: widget.studentID),
     ];

@@ -5,7 +5,11 @@ import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
 
 class ChatView extends StatefulWidget {
-  const ChatView({Key? key}) : super(key: key);
+  final String myId;
+  const ChatView({
+    Key? key,
+    required this.myId,
+  }) : super(key: key);
 
   @override
   _ChatViewState createState() => _ChatViewState();
@@ -80,7 +84,7 @@ class _ChatViewState extends State<ChatView>
           controller: _tabController,
           children: <Widget>[
             Text('Mensagens'),
-            StudentsBody(),
+            StudentsBody(myId: widget.myId),
           ],
         ),
       ),
