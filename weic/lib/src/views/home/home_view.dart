@@ -1,14 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crypton/crypton.dart';
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/home/widgets/insert_essencial_data_view.dart';
-import 'package:weic/src/config/app_assetsnames.dart';
 import 'package:weic/src/services/home/home_services.dart';
 import 'package:weic/src/views/login/login_view.dart';
 import '../../models/student.dart';
 import '../../components/home/body/home_body.dart';
-import '../../components/home/drawer/drawer_body.dart';
-import 'package:uuid/uuid.dart';
 
 class HomeView extends StatefulWidget {
   final String studentID;
