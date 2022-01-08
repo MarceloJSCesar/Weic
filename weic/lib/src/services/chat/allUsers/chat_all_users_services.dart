@@ -23,4 +23,32 @@ class ChatAllUsersService {
     }
     return students;
   }
+
+  Future sendPrivateMessage({
+    required String mensage,
+    required Student senderStudent,
+    required Student receiverStudent,
+  }) async {
+    final _instance = FirebaseFirestore.instance;
+    await _instance
+        .collection('mensages')
+        .doc('MENSAGENS')
+        .collection('private')
+        .doc('PRIVATE')
+        .collection(senderStudent.name as String)
+        .doc(senderStudent.id)
+        .collection('message')
+        .add({
+      'mensage': mensage,
+      'timestamp': Timestamp.now(),
+      'senderId': senderStudent.id,
+      'senderName': senderStudent.name,
+      'senderPhoto': senderStudent.profilePhoto,
+      'senderProfileVerified': senderStudent.isProfileVerified,
+      'receiverId': receiverStudent.id,
+      'receiverName': receiverStudent.name,
+      'receiverPhoto': receiverStudent.profilePhoto,
+      'receiverProfileVerified': receiverStudent.isProfileVerified,
+    });
+  }
 }
