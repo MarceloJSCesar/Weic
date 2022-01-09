@@ -79,17 +79,48 @@ class MensagesScreen extends StatelessWidget {
                     );
                   default:
                     if (snapshot.hasData) {
-                      return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (listViewcontext, index) {
-                          Map<String, dynamic> body =
-                              snapshot.data!.docs[index].data();
-
-                          return Text(
-                            body['mensage'] as String,
-                            style: AppTextStyles.blackTextStyle,
-                          );
-                        },
+                      var body = snapshot.data!.docs;
+                      List<Mensage> mensages = [];
+                      List<Mensage> senderMensages = [];
+                      List<Mensage> receiverMensages = [];
+                      body.forEach((mensage) {
+                        print('mensage: ${mensage.data()}');
+                        mensages.add(Mensage.fromDocument(mensage.data()));
+                      });
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 8),
+                        child: ListView.builder(
+                          reverse: true,
+                          itemCount: mensages.length,
+                          itemBuilder: (listViewcontext, index) {
+                            if (mensages[index].senderId == myId) {
+                              senderMensages.add(mensages[index]);
+                            } else {
+                              receiverMensages.add(mensages[index]);
+                            }
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  alignment: mensages[index].senderId == myId
+                                      ? Alignment.bottomRight
+                                      : Alignment.bottomLeft,
+                                  child: mensages[index].senderId == myId
+                                      ? Text(senderMensages[index].mensage
+                                          as String)
+                                      : Text(
+                                          receiverMensages[index].mensage
+                                              as String,
+                                        ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
                       );
                     } else {
                       return Center(
