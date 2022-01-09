@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
+import 'package:weic/src/models/mensage.dart';
 import 'package:weic/src/models/student.dart';
 
 class ChatAllUsersService {
@@ -29,13 +32,12 @@ class ChatAllUsersService {
     required Student senderStudent,
     required Student receiverStudent,
   }) async {
-    final _instance = FirebaseFirestore.instance;
     await _instance
         .collection('mensages')
         .doc('MENSAGENS')
         .collection('private')
         .doc('PRIVATE')
-        .collection(senderStudent.name as String)
+        .collection('PRIVATE-MENSAGENS')
         .doc(senderStudent.id)
         .collection('message')
         .add({
@@ -50,5 +52,24 @@ class ChatAllUsersService {
       'receiverPhoto': receiverStudent.profilePhoto,
       'receiverProfileVerified': receiverStudent.isProfileVerified,
     });
+  }
+
+  Future getPrivateMessages({required String senderID}) async {
+    var privateMessagesResponse = await _instance
+        .collection('mensages')
+        .doc('MENSAGENS')
+        .collection('private')
+        .doc('PRIVATE')
+        .collection('PRIVATE-MENSAGENS')
+        .doc(senderID)
+        .collection('message')
+        .doc('MESSAGE')
+        .get();
+    if (privateMessagesResponse.exists) {
+      Mensage mensage = Mensage.fromDocument(privateMessagesResponse.data());
+      return mensage;
+    } else {
+      return null;
+    }
   }
 }

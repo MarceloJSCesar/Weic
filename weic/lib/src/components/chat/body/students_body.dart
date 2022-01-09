@@ -30,7 +30,10 @@ class StudentsBody extends StatelessWidget {
               return ListView.builder(
                 itemCount: students.length,
                 itemBuilder: (context, index) {
-                  return StudentCard(student: students[index], myId: myId);
+                  return StudentCard(
+                    anotherStudent: students[index],
+                    myId: myId,
+                  );
                 },
               );
             } else {

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:weic/src/components/chat/widgets/mensages_screen.dart';
 import 'package:weic/src/components/chat/widgets/profile_viewer.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/student.dart';
 
 class StudentCard extends StatelessWidget {
   final String myId;
-  final Student student;
+  final Student anotherStudent;
   const StudentCard({
     Key? key,
     required this.myId,
-    required this.student,
+    required this.anotherStudent,
   }) : super(key: key);
 
   @override
@@ -19,12 +20,12 @@ class StudentCard extends StatelessWidget {
       child: ListTile(
         leading: CircleAvatar(
           radius: 30,
-          backgroundImage: NetworkImage(student.profilePhoto as String),
+          backgroundImage: NetworkImage(anotherStudent.profilePhoto as String),
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(student.name as String),
+            Text(anotherStudent.name as String),
             Row(
               children: <Widget>[
                 Expanded(
@@ -37,7 +38,14 @@ class StudentCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => MensagesScreen(
+                            myId: myId,
+                            anotherStudent: anotherStudent,
+                          ),
+                        ),
+                      ),
                       child: FittedBox(
                         child: Text(
                           'Enviar Mensagem',
@@ -63,7 +71,7 @@ class StudentCard extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (_) => ProfileViewer(
                               myID: myId,
-                              studentID: student.id as String,
+                              studentID: anotherStudent.id as String,
                             ),
                           ),
                         );

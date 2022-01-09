@@ -3,17 +3,17 @@ import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
 
 class MensageBody extends StatelessWidget {
-  final Student student;
+  final String senderID;
   const MensageBody({
     Key? key,
-    required this.student,
+    required this.senderID,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final _chatAllUsersServices = ChatAllUsersService();
     return FutureBuilder(
-      future: _chatAllUsersServices.getAllStudents(),
+      future: _chatAllUsersServices.getPrivateMessages(senderID: senderID),
       builder: (context, AsyncSnapshot snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:

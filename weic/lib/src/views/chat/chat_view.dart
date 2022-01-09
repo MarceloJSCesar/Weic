@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:weic/src/components/chat/body/mensage_body.dart';
 import 'package:weic/src/components/chat/body/students_body.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
@@ -83,7 +84,7 @@ class _ChatViewState extends State<ChatView>
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            Text('Mensagens'),
+            MensageBody(senderID: widget.myId),
             StudentsBody(myId: widget.myId),
           ],
         ),
