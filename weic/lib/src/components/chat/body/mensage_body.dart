@@ -1,20 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
 
 class MensageBody extends StatelessWidget {
-  final String senderID;
+  final String myId;
   const MensageBody({
     Key? key,
-    required this.senderID,
+    required this.myId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _instance = FirebaseFirestore.instance;
     final _chatAllUsersServices = ChatAllUsersService();
     return FutureBuilder(
-      future: _chatAllUsersServices.getPrivateMessages(senderID: senderID),
-      builder: (context, AsyncSnapshot snapshot) {
+      future: _instance
+          .collection('mensages')
+          .doc('MENSAGENS')
+          .collection('private')
+          .doc('PRIVATE')
+          .collection('private-mensagens')
+          .doc('PRIVATE-MENSAGENS')
+          .collection('message')
+          .orderBy('timestamp', descending: false)
+          .get(),
+      builder: (context,
+          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return Center(
@@ -25,11 +37,10 @@ class MensageBody extends StatelessWidget {
             );
           default:
             if (snapshot.hasData) {
-              final List<Student> students = snapshot.data;
               return ListView.builder(
-                itemCount: students.length,
+                itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-                  return Text('hi');
+                  return Text(snapshot.data!.docs[index].data()['mensage']);
                 },
               );
             } else {

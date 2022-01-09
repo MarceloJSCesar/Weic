@@ -25,9 +25,9 @@ class Mensage {
     required this.receiverProfileVerified,
   });
 
-  factory Mensage.fromDocument(Map<String, dynamic>? document) {
+  factory Mensage.fromDocument(Map<String, dynamic> document) {
     return Mensage(
-      timestamp: document!['timestamp'],
+      timestamp: document['timestamp'],
       mensage: document['mensage'],
       senderId: document['senderId'],
       senderName: document['senderName'],

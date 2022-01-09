@@ -29,7 +29,7 @@ class ChatAllUsersService {
 
   Future sendPrivateMessage({
     required String mensage,
-    required Student senderStudent,
+    required String senderStudentId,
     required Student receiverStudent,
   }) async {
     await _instance
@@ -37,16 +37,13 @@ class ChatAllUsersService {
         .doc('MENSAGENS')
         .collection('private')
         .doc('PRIVATE')
-        .collection('PRIVATE-MENSAGENS')
-        .doc(senderStudent.id)
+        .collection('private-mensagens')
+        .doc('PRIVATE-MENSAGENS')
         .collection('message')
         .add({
       'mensage': mensage,
       'timestamp': Timestamp.now(),
-      'senderId': senderStudent.id,
-      'senderName': senderStudent.name,
-      'senderPhoto': senderStudent.profilePhoto,
-      'senderProfileVerified': senderStudent.isProfileVerified,
+      'senderId': senderStudentId,
       'receiverId': receiverStudent.id,
       'receiverName': receiverStudent.name,
       'receiverPhoto': receiverStudent.profilePhoto,
@@ -54,20 +51,23 @@ class ChatAllUsersService {
     });
   }
 
-  Future getPrivateMessages({required String senderID}) async {
+  Future getPrivateMessages({required String myId}) async {
     var privateMessagesResponse = await _instance
         .collection('mensages')
         .doc('MENSAGENS')
         .collection('private')
         .doc('PRIVATE')
-        .collection('PRIVATE-MENSAGENS')
-        .doc(senderID)
+        .collection('private-mensagens')
+        .doc('PRIVATE-MENSAGENS')
         .collection('message')
-        .doc('MESSAGE')
         .get();
-    if (privateMessagesResponse.exists) {
-      Mensage mensage = Mensage.fromDocument(privateMessagesResponse.data());
-      return mensage;
+    if (privateMessagesResponse.docs.isNotEmpty) {
+      return privateMessagesResponse.docs.map(
+        (mensages) {
+          Mensage mensage = Mensage.fromDocument(mensages.data());
+          print('function get mensagem: ${mensage.toString()}');
+        },
+      ).toList();
     } else {
       return null;
     }

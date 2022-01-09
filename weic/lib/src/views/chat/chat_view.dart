@@ -84,7 +84,7 @@ class _ChatViewState extends State<ChatView>
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            MensageBody(senderID: widget.myId),
+            MensageBody(myId: widget.myId),
             StudentsBody(myId: widget.myId),
           ],
         ),
