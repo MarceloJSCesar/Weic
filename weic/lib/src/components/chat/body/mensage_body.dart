@@ -43,8 +43,8 @@ class MensageBody extends StatelessWidget {
               List<Mensage> senderMensages = [];
               List<Mensage> receiverMensages = [];
               body.forEach((mensage) {
-                print('mensage: ${mensage.data()}');
                 mensages.add(Mensage.fromDocument(mensage.data()));
+                print('mensage: ${mensage.data()}');
               });
               return ListView.builder(
                 reverse: true,
