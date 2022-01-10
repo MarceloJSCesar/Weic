@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:weic/src/components/chat/widgets/card_message.dart';
 import 'package:weic/src/components/chat/widgets/message_student_card.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/mensage.dart';
@@ -65,7 +66,7 @@ class MensagesScreen extends StatelessWidget {
                   .collection('private-mensagens')
                   .doc('PRIVATE-MENSAGENS')
                   .collection('message')
-                  .orderBy('timestamp', descending: false)
+                  .orderBy('timestamp', descending: true)
                   .snapshots(),
               builder: (context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
@@ -103,19 +104,14 @@ class MensagesScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
-                                Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  alignment: mensages[index].senderId == myId
-                                      ? Alignment.bottomRight
-                                      : Alignment.bottomLeft,
-                                  child: mensages[index].senderId == myId
-                                      ? Text(senderMensages[index].mensage
-                                          as String)
-                                      : Text(
-                                          receiverMensages[index].mensage
-                                              as String,
-                                        ),
+                                CardMessage(
+                                  isMe: mensages[index].senderId == myId,
+                                  senderMensage:
+                                      senderMensages[index].mensage as String,
+                                  receiverMensage: receiverMensages.isNotEmpty
+                                      ? receiverMensages[index].mensage
+                                          as String
+                                      : '',
                                 ),
                               ],
                             );
