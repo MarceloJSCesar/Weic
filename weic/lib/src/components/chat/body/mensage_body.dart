@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:weic/src/components/chat/widgets/mensagens_card.dart';
 import 'package:weic/src/models/mensage.dart';
 import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
@@ -44,13 +45,15 @@ class MensageBody extends StatelessWidget {
               List<Mensage> receiverMensages = [];
               body.forEach((mensage) {
                 mensages.add(Mensage.fromDocument(mensage.data()));
-                print('mensage: ${mensage.data()}');
               });
               return ListView.builder(
                 reverse: true,
-                itemCount: snapshot.data!.docs.length,
+                itemCount: mensages.length,
                 itemBuilder: (context, index) {
-                  return Text(snapshot.data!.docs[index].data()['mensage']);
+                  return MensagesCard(
+                    myId: myId,
+                    mensage: mensages[index],
+                  );
                 },
               );
             } else {
