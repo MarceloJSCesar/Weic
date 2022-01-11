@@ -101,17 +101,15 @@ class MensagesScreen extends StatelessWidget {
                               receiverMensages.add(mensages[index]);
                             }
                             return Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              crossAxisAlignment:
+                                  mensages[index].senderId == myId
+                                      ? CrossAxisAlignment.end
+                                      : CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
                                 CardMessage(
                                   isMe: mensages[index].senderId == myId,
-                                  senderMensage:
-                                      senderMensages[index].mensage as String,
-                                  receiverMensage: receiverMensages.isNotEmpty
-                                      ? receiverMensages[index].mensage
-                                          as String
-                                      : '',
+                                  mensage: mensages[index].mensage as String,
                                 ),
                               ],
                             );

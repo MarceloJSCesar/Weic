@@ -3,18 +3,16 @@ import 'package:weic/src/models/mensage.dart';
 
 class CardMessage extends StatelessWidget {
   final bool isMe;
-  final String senderMensage;
-  final String receiverMensage;
+  final String mensage;
   const CardMessage({
     Key? key,
     required this.isMe,
-    required this.senderMensage,
-    required this.receiverMensage,
+    required this.mensage,
   }) : super(key: key);
 
   double get _maxWidth {
-    final senderMensageLength = senderMensage.length;
-    final receiverMensageLength = receiverMensage.length;
+    final senderMensageLength = mensage.length;
+    final receiverMensageLength = mensage.length;
     if (senderMensageLength >= 0 ||
         receiverMensageLength >= 0 && senderMensageLength <= 100 ||
         receiverMensageLength <= 100) {
@@ -28,20 +26,20 @@ class CardMessage extends StatelessWidget {
         receiverMensageLength <= 300) {
       return 120;
     } else {
-      return isMe ? senderMensage.length * 1.08 : receiverMensage.length * 1.08;
+      return isMe ? mensage.length * 1.08 : mensage.length * 1.08;
     }
   }
 
   double get _maxHeight {
-    final senderMensageLength = senderMensage.length;
-    final receiverMensageLength = receiverMensage.length;
+    final senderMensageLength = mensage.length;
+    final receiverMensageLength = mensage.length;
     if (senderMensageLength >= 0 &&
         receiverMensageLength >= 0 &&
         senderMensageLength <= 20 &&
         receiverMensageLength <= 20) {
       return 100;
     } else {
-      return isMe ? senderMensage.length * 8.0 : receiverMensage.length * 8.0;
+      return isMe ? mensage.length * 8.0 : mensage.length * 8.0;
     }
   }
 
@@ -59,10 +57,10 @@ class CardMessage extends StatelessWidget {
       alignment: Alignment.center,
       child: isMe
           ? Text(
-              senderMensage,
+              mensage,
             )
           : Text(
-              receiverMensage.length <= 0 ? '' : receiverMensage,
+              mensage,
             ),
     );
   }
