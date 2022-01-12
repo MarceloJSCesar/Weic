@@ -47,7 +47,6 @@ class MensageBody extends StatelessWidget {
                 mensages.add(Mensage.fromDocument(mensage.data()));
               });
               return ListView.builder(
-                reverse: true,
                 itemCount: mensages.length,
                 itemBuilder: (context, index) {
                   return MensagesCard(
