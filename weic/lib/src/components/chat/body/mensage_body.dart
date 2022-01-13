@@ -31,10 +31,9 @@ class MensageBody extends StatelessWidget {
             default:
               if (studentSnapshots.hasData) {
                 List<Student> students = studentSnapshots.data;
+                students
+                    .remove(students.where((element) => element.id == myId));
                 for (int i = 0; i < students.length; i++) {
-                  if (students[i].id == myId) {
-                    students.removeAt(i);
-                  }
                   return StreamBuilder(
                     stream: _instance
                         .collection('mensages')
@@ -61,12 +60,18 @@ class MensageBody extends StatelessWidget {
                         default:
                           if (snapshot.hasData) {
                             var body = snapshot.data!.docs;
-                            List<Mensage> mensages = [];
-                            List<Mensage> senderMensages = [];
-                            List<Mensage> receiverMensages = [];
+                            List<Mensage> allMensages = [];
+                            Map<String, List<Mensage>> mensages = {};
                             body.forEach((mensage) {
-                              mensages
+                              allMensages
                                   .add(Mensage.fromDocument(mensage.data()));
+                              mensages.addAll({
+                                '${students[i].id}': allMensages
+                                    .where((element) =>
+                                        element.senderId == myId ||
+                                        element.receiverId == myId)
+                                    .toList(),
+                              });
                             });
                             return ListView.builder(
                               itemCount: mensages.length,
@@ -80,10 +85,15 @@ class MensageBody extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  child: MensagesCard(
-                                    myId: myId,
-                                    mensage: mensages[index],
-                                  ),
+                                  child: mensages.values
+                                          .toList()[index]
+                                          .isNotEmpty
+                                      ? MensagesCard(
+                                          myId: myId,
+                                          mensage: mensages[
+                                              students[i].id as String]![index],
+                                        )
+                                      : Container(),
                                 );
                               },
                             );

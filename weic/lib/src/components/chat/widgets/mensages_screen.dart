@@ -81,45 +81,62 @@ class MensagesScreen extends StatelessWidget {
                   default:
                     if (snapshot.hasData) {
                       var body = snapshot.data!.docs;
-                      List<Mensage> mensages = [];
-                      List<Mensage> senderMensages = [];
-                      List<Mensage> receiverMensages = [];
+                      List<Mensage> allMensages = [];
+                      List<Mensage> myMensages = [];
+                      Map<String, List<Mensage>> mensages = {};
                       body.forEach((mensage) {
-                        print('mensage: ${mensage.data()}');
-                        mensages.add(Mensage.fromDocument(mensage.data()));
+                        allMensages.add(Mensage.fromDocument(mensage.data()));
                       });
+                      for (int i = 0; i < allMensages.length; i++) {
+                        if (allMensages[i].senderId == myId ||
+                            allMensages[i].receiverId == myId &&
+                                allMensages[i].senderId == anotherStudent.id ||
+                            allMensages[i].receiverId == anotherStudent.id) {
+                          if (allMensages[i].senderId == myId) {
+                            if (allMensages[i].receiverId ==
+                                anotherStudent.id) {
+                              myMensages.add(allMensages[i]);
+                            }
+                          } else if (allMensages[i].receiverId == myId) {
+                            if (allMensages[i].senderId == anotherStudent.id) {
+                              myMensages.add(allMensages[i]);
+                            }
+                          }
+                        }
+                      }
                       return Container(
                         margin: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 8),
                         child: ListView.builder(
                           reverse: true,
-                          itemCount: mensages.length,
+                          itemCount: myMensages.length,
                           itemBuilder: (listViewcontext, index) {
-                            if (mensages[index].senderId == myId) {
-                              senderMensages.add(mensages[index]);
-                            } else {
-                              receiverMensages.add(mensages[index]);
-                            }
-                            return Column(
-                              crossAxisAlignment:
-                                  mensages[index].senderId == myId
-                                      ? CrossAxisAlignment.end
-                                      : CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                CardMessage(
-                                  isMe: mensages[index].senderId == myId,
-                                  mensage: mensages[index].mensage as String,
-                                ),
-                              ],
-                            );
+                            return myMensages.isNotEmpty
+                                ? Column(
+                                    crossAxisAlignment:
+                                        myMensages[index].senderId == myId
+                                            ? CrossAxisAlignment.end
+                                            : CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      CardMessage(
+                                        isMe:
+                                            myMensages[index].senderId == myId,
+                                        mensage:
+                                            myMensages[index].mensage as String,
+                                      ),
+                                    ],
+                                  )
+                                : Center(
+                                    child: Text('Nenhum mensagem ainda'),
+                                  );
                           },
                         ),
                       );
                     } else {
                       return Center(
                         child: Text(
-                          'Nenhuma mensagem ainda',
+                          'Nenhuma mensagem enviada ainda',
                           style: AppTextStyles.blackTextStyle,
                         ),
                       );
