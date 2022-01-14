@@ -3,6 +3,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
+import 'package:weic/src/models/mensage.dart';
 import 'package:weic/src/models/student.dart';
 import 'dart:convert';
 import '../../models/news.dart';
@@ -42,11 +43,13 @@ class HomeServices {
       body = data!['users'];
       print(body.toString());
       body!.add(student.id);
-      print('body after: ${body.toString()}');
     });
     await _instance.collection('generalUsers').doc('GENERAL-USERS').update(
       {'users': body},
     );
+    await _instance.collection('privateMensages').doc(student.id).set({
+      'mensages': [],
+    });
   }
 
   Future getStudentEssentialData({required String studentID}) async {
