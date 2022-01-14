@@ -41,14 +41,21 @@ class HomeServices {
         .then((value) {
       var data = value.data();
       body = data!['users'];
-      print(body.toString());
       body!.add(student.id);
     });
     await _instance.collection('generalUsers').doc('GENERAL-USERS').update(
       {'users': body},
     );
     await _instance.collection('privateMensages').doc(student.id).set({
-      'mensages': [],
+      'latestMensage': {
+        'timestamp': Timestamp.fromMillisecondsSinceEpoch(
+            DateTime.now().millisecondsSinceEpoch),
+        'mensage': '',
+        'senderId': '',
+        'receiverId': '',
+        'receiverName': '',
+        'receiverProfilePhoto': '',
+      },
     });
   }
 

@@ -42,13 +42,40 @@ class ChatAllUsersService {
         .collection('message')
         .add({
       'mensage': mensage,
-      'timestamp': Timestamp.now(),
+      'timestamp': msg.timestamp,
       'senderId': senderStudentId,
       'receiverId': msg.receiverId,
       'receiverName': msg.receiverName,
       'receiverPhoto': msg.receiverPhoto,
       'receiverProfileVerified': msg.receiverProfileVerified,
     });
+    Map<String, dynamic>? mensages = {};
+    final newMsg = {
+      'timestamp': msg.timestamp,
+      'mensage': mensage,
+      'senderId': senderStudentId,
+      'receiverId': msg.receiverId,
+      'receiverName': msg.receiverName,
+      'receiverProfilePhoto': msg.receiverPhoto,
+    };
+    await _instance
+        .collection('privateMensages')
+        .doc(senderStudentId)
+        .get()
+        .then((value) {
+      final valueMsg = value.data()!['latestMensage']['mensage'] as String;
+      if (valueMsg.length > 0) {
+        mensages = value.data()!['latestMensage'];
+        mensages!.addAll(newMsg);
+      } else {
+        mensages!.addAll(newMsg);
+      }
+    });
+    await _instance.collection('privateMensages').doc(senderStudentId).update(
+      {
+        'latestMensage': mensages!,
+      },
+    );
   }
 
   Future getPrivateMessages({required String myId}) async {

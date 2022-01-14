@@ -47,7 +47,10 @@ class StudentCard extends StatelessWidget {
                                 builder: (_) => MensagesScreen(
                                   myId: myId,
                                   mensage: Mensage(
-                                    timestamp: Timestamp.now(),
+                                    timestamp:
+                                        Timestamp.fromMillisecondsSinceEpoch(
+                                            DateTime.now()
+                                                .millisecondsSinceEpoch),
                                     mensage: '',
                                     senderId: myId,
                                     receiverId: anotherStudent.id,
