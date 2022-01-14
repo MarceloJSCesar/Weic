@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:weic/src/components/chat/widgets/mensages_screen.dart';
 import 'package:weic/src/components/chat/widgets/profile_viewer.dart';
 import 'package:weic/src/config/app_textstyles.dart';
+import 'package:weic/src/models/mensage.dart';
 import 'package:weic/src/models/student.dart';
 
 class StudentCard extends StatelessWidget {
@@ -44,7 +46,16 @@ class StudentCard extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (_) => MensagesScreen(
                                   myId: myId,
-                                  anotherStudent: anotherStudent,
+                                  mensage: Mensage(
+                                    timestamp: Timestamp.now(),
+                                    mensage: '',
+                                    senderId: myId,
+                                    receiverId: anotherStudent.id,
+                                    receiverName: anotherStudent.name,
+                                    receiverPhoto: anotherStudent.profilePhoto,
+                                    receiverProfileVerified:
+                                        anotherStudent.isProfileVerified,
+                                  ),
                                 ),
                               ),
                             ),

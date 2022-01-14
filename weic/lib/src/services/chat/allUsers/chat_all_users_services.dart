@@ -30,7 +30,7 @@ class ChatAllUsersService {
   Future sendPrivateMessage({
     required String mensage,
     required String senderStudentId,
-    required Student receiverStudent,
+    required Mensage msg,
   }) async {
     await _instance
         .collection('mensages')
@@ -44,10 +44,10 @@ class ChatAllUsersService {
       'mensage': mensage,
       'timestamp': Timestamp.now(),
       'senderId': senderStudentId,
-      'receiverId': receiverStudent.id,
-      'receiverName': receiverStudent.name,
-      'receiverPhoto': receiverStudent.profilePhoto,
-      'receiverProfileVerified': receiverStudent.isProfileVerified,
+      'receiverId': msg.receiverId,
+      'receiverName': msg.receiverName,
+      'receiverPhoto': msg.receiverPhoto,
+      'receiverProfileVerified': msg.receiverProfileVerified,
     });
   }
 

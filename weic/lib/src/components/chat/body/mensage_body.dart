@@ -33,8 +33,8 @@ class MensageBody extends StatelessWidget {
                 List<Student> students = studentSnapshots.data;
                 students
                     .remove(students.where((element) => element.id == myId));
-                for (int i = 0; i < students.length; i++) {
-                  return StreamBuilder(
+
+                return StreamBuilder(
                     stream: _instance
                         .collection('mensages')
                         .doc('MENSAGENS')
@@ -60,61 +60,94 @@ class MensageBody extends StatelessWidget {
                         default:
                           if (snapshot.hasData) {
                             var body = snapshot.data!.docs;
+                            List<String> msgIds = [];
+                            List<Mensage> listMsg = [];
                             List<Mensage> allMensages = [];
-                            Map<String, List<Mensage>> mensages = {};
+                            List<Mensage> myMensages = [];
+                            Map<String, Mensage> studentsMensages = {};
                             body.forEach((mensage) {
                               allMensages
                                   .add(Mensage.fromDocument(mensage.data()));
-                              mensages.addAll({
-                                '${students[i].id}': allMensages
-                                    .where((element) =>
-                                        element.senderId == myId ||
-                                        element.receiverId == myId)
-                                    .toList(),
-                              });
                             });
-                            return ListView.builder(
-                              itemCount: mensages.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => MensagesScreen(
-                                        myId: myId,
-                                        anotherStudent: students[i],
-                                      ),
-                                    ),
-                                  ),
-                                  child: mensages.values
-                                          .toList()[index]
-                                          .isNotEmpty
-                                      ? MensagesCard(
-                                          myId: myId,
-                                          mensage: mensages[
-                                              students[i].id as String]![index],
-                                        )
-                                      : Container(),
-                                );
-                              },
-                            );
+                            for (int index = 0;
+                                index < students.length;
+                                index++) {
+                              for (int i = 0; i < allMensages.length; i++) {
+                                if (allMensages[i].senderId == myId ||
+                                    allMensages[i].receiverId == myId) {
+                                  listMsg.add(allMensages[i]);
+                                }
+                              }
+                              for (int i = 0; i < listMsg.length; i++) {
+                                if (listMsg[i].senderId == myId) {
+                                  studentsMensages.addAll(
+                                      {'${listMsg[i].receiverId}': listMsg[i]});
+                                } else {
+                                  studentsMensages.addAll(
+                                      {'${listMsg[i].senderId}': listMsg[i]});
+                                }
+                              }
+                              for (int i = 0; i < listMsg.length; i++) {
+                                print('msg: ' + studentsMensages.toString());
+                                return ListView.builder(
+                                    itemCount: studentsMensages.length,
+                                    itemBuilder: (context, msgIndex) {
+                                      listMsg.forEach((element) {});
+                                      return GestureDetector(
+                                        onTap: () => Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (_) => MensagesScreen(
+                                                myId: myId,
+                                                mensage: studentsMensages
+                                                        .containsKey(
+                                                            listMsg[i].senderId)
+                                                    ? studentsMensages[
+                                                            listMsg[i].senderId
+                                                                as String]
+                                                        as Mensage
+                                                    : studentsMensages[
+                                                            listMsg[i]
+                                                                    .receiverId
+                                                                as String]
+                                                        as Mensage),
+                                          ),
+                                        ),
+                                        child: studentsMensages.length > 0
+                                            ? MensagesCard(
+                                                myId: myId,
+                                                mensage: studentsMensages
+                                                        .containsKey(
+                                                            listMsg[i].senderId)
+                                                    ? studentsMensages[
+                                                            listMsg[i].senderId
+                                                                as String]
+                                                        as Mensage
+                                                    : studentsMensages[
+                                                            listMsg[i]
+                                                                    .receiverId
+                                                                as String]
+                                                        as Mensage)
+                                            : Container(),
+                                      );
+                                    });
+                              }
+                            }
                           } else {
                             return Center(
                               child: Text('Nenhum mensagem ainda'),
                             );
                           }
                       }
-                    },
-                  );
-                }
-              } else {
-                return Center(
-                  child: Text('Nenhum estudante ainda'),
-                );
+
+                      return Center(
+                        child: Text('Nenhum estudante ainda'),
+                      );
+                    });
               }
-              return Center(
-                child: Text('Nenhum estudante ainda'),
-              );
           }
+          return Center(
+            child: Text('Nenhum estudante ainda'),
+          );
         });
   }
 }

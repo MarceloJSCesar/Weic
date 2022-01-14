@@ -9,11 +9,11 @@ import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
 
 class MensagesScreen extends StatelessWidget {
   final String myId;
-  final Student anotherStudent;
+  final Mensage mensage;
   const MensagesScreen({
     Key? key,
     required this.myId,
-    required this.anotherStudent,
+    required this.mensage,
   }) : super(key: key);
 
   @override
@@ -47,7 +47,7 @@ class MensagesScreen extends StatelessWidget {
               ),
               MessageStudentCard(
                 myId: myId,
-                anotherStudent: anotherStudent,
+                mensage: mensage,
               ),
             ],
           ),
@@ -90,18 +90,21 @@ class MensagesScreen extends StatelessWidget {
                       for (int i = 0; i < allMensages.length; i++) {
                         if (allMensages[i].senderId == myId ||
                             allMensages[i].receiverId == myId &&
-                                allMensages[i].senderId == anotherStudent.id ||
-                            allMensages[i].receiverId == anotherStudent.id) {
+                                allMensages[i].senderId == mensage.receiverId ||
+                            allMensages[i].receiverId == mensage.receiverId) {
                           if (allMensages[i].senderId == myId) {
                             if (allMensages[i].receiverId ==
-                                anotherStudent.id) {
+                                mensage.receiverId) {
                               myMensages.add(allMensages[i]);
                             }
                           } else if (allMensages[i].receiverId == myId) {
-                            if (allMensages[i].senderId == anotherStudent.id) {
+                            if (allMensages[i].senderId == mensage.receiverId) {
                               myMensages.add(allMensages[i]);
                             }
                           }
+                        } else if (allMensages[i].receiverId == myId &&
+                            allMensages[i].senderId == mensage.receiverId) {
+                          myMensages.add(allMensages[i]);
                         }
                       }
                       return Container(
@@ -177,7 +180,7 @@ class MensagesScreen extends StatelessWidget {
                       await _chatAllUsersServices.sendPrivateMessage(
                     mensage: _textController.text,
                     senderStudentId: myId,
-                    receiverStudent: anotherStudent,
+                    msg: mensage,
                   ),
                 ),
               ],
