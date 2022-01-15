@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:weic/src/components/chat/widgets/profile_viewer.dart';
 import 'package:weic/src/config/app_textstyles.dart';
+import 'package:weic/src/models/latestMensage.dart';
 import 'package:weic/src/models/mensage.dart';
 import 'package:weic/src/models/student.dart';
 
 class MessageStudentCard extends StatelessWidget {
   final String myId;
-  final Mensage mensage;
+  final LatestMensage latestMensage;
   const MessageStudentCard({
     Key? key,
     required this.myId,
-    required this.mensage,
+    required this.latestMensage,
   }) : super(key: key);
 
   @override
@@ -20,12 +21,13 @@ class MessageStudentCard extends StatelessWidget {
       child: ListTile(
         leading: CircleAvatar(
           radius: 30,
-          backgroundImage: NetworkImage(mensage.receiverPhoto as String),
+          backgroundImage:
+              NetworkImage(latestMensage.receiverProfilePhoto as String),
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(mensage.receiverName as String),
+            Text(latestMensage.receiverName as String),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -35,7 +37,7 @@ class MessageStudentCard extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (_) => ProfileViewer(
                             myID: myId,
-                            studentID: mensage.receiverId as String),
+                            studentID: latestMensage.receiverId as String),
                       ),
                     ),
                     child: Container(

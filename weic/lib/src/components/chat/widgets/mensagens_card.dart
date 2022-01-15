@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:weic/src/config/app_textstyles.dart';
+import 'package:weic/src/models/latestMensage.dart';
 import 'package:weic/src/models/mensage.dart';
 import 'package:weic/src/models/student.dart';
 
 class MensagesCard extends StatelessWidget {
   final String myId;
-  final Mensage mensage;
+  final LatestMensage latestMensage;
   const MensagesCard({
     Key? key,
     required this.myId,
-    required this.mensage,
+    required this.latestMensage,
   }) : super(key: key);
 
   @override
@@ -19,10 +20,11 @@ class MensagesCard extends StatelessWidget {
       child: ListTile(
         leading: CircleAvatar(
           radius: 30,
-          backgroundImage: NetworkImage(mensage.receiverPhoto as String),
+          backgroundImage:
+              NetworkImage(latestMensage.receiverProfilePhoto as String),
         ),
-        title: Text(mensage.receiverName as String),
-        subtitle: Text(mensage.mensage as String),
+        title: Text(latestMensage.receiverName as String),
+        subtitle: Text(latestMensage.mensage as String),
       ),
     );
   }

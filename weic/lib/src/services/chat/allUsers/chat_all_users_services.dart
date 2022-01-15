@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
+import 'package:weic/src/models/latestMensage.dart';
 import 'package:weic/src/models/mensage.dart';
 import 'package:weic/src/models/student.dart';
 
@@ -61,6 +62,7 @@ class ChatAllUsersService {
       'receiverId': msg.receiverId,
       'receiverName': msg.receiverName,
       'receiverProfilePhoto': msg.receiverPhoto,
+      'receiverProfileVerified': msg.receiverProfileVerified,
     };
 
     var senderDataResponse = await _instance
@@ -143,24 +145,30 @@ class ChatAllUsersService {
   }
 
   Future getPrivateMessages({required String myId}) async {
-    var privateMessagesResponse = await _instance
-        .collection('mensages')
-        .doc('MENSAGENS')
-        .collection('private')
-        .doc('PRIVATE')
-        .collection('private-mensagens')
-        .doc('PRIVATE-MENSAGENS')
-        .collection('message')
+    DocumentSnapshot<Map<String, dynamic>>? chatRoomCollection;
+    List<String>? chatRoomIds;
+    Map<String, dynamic>? chatRooms;
+    List<LatestMensage> latestMensages = [];
+    var studentData = await _instance
+        .collection('users')
+        .doc(userCollectionDocID)
+        .collection('students')
+        .doc('student $myId')
         .get();
-    if (privateMessagesResponse.docs.isNotEmpty) {
-      return privateMessagesResponse.docs.map(
-        (mensages) {
-          Mensage mensage = Mensage.fromDocument(mensages.data());
-          print('function get mensagem: ${mensage.toString()}');
-        },
-      ).toList();
+    if (studentData.exists) {
+      chatRoomIds = studentData.data()!['chatRoomIds'];
     } else {
       return null;
     }
+    for (int i = 0; i < chatRoomIds!.length; i++) {
+      chatRoomCollection = await _instance
+          .collection('chatRooms')
+          .doc('${chatRoomIds[i]}')
+          .get();
+      if (chatRoomCollection.exists) {
+        latestMensages.add(chatRoomCollection.data()!['latestMensage']);
+      }
+    }
+    return latestMensages;
   }
 }

@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:weic/src/components/chat/widgets/card_message.dart';
 import 'package:weic/src/components/chat/widgets/message_student_card.dart';
 import 'package:weic/src/config/app_textstyles.dart';
+import 'package:weic/src/models/latestMensage.dart';
 import 'package:weic/src/models/mensage.dart';
 import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
 
 class MensagesScreen extends StatelessWidget {
   final String myId;
-  final Mensage mensage;
+  final LatestMensage latestMensage;
   const MensagesScreen({
     Key? key,
     required this.myId,
-    required this.mensage,
+    required this.latestMensage,
   }) : super(key: key);
 
   @override
@@ -47,7 +48,7 @@ class MensagesScreen extends StatelessWidget {
               ),
               MessageStudentCard(
                 myId: myId,
-                mensage: mensage,
+                latestMensage: latestMensage,
               ),
             ],
           ),
@@ -90,20 +91,24 @@ class MensagesScreen extends StatelessWidget {
                       for (int i = 0; i < allMensages.length; i++) {
                         if (allMensages[i].senderId == myId ||
                             allMensages[i].receiverId == myId &&
-                                allMensages[i].senderId == mensage.receiverId ||
-                            allMensages[i].receiverId == mensage.receiverId) {
+                                allMensages[i].senderId ==
+                                    latestMensage.receiverId ||
+                            allMensages[i].receiverId ==
+                                latestMensage.receiverId) {
                           if (allMensages[i].senderId == myId) {
                             if (allMensages[i].receiverId ==
-                                mensage.receiverId) {
+                                latestMensage.receiverId) {
                               myMensages.add(allMensages[i]);
                             }
                           } else if (allMensages[i].receiverId == myId) {
-                            if (allMensages[i].senderId == mensage.receiverId) {
+                            if (allMensages[i].senderId ==
+                                latestMensage.receiverId) {
                               myMensages.add(allMensages[i]);
                             }
                           }
                         } else if (allMensages[i].receiverId == myId &&
-                            allMensages[i].senderId == mensage.receiverId) {
+                            allMensages[i].senderId ==
+                                latestMensage.receiverId) {
                           myMensages.add(allMensages[i]);
                         }
                       }
@@ -180,7 +185,16 @@ class MensagesScreen extends StatelessWidget {
                       await _chatAllUsersServices.sendPrivateMessage(
                     mensage: _textController.text,
                     senderStudentId: myId,
-                    msg: mensage,
+                    msg: Mensage(
+                      timestamp: latestMensage.timestamp,
+                      mensage: latestMensage.mensage,
+                      senderId: latestMensage.senderId,
+                      receiverId: latestMensage.receiverId,
+                      receiverName: latestMensage.receiverName,
+                      receiverPhoto: latestMensage.receiverProfilePhoto,
+                      receiverProfileVerified:
+                          latestMensage.receiverProfileVerified,
+                    ),
                   ),
                 ),
               ],
