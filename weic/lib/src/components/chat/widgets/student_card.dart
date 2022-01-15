@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:weic/src/components/chat/widgets/mensages_screen.dart';
 import 'package:weic/src/components/chat/widgets/profile_viewer.dart';
 import 'package:weic/src/config/app_textstyles.dart';
+import 'package:weic/src/models/latestMensage.dart';
 import 'package:weic/src/models/mensage.dart';
 import 'package:weic/src/models/student.dart';
 
@@ -46,7 +47,8 @@ class StudentCard extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (_) => MensagesScreen(
                                   myId: myId,
-                                  mensage: Mensage(
+                                  latestMensage: LatestMensage(
+                                    chatRoomId: '',
                                     timestamp:
                                         Timestamp.fromMillisecondsSinceEpoch(
                                             DateTime.now()
@@ -55,7 +57,8 @@ class StudentCard extends StatelessWidget {
                                     senderId: myId,
                                     receiverId: anotherStudent.id,
                                     receiverName: anotherStudent.name,
-                                    receiverPhoto: anotherStudent.profilePhoto,
+                                    receiverProfilePhoto:
+                                        anotherStudent.profilePhoto,
                                     receiverProfileVerified:
                                         anotherStudent.isProfileVerified,
                                   ),

@@ -19,8 +19,8 @@ class MensageBody extends StatelessWidget {
     final _instance = FirebaseFirestore.instance;
     final _chatAllUsersServices = ChatAllUsersService();
     final String userCollectionDocID = '-1-2-22-weic-MarceloCesar-';
-    return FutureBuilder(
-      future: _chatAllUsersServices.getPrivateMessages(myId: myId),
+    return StreamBuilder(
+      stream: _chatAllUsersServices.getPrivateMessages(myId: myId)!.asStream(),
       builder: (context, AsyncSnapshot snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
@@ -31,6 +31,7 @@ class MensageBody extends StatelessWidget {
               ),
             );
           default:
+            print('snapshot data: ${snapshot.data}');
             if (snapshot.hasData) {
               List<LatestMensage> latestMensages = snapshot.data;
               return ListView.builder(

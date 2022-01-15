@@ -28,14 +28,13 @@ class StudentsBody extends StatelessWidget {
             if (snapshot.hasData) {
               final List<Student> students = snapshot.data;
               return ListView.builder(
-                itemCount: students.length,
-                itemBuilder: (context, index) {
-                  return StudentCard(
-                    anotherStudent: students[index],
-                    myId: myId,
-                  );
-                },
-              );
+                  itemCount: students.length,
+                  itemBuilder: (context, index) {
+                    return StudentCard(
+                      anotherStudent: students[index],
+                      myId: myId,
+                    );
+                  });
             } else {
               return Center(
                 child: Text('Nenhum estudante disponivel ainda'),

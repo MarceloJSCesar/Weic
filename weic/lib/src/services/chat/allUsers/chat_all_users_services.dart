@@ -99,8 +99,6 @@ class ChatAllUsersService {
         .get();
 
     if (receiverDataResponse.exists) {
-      print('senderStudentId: $senderStudentId');
-      print('valueMsg: ${receiverDataResponse.exists}');
       chatRoomsId.length == 0 ? chatRoomsId = [] : chatRoomsId.clear();
       chatRoomsId = receiverDataResponse.data()!['chatRoomIds'];
       if (!chatRoomsId.contains(chatRoomId)) {
@@ -144,10 +142,9 @@ class ChatAllUsersService {
     }
   }
 
-  Future getPrivateMessages({required String myId}) async {
-    DocumentSnapshot<Map<String, dynamic>>? chatRoomCollection;
-    List<String>? chatRoomIds;
-    Map<String, dynamic>? chatRooms;
+  Future<List<LatestMensage>>? getPrivateMessages(
+      {required String myId}) async {
+    List? chatRoomIds;
     List<LatestMensage> latestMensages = [];
     var studentData = await _instance
         .collection('users')
@@ -157,18 +154,22 @@ class ChatAllUsersService {
         .get();
     if (studentData.exists) {
       chatRoomIds = studentData.data()!['chatRoomIds'];
-    } else {
-      return null;
-    }
-    for (int i = 0; i < chatRoomIds!.length; i++) {
-      chatRoomCollection = await _instance
-          .collection('chatRooms')
-          .doc('${chatRoomIds[i]}')
-          .get();
-      if (chatRoomCollection.exists) {
-        latestMensages.add(chatRoomCollection.data()!['latestMensage']);
+      print('chatRoomIdss: ${chatRoomIds!.cast()}');
+      for (int i = 0; i < chatRoomIds.length; i++) {
+        var chatRoomCollection = await _instance
+            .collection('chatRooms')
+            .doc('[${chatRoomIds[i]}]')
+            .get();
+        print('chatRoomExists: ${chatRoomCollection.exists} and $i');
+        if (chatRoomCollection.exists) {
+          print(
+              'chatRoomCollection: ${chatRoomCollection.data()!['latestMensage']}');
+          latestMensages.add(LatestMensage.fromDocument(
+              chatRoomCollection.data()!['latestMensage']));
+        }
       }
     }
+    print('latestMensages: ${latestMensages.cast()}');
     return latestMensages;
   }
 }
