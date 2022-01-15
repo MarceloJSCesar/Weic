@@ -23,6 +23,7 @@ class LoginServices {
         posts: <Post>[],
         profilePhoto: '',
         schoolName: 'ESAD',
+        chatRoomIds: <String>[],
         guests: <
             String>[], // if they want to see their guests their have to watch ads
         followers: <String>[], // will be a list of students id
