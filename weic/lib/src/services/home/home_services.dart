@@ -46,17 +46,6 @@ class HomeServices {
     await _instance.collection('generalUsers').doc('GENERAL-USERS').update(
       {'users': body},
     );
-    await _instance.collection('privateMensages').doc(student.id).set({
-      'latestMensage': {
-        'timestamp': Timestamp.fromMillisecondsSinceEpoch(
-            DateTime.now().millisecondsSinceEpoch),
-        'mensage': '',
-        'senderId': '',
-        'receiverId': '',
-        'receiverName': '',
-        'receiverProfilePhoto': '',
-      },
-    });
   }
 
   Future getStudentEssentialData({required String studentID}) async {

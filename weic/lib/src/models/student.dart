@@ -10,6 +10,7 @@ class Student {
   List? following;
   List? followers;
   String? password;
+  List? chatRoomIds;
   String? schoolName;
   String? profilePhoto;
   bool? isMemberOfCFESAD;
@@ -25,6 +26,7 @@ class Student {
     this.followers,
     this.following,
     this.schoolName,
+    this.chatRoomIds,
     this.profilePhoto,
     this.isMemberOfCFESAD = false,
     this.isProfileVerified = false,
@@ -34,13 +36,13 @@ class Student {
         'id': id,
         'name': name,
         'posts': posts,
-
         'email': email,
         'guests': guests,
         'password': password,
         'followers': followers,
         'following': following,
         'schoolName': schoolName,
+        'chatRoomIds': chatRoomIds,
         'profilePhoto': profilePhoto,
         'isMemberOfCFESAD': isMemberOfCFESAD,
         'isProfileVerified': isProfileVerified,
@@ -57,6 +59,7 @@ class Student {
       followers: document.data['followers'],
       following: document.data['following'],
       schoolName: document.data['schoolName'],
+      chatRoomIds: document.data['chatRoomIds'],
       profilePhoto: document.data['profilePhoto'],
       isMemberOfCFESAD: document.data['isMemberOfCFESAD'],
       isProfileVerified: document.data['isProfileVerified'],
@@ -74,6 +77,7 @@ class Student {
       followers: document['followers'],
       following: document['following'],
       schoolName: document['schoolName'],
+      chatRoomIds: document['chatRoomIds'],
       profilePhoto: document['profilePhoto'],
       isMemberOfCFESAD: document['isMemberOfCFESAD'],
       isProfileVerified: document['isProfileVerified'],
@@ -82,6 +86,6 @@ class Student {
 
   @override
   String toString() {
-    return 'Student{id: $id, name: $name, posts: $posts, email: $email, guests: $guests, password: $password, followers: $followers, following: $following, schoolName: $schoolName, profilePhoto: $profilePhoto, isMemberOfCFESAD: $isMemberOfCFESAD, isProfileVerified: $isProfileVerified}';
+    return 'Student{id: $id, name: $name, posts: $posts, email: $email, guests: $guests, password: $password, followers: $followers, following: $following, schoolName: $schoolName, chatRoomIds: $chatRoomIds, profilePhoto: $profilePhoto, isMemberOfCFESAD: $isMemberOfCFESAD, isProfileVerified: $isProfileVerified}';
   }
 }

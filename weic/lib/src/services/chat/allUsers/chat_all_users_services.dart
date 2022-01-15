@@ -58,24 +58,6 @@ class ChatAllUsersService {
       'receiverName': msg.receiverName,
       'receiverProfilePhoto': msg.receiverPhoto,
     };
-    await _instance
-        .collection('privateMensages')
-        .doc(senderStudentId)
-        .get()
-        .then((value) {
-      final valueMsg = value.data()!['latestMensage']['mensage'] as String;
-      if (valueMsg.length > 0) {
-        mensages = value.data()!['latestMensage'];
-        mensages!.addAll(newMsg);
-      } else {
-        mensages!.addAll(newMsg);
-      }
-    });
-    await _instance.collection('privateMensages').doc(senderStudentId).update(
-      {
-        'latestMensage': mensages!,
-      },
-    );
   }
 
   Future getPrivateMessages({required String myId}) async {
