@@ -49,8 +49,12 @@ class ChatAllUsersService {
       'receiverPhoto': msg.receiverPhoto,
       'receiverProfileVerified': msg.receiverProfileVerified,
     });
-    Map<String, dynamic>? mensages = {};
-    final newMsg = {
+
+    List chatRoomsId = [];
+    final chatRoomId =
+        createRoomId(msg.senderId as String, msg.receiverId as String);
+    final latestMensage = {
+      'chatRoomId': chatRoomId,
       'timestamp': msg.timestamp,
       'mensage': mensage,
       'senderId': senderStudentId,
@@ -58,6 +62,84 @@ class ChatAllUsersService {
       'receiverName': msg.receiverName,
       'receiverProfilePhoto': msg.receiverPhoto,
     };
+
+    var senderDataResponse = await _instance
+        .collection('users')
+        .doc(userCollectionDocID)
+        .collection('students')
+        .doc('student $senderStudentId')
+        .get();
+    if (senderDataResponse.exists) {
+      print('senderStudentId: $senderStudentId');
+      print('valueMsg: ${senderDataResponse.exists}');
+      chatRoomsId = senderDataResponse.data()!['chatRoomIds'];
+      if (!chatRoomsId.contains(chatRoomId)) {
+        chatRoomsId.add(chatRoomId);
+      }
+    } else {
+      chatRoomsId.add(chatRoomId);
+    }
+
+    await _instance
+        .collection('users')
+        .doc(userCollectionDocID)
+        .collection('students')
+        .doc('student ${msg.senderId}')
+        .update({
+      'chatRoomIds': chatRoomsId,
+    });
+
+    var receiverDataResponse = await _instance
+        .collection('users')
+        .doc(userCollectionDocID)
+        .collection('students')
+        .doc('student ${msg.receiverId}')
+        .get();
+
+    if (receiverDataResponse.exists) {
+      print('senderStudentId: $senderStudentId');
+      print('valueMsg: ${receiverDataResponse.exists}');
+      chatRoomsId.length == 0 ? chatRoomsId = [] : chatRoomsId.clear();
+      chatRoomsId = receiverDataResponse.data()!['chatRoomIds'];
+      if (!chatRoomsId.contains(chatRoomId)) {
+        chatRoomsId.add(chatRoomId);
+      }
+    } else {
+      chatRoomsId.add(chatRoomId);
+    }
+
+    await _instance
+        .collection('users')
+        .doc(userCollectionDocID)
+        .collection('students')
+        .doc('student ${msg.receiverId}')
+        .update({
+      'chatRoomIds': chatRoomsId,
+    });
+    bool isThisChatRoomExists = await _instance
+        .collection('chatRooms')
+        .doc('$chatRoomsId')
+        .snapshots()
+        .isEmpty;
+    if (isThisChatRoomExists) {
+      await _instance
+          .collection('chatRooms')
+          .doc('$chatRoomsId')
+          .update({'latestMensage': latestMensage});
+    } else {
+      await _instance
+          .collection('chatRooms')
+          .doc('$chatRoomsId')
+          .set({'latestMensage': latestMensage});
+    }
+  }
+
+  String createRoomId(String a, String b) {
+    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
+      return "$b\_$a";
+    } else {
+      return "$a\_$b";
+    }
   }
 
   Future getPrivateMessages({required String myId}) async {
