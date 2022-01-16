@@ -42,4 +42,7 @@ class LatestMensage {
       receiverProfileVerified: document['receiverProfileVerified'],
     );
   }
+
+  String toString() =>
+      'latestMensage: $mensage, $senderId, $senderName, $receiverId, $receiverName';
 }

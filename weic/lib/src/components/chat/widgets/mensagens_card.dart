@@ -15,6 +15,7 @@ class MensagesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('latestMensage from mensages card:' + latestMensage.toString());
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
