@@ -88,28 +88,56 @@ class MensagesScreen extends StatelessWidget {
                       body.forEach((mensage) {
                         allMensages.add(Mensage.fromDocument(mensage.data()));
                       });
-                      for (int i = 0; i < allMensages.length; i++) {
-                        if (allMensages[i].senderId == myId ||
-                            allMensages[i].receiverId == myId &&
-                                allMensages[i].senderId ==
-                                    latestMensage.receiverId ||
-                            allMensages[i].receiverId ==
-                                latestMensage.receiverId) {
-                          if (allMensages[i].senderId == myId) {
-                            if (allMensages[i].receiverId ==
-                                latestMensage.receiverId) {
-                              myMensages.add(allMensages[i]);
+                      bool isMeReceiver = latestMensage.receiverId == myId;
+                      if (isMeReceiver) {
+                        for (int i = 0; i < allMensages.length; i++) {
+                          if (allMensages[i].senderId == myId ||
+                              allMensages[i].receiverId == myId &&
+                                  allMensages[i].senderId ==
+                                      latestMensage.senderId ||
+                              allMensages[i].receiverId ==
+                                  latestMensage.senderId) {
+                            if (allMensages[i].senderId == myId) {
+                              if (allMensages[i].receiverId ==
+                                  latestMensage.senderId) {
+                                myMensages.add(allMensages[i]);
+                              }
+                            } else if (allMensages[i].receiverId == myId) {
+                              if (allMensages[i].senderId ==
+                                  latestMensage.senderId) {
+                                myMensages.add(allMensages[i]);
+                              }
                             }
-                          } else if (allMensages[i].receiverId == myId) {
-                            if (allMensages[i].senderId ==
-                                latestMensage.receiverId) {
-                              myMensages.add(allMensages[i]);
-                            }
+                          } else if (allMensages[i].receiverId == myId &&
+                              allMensages[i].senderId ==
+                                  latestMensage.senderId) {
+                            myMensages.add(allMensages[i]);
                           }
-                        } else if (allMensages[i].receiverId == myId &&
-                            allMensages[i].senderId ==
-                                latestMensage.receiverId) {
-                          myMensages.add(allMensages[i]);
+                        }
+                      } else {
+                        for (int i = 0; i < allMensages.length; i++) {
+                          if (allMensages[i].senderId == myId ||
+                              allMensages[i].receiverId == myId &&
+                                  allMensages[i].senderId ==
+                                      latestMensage.receiverId ||
+                              allMensages[i].receiverId ==
+                                  latestMensage.receiverId) {
+                            if (allMensages[i].senderId == myId) {
+                              if (allMensages[i].receiverId ==
+                                  latestMensage.receiverId) {
+                                myMensages.add(allMensages[i]);
+                              }
+                            } else if (allMensages[i].receiverId == myId) {
+                              if (allMensages[i].senderId ==
+                                  latestMensage.receiverId) {
+                                myMensages.add(allMensages[i]);
+                              }
+                            }
+                          } else if (allMensages[i].receiverId == myId &&
+                              allMensages[i].senderId ==
+                                  latestMensage.receiverId) {
+                            myMensages.add(allMensages[i]);
+                          }
                         }
                       }
                       return Container(

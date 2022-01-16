@@ -20,11 +20,20 @@ class MensagesCard extends StatelessWidget {
       child: ListTile(
         leading: CircleAvatar(
           radius: 30,
-          backgroundImage:
-              NetworkImage(latestMensage.receiverProfilePhoto as String),
+          backgroundImage: NetworkImage(
+            latestMensage.receiverId == myId
+                ? latestMensage.senderProfilePhoto as String
+                : latestMensage.receiverProfilePhoto as String,
+          ),
         ),
-        title: Text(latestMensage.receiverName as String),
-        subtitle: Text(latestMensage.mensage as String),
+        title: Text(
+          latestMensage.receiverId == myId
+              ? latestMensage.senderName as String
+              : latestMensage.receiverName as String,
+        ),
+        subtitle: Text(
+          latestMensage.mensage as String,
+        ),
       ),
     );
   }

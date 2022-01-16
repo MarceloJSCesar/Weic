@@ -105,6 +105,7 @@ class ChatAllUsersService {
       chatRoomsId.length == 0 ? chatRoomsId = [] : chatRoomsId.clear();
       print('after clear:' + chatRoomsId.toString());
       chatRoomsId = receiverDataResponse.data()!['chatRoomIds'];
+      print('after add value: ' + chatRoomsId.toString());
       if (!chatRoomsId.contains(chatRoomId)) {
         chatRoomsId.add(chatRoomId);
       }
@@ -118,22 +119,24 @@ class ChatAllUsersService {
         .update({
       'chatRoomIds': chatRoomsId,
     });
-    bool isThisChatRoomExists = await _instance
-        .collection('chatRooms')
-        .doc('$chatRoomsId')
-        .snapshots()
-        .isEmpty;
-    if (isThisChatRoomExists) {
-      await _instance
+    chatRoomsId.forEach((chatRoomID) async {
+      bool isThisChatRoomExists = await _instance
           .collection('chatRooms')
-          .doc('$chatRoomsId')
-          .update({'latestMensage': latestMensage});
-    } else {
-      await _instance
-          .collection('chatRooms')
-          .doc('$chatRoomsId')
-          .set({'latestMensage': latestMensage});
-    }
+          .doc('$chatRoomID')
+          .snapshots()
+          .isEmpty;
+      if (isThisChatRoomExists) {
+        await _instance
+            .collection('chatRooms')
+            .doc('$chatRoomID')
+            .update({'latestMensage': latestMensage});
+      } else {
+        await _instance
+            .collection('chatRooms')
+            .doc('$chatRoomID')
+            .set({'latestMensage': latestMensage});
+      }
+    });
   }
 
   String createRoomId(String a, String b) {
