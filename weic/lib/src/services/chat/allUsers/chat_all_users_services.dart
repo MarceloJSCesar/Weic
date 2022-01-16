@@ -31,7 +31,7 @@ class ChatAllUsersService {
   Future sendPrivateMessage({
     required String mensage,
     required String senderStudentId,
-    required Mensage msg,
+    required LatestMensage msg,
   }) async {
     await _instance
         .collection('mensages')
@@ -47,7 +47,7 @@ class ChatAllUsersService {
       'senderId': senderStudentId,
       'receiverId': msg.receiverId,
       'receiverName': msg.receiverName,
-      'receiverPhoto': msg.receiverPhoto,
+      'receiverPhoto': msg.receiverProfilePhoto,
       'receiverProfileVerified': msg.receiverProfileVerified,
     });
 
@@ -79,7 +79,7 @@ class ChatAllUsersService {
       'receiverId': msg.receiverId,
       'receiverName': msg.receiverName,
       'senderProfilePhoto': sender.profilePhoto,
-      'receiverProfilePhoto': msg.receiverPhoto,
+      'receiverProfilePhoto': msg.receiverProfilePhoto,
       'senderProfileVerified': sender.isProfileVerified,
       'receiverProfileVerified': msg.receiverProfileVerified,
     };
@@ -105,9 +105,9 @@ class ChatAllUsersService {
       chatRoomsId.length == 0 ? chatRoomsId = [] : chatRoomsId.clear();
       print('after clear:' + chatRoomsId.toString());
       chatRoomsId = receiverDataResponse.data()!['chatRoomIds'];
-      print('after add value: ' + chatRoomsId.toString());
       if (!chatRoomsId.contains(chatRoomId)) {
         chatRoomsId.add(chatRoomId);
+        print('after add value: ' + chatRoomsId.toString());
       }
     }
 
@@ -163,14 +163,17 @@ class ChatAllUsersService {
       for (int i = 0; i < chatRoomIds.length; i++) {
         var chatRoomCollection = await _instance
             .collection('chatRooms')
-            .doc('[${chatRoomIds[i]}]')
+            .doc(chatRoomIds[i].toString())
             .get();
-        print('chatRoomExists: ${chatRoomCollection.exists} and $i');
+        print('chatRoomExists: ${chatRoomCollection.exists} and' +
+            chatRoomIds[i].toString());
         if (chatRoomCollection.exists) {
           print(
               'chatRoomCollection: ${chatRoomCollection.data()!['latestMensage']}');
           latestMensages.add(LatestMensage.fromDocument(
               chatRoomCollection.data()!['latestMensage']));
+          print(
+              'after add value to latestMensage: ' + latestMensages.toString());
         }
       }
     }
