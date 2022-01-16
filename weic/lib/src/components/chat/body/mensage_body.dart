@@ -34,6 +34,7 @@ class MensageBody extends StatelessWidget {
             print('snapshot data: ${snapshot.data}');
             if (snapshot.hasData) {
               List<LatestMensage> latestMensages = snapshot.data;
+              print(latestMensages.toString());
               return ListView.builder(
                 itemCount: latestMensages.length,
                 itemBuilder: (context, msgIndex) {

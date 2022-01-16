@@ -52,7 +52,8 @@ class ChatAllUsersService {
     });
 
     List chatRoomsId = [];
-    String? chatRoomId;
+    String? chatRoomId =
+        createRoomId(msg.senderId as String, msg.receiverId as String);
 
     var senderDataResponse = await _instance
         .collection('users')
@@ -61,15 +62,27 @@ class ChatAllUsersService {
         .doc('student $senderStudentId')
         .get();
     if (senderDataResponse.exists) {
-      print('senderStudentId: $senderStudentId');
-      print('valueMsg: ${senderDataResponse.exists}');
       chatRoomsId = senderDataResponse.data()!['chatRoomIds'];
-      chatRoomId =
-          createRoomId(msg.senderId as String, msg.receiverId as String);
       if (!chatRoomsId.contains(chatRoomId)) {
         chatRoomsId.add(chatRoomId);
       }
     }
+
+    Student sender = Student.fromDocument(senderDataResponse.data());
+
+    final latestMensage = {
+      'mensage': mensage,
+      'chatRoomId': chatRoomId,
+      'senderName': sender.name,
+      'timestamp': msg.timestamp,
+      'senderId': senderStudentId,
+      'receiverId': msg.receiverId,
+      'receiverName': msg.receiverName,
+      'senderProfilePhoto': sender.profilePhoto,
+      'receiverProfilePhoto': msg.receiverPhoto,
+      'senderProfileVerified': sender.isProfileVerified,
+      'receiverProfileVerified': msg.receiverProfileVerified,
+    };
 
     await _instance
         .collection('users')
@@ -88,7 +101,9 @@ class ChatAllUsersService {
         .get();
 
     if (receiverDataResponse.exists) {
+      print('before clear:' + chatRoomsId.toString());
       chatRoomsId.length == 0 ? chatRoomsId = [] : chatRoomsId.clear();
+      print('after clear:' + chatRoomsId.toString());
       chatRoomsId = receiverDataResponse.data()!['chatRoomIds'];
       if (!chatRoomsId.contains(chatRoomId)) {
         chatRoomsId.add(chatRoomId);
@@ -103,16 +118,6 @@ class ChatAllUsersService {
         .update({
       'chatRoomIds': chatRoomsId,
     });
-    final latestMensage = {
-      'chatRoomId': chatRoomId,
-      'timestamp': msg.timestamp,
-      'mensage': mensage,
-      'senderId': senderStudentId,
-      'receiverId': msg.receiverId,
-      'receiverName': msg.receiverName,
-      'receiverProfilePhoto': msg.receiverPhoto,
-      'receiverProfileVerified': msg.receiverProfileVerified,
-    };
     bool isThisChatRoomExists = await _instance
         .collection('chatRooms')
         .doc('$chatRoomsId')

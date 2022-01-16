@@ -5,8 +5,11 @@ class LatestMensage {
   String? senderId;
   String? chatRoomId;
   String? receiverId;
-  Timestamp? timestamp;
+  String? senderName;
   String? receiverName;
+  Timestamp? timestamp;
+  String? senderProfilePhoto;
+  bool? senderProfileVerified;
   String? receiverProfilePhoto;
   bool? receiverProfileVerified;
 
@@ -16,8 +19,11 @@ class LatestMensage {
     required this.timestamp,
     required this.chatRoomId,
     required this.receiverId,
+    required this.senderName,
     required this.receiverName,
+    required this.senderProfilePhoto,
     required this.receiverProfilePhoto,
+    required this.senderProfileVerified,
     required this.receiverProfileVerified,
   });
 
@@ -28,8 +34,11 @@ class LatestMensage {
       timestamp: document['timestamp'],
       chatRoomId: document['chatRoomId'],
       receiverId: document['receiverId'],
+      senderName: document['senderName'],
       receiverName: document['receiverName'],
+      senderProfilePhoto: document['senderProfilePhoto'],
       receiverProfilePhoto: document['receiverProfilePhoto'],
+      senderProfileVerified: document['senderProfileVerified'],
       receiverProfileVerified: document['receiverProfileVerified'],
     );
   }
