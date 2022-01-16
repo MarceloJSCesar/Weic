@@ -52,18 +52,7 @@ class ChatAllUsersService {
     });
 
     List chatRoomsId = [];
-    final chatRoomId =
-        createRoomId(msg.senderId as String, msg.receiverId as String);
-    final latestMensage = {
-      'chatRoomId': chatRoomId,
-      'timestamp': msg.timestamp,
-      'mensage': mensage,
-      'senderId': senderStudentId,
-      'receiverId': msg.receiverId,
-      'receiverName': msg.receiverName,
-      'receiverProfilePhoto': msg.receiverPhoto,
-      'receiverProfileVerified': msg.receiverProfileVerified,
-    };
+    String? chatRoomId;
 
     var senderDataResponse = await _instance
         .collection('users')
@@ -75,11 +64,11 @@ class ChatAllUsersService {
       print('senderStudentId: $senderStudentId');
       print('valueMsg: ${senderDataResponse.exists}');
       chatRoomsId = senderDataResponse.data()!['chatRoomIds'];
+      chatRoomId =
+          createRoomId(msg.senderId as String, msg.receiverId as String);
       if (!chatRoomsId.contains(chatRoomId)) {
         chatRoomsId.add(chatRoomId);
       }
-    } else {
-      chatRoomsId.add(chatRoomId);
     }
 
     await _instance
@@ -104,8 +93,6 @@ class ChatAllUsersService {
       if (!chatRoomsId.contains(chatRoomId)) {
         chatRoomsId.add(chatRoomId);
       }
-    } else {
-      chatRoomsId.add(chatRoomId);
     }
 
     await _instance
@@ -116,6 +103,16 @@ class ChatAllUsersService {
         .update({
       'chatRoomIds': chatRoomsId,
     });
+    final latestMensage = {
+      'chatRoomId': chatRoomId,
+      'timestamp': msg.timestamp,
+      'mensage': mensage,
+      'senderId': senderStudentId,
+      'receiverId': msg.receiverId,
+      'receiverName': msg.receiverName,
+      'receiverProfilePhoto': msg.receiverPhoto,
+      'receiverProfileVerified': msg.receiverProfileVerified,
+    };
     bool isThisChatRoomExists = await _instance
         .collection('chatRooms')
         .doc('$chatRoomsId')
