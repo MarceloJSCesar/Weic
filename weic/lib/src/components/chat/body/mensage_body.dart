@@ -6,6 +6,7 @@ import 'package:weic/src/models/latestMensage.dart';
 import 'package:weic/src/models/mensage.dart';
 import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
+import 'package:weic/src/views/login/login_view.dart';
 
 class MensageBody extends StatelessWidget {
   final String myId;
@@ -20,48 +21,75 @@ class MensageBody extends StatelessWidget {
     final _chatAllUsersServices = ChatAllUsersService();
     final String userCollectionDocID = '-1-2-22-weic-MarceloCesar-';
     return StreamBuilder(
-      stream: _chatAllUsersServices.getPrivateMessages(myId: myId)!.asStream(),
-      builder: (context, AsyncSnapshot snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                strokeWidth: 3.0,
-              ),
-            );
-          default:
-            print('snapshot data: ${snapshot.data}');
-            if (snapshot.hasData) {
-              List<LatestMensage> latestMensages = snapshot.data;
-              print(latestMensages.toString());
-              return ListView.builder(
-                itemCount: latestMensages.length,
-                itemBuilder: (context, msgIndex) {
-                  return GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => MensagesScreen(
-                          myId: myId,
-                          latestMensage: latestMensages[msgIndex],
-                        ),
-                      ),
-                    ),
-                    child: latestMensages.length > 0
-                        ? MensagesCard(
-                            myId: myId,
-                            latestMensage: latestMensages[msgIndex],
-                          )
-                        : Container(),
-                  );
-                },
+        stream: _instance
+            .collection('users')
+            .doc(userCollectionDocID)
+            .collection('students')
+            .doc('student $myId')
+            .snapshots(),
+        builder: (context, AsyncSnapshot studentSnapshot) {
+          switch (studentSnapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                  strokeWidth: 3.0,
+                ),
               );
-            }
-            return Center(
-              child: Text('Nenhum mensagem ainda'),
-            );
-        }
-      },
-    );
+            default:
+              print('snapshot data: ${studentSnapshot.data}');
+              if (studentSnapshot.hasData) {
+                return StreamBuilder(
+                  stream: _chatAllUsersServices
+                      .getPrivateMessages(myId: myId)!
+                      .asStream(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Center(
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.black),
+                            strokeWidth: 3.0,
+                          ),
+                        );
+                      default:
+                        print('snapshot data: ${snapshot.data}');
+                        if (snapshot.hasData) {
+                          List<LatestMensage> latestMensages = snapshot.data;
+                          print(latestMensages.toString());
+                          return ListView.builder(
+                            itemCount: latestMensages.length,
+                            itemBuilder: (context, msgIndex) {
+                              return GestureDetector(
+                                onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => MensagesScreen(
+                                      myId: myId,
+                                      latestMensage: latestMensages[msgIndex],
+                                    ),
+                                  ),
+                                ),
+                                child: latestMensages.length > 0
+                                    ? MensagesCard(
+                                        myId: myId,
+                                        latestMensage: latestMensages[msgIndex],
+                                      )
+                                    : Container(),
+                              );
+                            },
+                          );
+                        }
+                        return Center(
+                          child: Text('Nenhum mensagem ainda'),
+                        );
+                    }
+                  },
+                );
+              } else {
+                return LoginView();
+              }
+          }
+        });
   }
 }
