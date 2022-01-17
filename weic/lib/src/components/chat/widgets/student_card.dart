@@ -12,133 +12,102 @@ import 'package:weic/src/views/login/login_view.dart';
 
 class StudentCard extends StatelessWidget {
   final String myId;
-  final Student anotherStudent;
+  final Student student;
   const StudentCard({
     Key? key,
     required this.myId,
-    required this.anotherStudent,
+    required this.student,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return anotherStudent.id != myId
-        ? FutureBuilder(
-            future: HomeServices().getStudentEssentialData(studentID: myId),
-            builder: (context, AsyncSnapshot snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                      strokeWidth: 3.0,
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 30,
+          backgroundImage: NetworkImage(student.profilePhoto as String),
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(student.name as String),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    height: 30,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                  );
-                default:
-                  if (snapshot.hasData) {
-                    Student student = Student.fromDocument(snapshot.data);
-                    return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 8),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 30,
-                          backgroundImage: NetworkImage(
-                              anotherStudent.profilePhoto as String),
-                        ),
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(anotherStudent.name as String),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Container(
-                                    height: 30,
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.all(6),
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: GestureDetector(
-                                      onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) => MensagesScreen(
-                                            myId: myId,
-                                            latestMensage: LatestMensage(
-                                              chatRoomId: '',
-                                              timestamp: Timestamp
-                                                  .fromMillisecondsSinceEpoch(
-                                                      DateTime.now()
-                                                          .millisecondsSinceEpoch),
-                                              mensage: '',
-                                              senderId: myId,
-                                              senderName: student.name,
-                                              receiverId: anotherStudent.id,
-                                              receiverName: anotherStudent.name,
-                                              senderProfilePhoto:
-                                                  student.profilePhoto,
-                                              senderProfileVerified:
-                                                  student.isProfileVerified,
-                                              receiverProfilePhoto:
-                                                  anotherStudent.profilePhoto,
-                                              receiverProfileVerified:
-                                                  anotherStudent
-                                                      .isProfileVerified,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      child: FittedBox(
-                                        child: Text(
-                                          'Enviar Mensagem',
-                                          style: AppTextStyles
-                                              .studentCardButtonTextStyle,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    height: 30,
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.all(4),
-                                    margin: const EdgeInsets.only(left: 4),
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) => ProfileViewer(
-                                              myID: myId,
-                                              studentID:
-                                                  anotherStudent.id as String,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Text(
-                                        'Ver Perfil',
-                                        style: AppTextStyles
-                                            .studentCardButtonTextStyle,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                    child: GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => MensagesScreen(
+                            myId: myId,
+                            latestMensage: LatestMensage(
+                              chatRoomId: '',
+                              timestamp: Timestamp.fromMillisecondsSinceEpoch(
+                                  DateTime.now().millisecondsSinceEpoch),
+                              mensage: '',
+                              senderId: myId,
+                              senderName: student.name,
+                              receiverId: student.id,
+                              receiverName: student.name,
+                              senderProfilePhoto: student.profilePhoto,
+                              senderProfileVerified: student.isProfileVerified,
+                              receiverProfilePhoto: student.profilePhoto,
+                              receiverProfileVerified:
+                                  student.isProfileVerified,
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    );
-                  } else {
-                    return LoginView();
-                  }
-              }
-            })
-        : Container();
+                      child: FittedBox(
+                        child: Text(
+                          'Enviar Mensagem',
+                          style: AppTextStyles.studentCardButtonTextStyle,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    height: 30,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(4),
+                    margin: const EdgeInsets.only(left: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => ProfileViewer(
+                              myID: myId,
+                              studentID: student.id as String,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Ver Perfil',
+                        style: AppTextStyles.studentCardButtonTextStyle,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -31,7 +31,7 @@ class StudentsBody extends StatelessWidget {
                   itemCount: students.length,
                   itemBuilder: (context, index) {
                     return StudentCard(
-                      anotherStudent: students[index],
+                      student: students[index],
                       myId: myId,
                     );
                   });
