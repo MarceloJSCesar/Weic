@@ -27,6 +27,7 @@ class StudentsBody extends StatelessWidget {
           default:
             if (snapshot.hasData) {
               final List<Student> students = snapshot.data;
+              students.removeWhere((student) => student.id == myId);
               return ListView.builder(
                   itemCount: students.length,
                   itemBuilder: (context, index) {
