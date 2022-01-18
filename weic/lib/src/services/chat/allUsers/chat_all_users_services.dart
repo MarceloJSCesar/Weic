@@ -44,7 +44,7 @@ class ChatAllUsersService {
         .add({
       'mensage': mensage,
       'timestamp': msg.timestamp,
-      'senderId': senderStudentId,
+      'senderId': msg.senderId,
       'receiverId': msg.receiverId,
       'receiverName': msg.receiverName,
       'receiverPhoto': msg.receiverProfilePhoto,
@@ -59,7 +59,7 @@ class ChatAllUsersService {
         .collection('users')
         .doc(userCollectionDocID)
         .collection('students')
-        .doc('student $senderStudentId')
+        .doc('student ${msg.senderId}')
         .get();
     if (senderDataResponse.exists) {
       chatRoomsId = senderDataResponse.data()!['chatRoomIds'];
@@ -72,10 +72,10 @@ class ChatAllUsersService {
 
     final latestMensage = {
       'mensage': mensage,
+      'senderId': sender.id,
       'chatRoomId': chatRoomId,
       'senderName': sender.name,
       'timestamp': msg.timestamp,
-      'senderId': senderStudentId,
       'receiverId': msg.receiverId,
       'receiverName': msg.receiverName,
       'senderProfilePhoto': sender.profilePhoto,

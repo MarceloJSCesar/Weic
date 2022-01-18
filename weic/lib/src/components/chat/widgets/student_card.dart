@@ -13,10 +13,12 @@ import 'package:weic/src/views/login/login_view.dart';
 class StudentCard extends StatelessWidget {
   final String myId;
   final Student student;
+  final String chatRoomId;
   const StudentCard({
     Key? key,
     required this.myId,
     required this.student,
+    required this.chatRoomId,
   }) : super(key: key);
 
   @override
@@ -49,7 +51,7 @@ class StudentCard extends StatelessWidget {
                           builder: (_) => MensagesScreen(
                             myId: myId,
                             latestMensage: LatestMensage(
-                              chatRoomId: '',
+                              chatRoomId: chatRoomId,
                               timestamp: Timestamp.fromMillisecondsSinceEpoch(
                                   DateTime.now().millisecondsSinceEpoch),
                               mensage: '',

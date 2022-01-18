@@ -67,28 +67,32 @@ class MensageBody extends StatelessWidget {
                                   ),
                                 );
                                 print(latestMensages.toString());
-                                return ListView.builder(
-                                  itemCount: latestMensages.length,
-                                  itemBuilder: (context, msgIndex) {
-                                    return GestureDetector(
-                                      onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) => MensagesScreen(
-                                            myId: myId,
-                                            latestMensage:
-                                                latestMensages[msgIndex],
-                                          ),
-                                        ),
-                                      ),
-                                      child: latestMensages.length > 0
-                                          ? MensagesCard(
+                                return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: ListView.builder(
+                                    itemCount: latestMensages.length,
+                                    itemBuilder: (context, msgIndex) {
+                                      return GestureDetector(
+                                        onTap: () => Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (_) => MensagesScreen(
                                               myId: myId,
                                               latestMensage:
                                                   latestMensages[msgIndex],
-                                            )
-                                          : Container(),
-                                    );
-                                  },
+                                            ),
+                                          ),
+                                        ),
+                                        child: latestMensages.length > 0
+                                            ? MensagesCard(
+                                                myId: myId,
+                                                latestMensage:
+                                                    latestMensages[msgIndex],
+                                              )
+                                            : Container(),
+                                      );
+                                    },
+                                  ),
                                 );
                               }
                               return Center(
