@@ -44,11 +44,18 @@ class ChatAllUsersService {
         .add({
       'mensage': mensage,
       'timestamp': msg.timestamp,
-      'senderId': msg.senderId,
-      'receiverId': msg.receiverId,
-      'receiverName': msg.receiverName,
-      'receiverPhoto': msg.receiverProfilePhoto,
-      'receiverProfileVerified': msg.receiverProfileVerified,
+      'senderId':
+          msg.senderId == senderStudentId ? msg.senderId : msg.receiverId,
+      'receiverId':
+          msg.receiverId == senderStudentId ? msg.receiverId : msg.senderId,
+      'receiverName':
+          msg.receiverId == senderStudentId ? msg.receiverName : msg.senderName,
+      'receiverPhoto': msg.receiverId == senderStudentId
+          ? msg.receiverProfilePhoto
+          : msg.senderProfilePhoto,
+      'receiverProfileVerified': msg.receiverId == senderStudentId
+          ? msg.receiverProfileVerified
+          : msg.senderProfileVerified,
     });
 
     List chatRoomsId = [];
@@ -59,7 +66,8 @@ class ChatAllUsersService {
         .collection('users')
         .doc(userCollectionDocID)
         .collection('students')
-        .doc('student ${msg.senderId}')
+        .doc(
+            'student ${msg.senderId == senderStudentId ? msg.senderId : msg.receiverId}')
         .get();
     if (senderDataResponse.exists) {
       chatRoomsId = senderDataResponse.data()!['chatRoomIds'];
@@ -72,23 +80,35 @@ class ChatAllUsersService {
 
     final latestMensage = {
       'mensage': mensage,
-      'senderId': sender.id,
+      'senderId': msg.senderId == senderStudentId ? sender.id : msg.receiverId,
       'chatRoomId': chatRoomId,
-      'senderName': sender.name,
+      'senderName':
+          msg.senderId == senderStudentId ? sender.name : msg.receiverName,
       'timestamp': msg.timestamp,
-      'receiverId': msg.receiverId,
-      'receiverName': msg.receiverName,
-      'senderProfilePhoto': sender.profilePhoto,
-      'receiverProfilePhoto': msg.receiverProfilePhoto,
-      'senderProfileVerified': sender.isProfileVerified,
-      'receiverProfileVerified': msg.receiverProfileVerified,
+      'receiverId':
+          msg.senderId == senderStudentId ? msg.receiverId : sender.id,
+      'receiverName':
+          msg.senderId == senderStudentId ? msg.receiverName : sender.name,
+      'senderProfilePhoto': msg.senderId == senderStudentId
+          ? sender.profilePhoto
+          : msg.receiverProfilePhoto,
+      'receiverProfilePhoto': msg.senderId == senderStudentId
+          ? msg.receiverProfilePhoto
+          : sender.profilePhoto,
+      'senderProfileVerified': msg.senderId == senderStudentId
+          ? sender.isProfileVerified
+          : msg.receiverProfileVerified,
+      'receiverProfileVerified': msg.senderId == senderStudentId
+          ? msg.receiverProfileVerified
+          : sender.isProfileVerified,
     };
 
     await _instance
         .collection('users')
         .doc(userCollectionDocID)
         .collection('students')
-        .doc('student ${msg.senderId}')
+        .doc(
+            'student ${msg.senderId == senderStudentId ? msg.senderId : msg.receiverId}')
         .update({
       'chatRoomIds': chatRoomsId,
     });
@@ -97,7 +117,8 @@ class ChatAllUsersService {
         .collection('users')
         .doc(userCollectionDocID)
         .collection('students')
-        .doc('student ${msg.receiverId}')
+        .doc(
+            'student ${msg.senderId == senderStudentId ? msg.receiverId : msg.senderId}')
         .get();
 
     if (receiverDataResponse.exists) {
@@ -115,7 +136,8 @@ class ChatAllUsersService {
         .collection('users')
         .doc(userCollectionDocID)
         .collection('students')
-        .doc('student ${msg.receiverId}')
+        .doc(
+            'student ${msg.senderId == senderStudentId ? msg.receiverId : msg.senderId}')
         .update({
       'chatRoomIds': chatRoomsId,
     });

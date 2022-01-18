@@ -87,6 +87,7 @@ class MensagesScreen extends StatelessWidget {
                       Map<String, List<Mensage>> mensages = {};
                       body.forEach((mensage) {
                         allMensages.add(Mensage.fromDocument(mensage.data()));
+                        print('allMensages:' + allMensages.toString());
                       });
                       bool isMeReceiver = latestMensage.receiverId == myId;
                       if (isMeReceiver) {
@@ -140,6 +141,7 @@ class MensagesScreen extends StatelessWidget {
                           }
                         }
                       }
+
                       return Container(
                         margin: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 8),
@@ -172,7 +174,7 @@ class MensagesScreen extends StatelessWidget {
                     } else {
                       return Center(
                         child: Text(
-                          'Nenhuma mensagem enviada ainda',
+                          'Nenhuma mensagem enviada ainda ultimo',
                           style: AppTextStyles.blackTextStyle,
                         ),
                       );

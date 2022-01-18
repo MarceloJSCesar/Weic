@@ -80,13 +80,15 @@ class _MensageBodyState extends State<MensageBody> {
                                     itemBuilder: (context, msgIndex) {
                                       return GestureDetector(
                                         onTap: () => Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) => MensagesScreen(
+                                          MaterialPageRoute(builder: (_) {
+                                            print(
+                                                'latestMensage||: ${latestMensages[msgIndex]}}');
+                                            return MensagesScreen(
                                               myId: widget.myId,
                                               latestMensage:
                                                   latestMensages[msgIndex],
-                                            ),
-                                          ),
+                                            );
+                                          }),
                                         ),
                                         child: latestMensages.length > 0
                                             ? MensagesCard(
