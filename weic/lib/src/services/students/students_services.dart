@@ -5,6 +5,11 @@ class StudentsServices {
   final _instance = FirebaseFirestore.instance;
   final String userCollectionDocID = '-1-2-22-weic-MarceloCesar-';
 
+  /*
+    I think getAllStudents is not necessary, 
+    because user will search students by the school year and 
+    show all the students according to their school year
+  */
   Future<List<Student>>? getAllStudents() async {
     var studentIDResponse =
         await _instance.collection('generalUsers').doc('GENERAL-USERS').get();
