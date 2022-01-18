@@ -21,13 +21,16 @@ class MessageStudentCard extends StatelessWidget {
       child: ListTile(
         leading: CircleAvatar(
           radius: 30,
-          backgroundImage:
-              NetworkImage(latestMensage.receiverProfilePhoto as String),
+          backgroundImage: NetworkImage(latestMensage.senderId == myId
+              ? latestMensage.receiverProfilePhoto as String
+              : latestMensage.senderProfilePhoto as String),
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(latestMensage.receiverName as String),
+            Text(latestMensage.senderId == myId
+                ? latestMensage.receiverName as String
+                : latestMensage.senderName as String),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -37,7 +40,9 @@ class MessageStudentCard extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (_) => ProfileViewer(
                             myID: myId,
-                            studentID: latestMensage.receiverId as String),
+                            studentID: latestMensage.senderId == myId
+                                ? latestMensage.receiverId as String
+                                : latestMensage.senderId as String),
                       ),
                     ),
                     child: Container(

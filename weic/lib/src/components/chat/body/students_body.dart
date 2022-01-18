@@ -32,8 +32,6 @@ class StudentsBody extends StatelessWidget {
                   itemCount: students.length,
                   itemBuilder: (context, index) {
                     return StudentCard(
-                      chatRoomId: _chatAllUsersServices.createRoomId(
-                          myId, students[index].id as String),
                       student: students[index],
                       myId: myId,
                     );

@@ -211,9 +211,10 @@ class MensagesScreen extends StatelessWidget {
                   color: Colors.black,
                   onPressed: () async =>
                       await _chatAllUsersServices.sendPrivateMessage(
-                          mensage: _textController.text,
-                          senderStudentId: myId,
-                          msg: latestMensage),
+                    mensage: _textController.text,
+                    senderStudentId: myId,
+                    msg: latestMensage,
+                  ),
                 ),
               ],
             ),

@@ -8,13 +8,18 @@ import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
 import 'package:weic/src/views/login/login_view.dart';
 
-class MensageBody extends StatelessWidget {
+class MensageBody extends StatefulWidget {
   final String myId;
   const MensageBody({
     Key? key,
     required this.myId,
   }) : super(key: key);
 
+  @override
+  State<MensageBody> createState() => _MensageBodyState();
+}
+
+class _MensageBodyState extends State<MensageBody> {
   @override
   Widget build(BuildContext context) {
     final _instance = FirebaseFirestore.instance;
@@ -25,7 +30,7 @@ class MensageBody extends StatelessWidget {
             .collection('users')
             .doc(userCollectionDocID)
             .collection('students')
-            .doc('student $myId')
+            .doc('student ${widget.myId}')
             .snapshots(),
         builder: (context, AsyncSnapshot studentSnapshot) {
           switch (studentSnapshot.connectionState) {
@@ -77,7 +82,7 @@ class MensageBody extends StatelessWidget {
                                         onTap: () => Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (_) => MensagesScreen(
-                                              myId: myId,
+                                              myId: widget.myId,
                                               latestMensage:
                                                   latestMensages[msgIndex],
                                             ),
@@ -85,7 +90,7 @@ class MensageBody extends StatelessWidget {
                                         ),
                                         child: latestMensages.length > 0
                                             ? MensagesCard(
-                                                myId: myId,
+                                                myId: widget.myId,
                                                 latestMensage:
                                                     latestMensages[msgIndex],
                                               )
