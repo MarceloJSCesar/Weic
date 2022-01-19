@@ -99,7 +99,15 @@ class _ProfileViewState extends State<ProfileView> {
                             icon: Icon(Icons.menu),
                             onPressed: () => ScaffoldMessenger.of(context)
                                 .showSnackBar(SnackBar(
-                              content: Text(''),
+                              content: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text('Ajuda'),
+                                  Text('Melhorar o app'),
+                                  Text('Definições'),
+                                  Text('Sair'),
+                                ],
+                              ),
                             )),
                           )
                         : Container(),
