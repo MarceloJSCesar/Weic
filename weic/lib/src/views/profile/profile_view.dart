@@ -97,7 +97,10 @@ class _ProfileViewState extends State<ProfileView> {
                             iconSize: 27,
                             color: Colors.black,
                             icon: Icon(Icons.menu),
-                            onPressed: () {},
+                            onPressed: () => ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(
+                              content: Text(''),
+                            )),
                           )
                         : Container(),
                   ],
