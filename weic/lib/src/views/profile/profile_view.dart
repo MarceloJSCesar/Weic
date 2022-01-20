@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/profile/snackbar_text_button.dart';
+import 'package:weic/src/components/profile/widgets/snackbar_text_button.dart';
 import 'package:weic/src/config/app_assetsnames.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/student.dart';

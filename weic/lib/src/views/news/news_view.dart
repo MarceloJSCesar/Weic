@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/home/widgets/news_card.dart';
-import 'package:weic/src/components/home/widgets/news_card_only_title.dart';
-import 'package:weic/src/components/home/widgets/news_page_viewer.dart';
+import 'package:weic/src/components/news/widgets/news_body.dart';
+import 'package:weic/src/components/news/widgets/news_card.dart';
+import 'package:weic/src/components/news/widgets/news_card_only_title.dart';
+import 'package:weic/src/components/news/widgets/news_page_viewer.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/news.dart';
 import 'package:weic/src/services/home/home_services.dart';
@@ -66,34 +67,7 @@ class NewsView extends StatelessWidget {
                                   description: data[index]['body'],
                                   newsUrl: data[index]['links']['shortUrl'],
                                 );
-                                return Column(
-                                  children: <Widget>[
-                                    if (news.imageUrl != null)
-                                      GestureDetector(
-                                        onTap: () => Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) => NewsPageViewer(
-                                              news: news,
-                                            ),
-                                          ),
-                                        ),
-                                        child: NewsCard(news: news),
-                                      ),
-                                    if (news.imageUrl == null)
-                                      GestureDetector(
-                                        onTap: () => Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) => NewsPageViewer(
-                                              news: news,
-                                            ),
-                                          ),
-                                        ),
-                                        child: NewsCardOnlyTitle(
-                                          news: news,
-                                        ),
-                                      ),
-                                  ],
-                                );
+                                return NewsBody(news: news);
                               },
                             ),
                           );
