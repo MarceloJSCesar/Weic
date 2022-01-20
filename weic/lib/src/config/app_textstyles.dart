@@ -96,4 +96,10 @@ class AppTextStyles {
     color: Colors.black,
     fontWeight: FontWeight.normal,
   );
+  // student search
+  static final TextStyle searchStudentFieldTextStyle = GoogleFonts.notoSans(
+    fontSize: 16,
+    color: Colors.black,
+    fontWeight: FontWeight.normal,
+  );
 }
