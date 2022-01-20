@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/config/app_textstyles.dart';
+import '/src/config/app_textstyles.dart';
 
 class SearchStudentView extends StatelessWidget {
   const SearchStudentView({Key? key}) : super(key: key);
