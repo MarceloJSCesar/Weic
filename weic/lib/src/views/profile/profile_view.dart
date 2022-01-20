@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/src/components/profile/snackbar_text_button.dart';
 import 'package:weic/src/config/app_assetsnames.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/student.dart';
@@ -102,10 +103,22 @@ class _ProfileViewState extends State<ProfileView> {
                               content: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text('Ajuda'),
-                                  Text('Melhorar o app'),
-                                  Text('Definições'),
-                                  Text('Sair'),
+                                  SnackbarTextButton(
+                                    text: 'Ajuda',
+                                    onPressed: () {},
+                                  ),
+                                  SnackbarTextButton(
+                                    text: 'Melhorar o app',
+                                    onPressed: () {},
+                                  ),
+                                  SnackbarTextButton(
+                                    text: 'Definições',
+                                    onPressed: () {},
+                                  ),
+                                  SnackbarTextButton(
+                                    text: 'Sair',
+                                    onPressed: () {},
+                                  )
                                 ],
                               ),
                             )),
