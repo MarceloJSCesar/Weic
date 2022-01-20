@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
-import 'package:weic/src/services/home/home_services.dart';
-import 'package:weic/src/views/login/login_view.dart';
 import '../../models/student.dart';
+import '../../views/login/login_view.dart';
+import '../../services/home/home_services.dart';
 import '../../components/home/body/home_body.dart';
+import '../../services/chat/allUsers/chat_all_users_services.dart';
 
 class HomeView extends StatefulWidget {
   final String studentID;
@@ -19,15 +19,6 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final _homeServices = HomeServices();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    ChatAllUsersService()
-        .getPrivateMessages(myId: widget.studentID)!
-        .then((value) => print('homevalue: $value'));
-  }
 
   @override
   Widget build(BuildContext context) {

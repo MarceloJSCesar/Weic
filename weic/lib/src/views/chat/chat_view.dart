@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:weic/src/config/app_textstyles.dart';
-import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
 
 class ChatView extends StatefulWidget {
   final String myId;
