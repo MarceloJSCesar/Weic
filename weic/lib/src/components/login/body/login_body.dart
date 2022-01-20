@@ -1,18 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uuid/uuid.dart';
-import 'package:weic/src/components/home/widgets/insert_essencial_data_view.dart';
-import 'package:weic/src/models/student.dart';
-import 'package:weic/src/services/home/home_services.dart';
-import 'package:weic/src/views/dados_essencial/dados_essencial_view.dart';
 import '../../../views/app_view.dart';
 import '../../../config/app_colors.dart';
 import '../../../config/app_textstyles.dart';
 import '../../../config/app_assetsnames.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import '../../../services/home/home_services.dart';
+import '../../../views/dados_essencial/dados_essencial_view.dart';
 import '../../../components/login/textfield/app_text_field_component.dart';
-import 'package:crypton/crypton.dart';
 
 class LoginBody extends StatelessWidget {
   final formkey;
