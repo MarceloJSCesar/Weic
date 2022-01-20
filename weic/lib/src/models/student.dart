@@ -12,6 +12,7 @@ class Student {
   String? password;
   List? chatRoomIds;
   String? schoolName;
+  String? schoolYear;
   String? profilePhoto;
   bool? isMemberOfCFESAD;
   bool? isProfileVerified;
@@ -26,6 +27,7 @@ class Student {
     this.followers,
     this.following,
     this.schoolName,
+    this.schoolYear,
     this.chatRoomIds,
     this.profilePhoto,
     this.isMemberOfCFESAD = false,
@@ -42,6 +44,7 @@ class Student {
         'followers': followers,
         'following': following,
         'schoolName': schoolName,
+        'schoolYear': schoolYear,
         'chatRoomIds': chatRoomIds,
         'profilePhoto': profilePhoto,
         'isMemberOfCFESAD': isMemberOfCFESAD,
@@ -59,6 +62,7 @@ class Student {
       followers: document.data['followers'],
       following: document.data['following'],
       schoolName: document.data['schoolName'],
+      schoolYear: document.data['schoolYear'],
       chatRoomIds: document.data['chatRoomIds'],
       profilePhoto: document.data['profilePhoto'],
       isMemberOfCFESAD: document.data['isMemberOfCFESAD'],
@@ -77,6 +81,7 @@ class Student {
       followers: document['followers'],
       following: document['following'],
       schoolName: document['schoolName'],
+      schoolYear: document['schoolYear'],
       chatRoomIds: document['chatRoomIds'],
       profilePhoto: document['profilePhoto'],
       isMemberOfCFESAD: document['isMemberOfCFESAD'],
@@ -86,6 +91,6 @@ class Student {
 
   @override
   String toString() {
-    return 'Student{id: $id, name: $name, posts: $posts, email: $email, guests: $guests, password: $password, followers: $followers, following: $following, schoolName: $schoolName, chatRoomIds: $chatRoomIds, profilePhoto: $profilePhoto, isMemberOfCFESAD: $isMemberOfCFESAD, isProfileVerified: $isProfileVerified}';
+    return 'Student{id: $id, name: $name, posts: $posts, email: $email, guests: $guests, password: $password, followers: $followers, following: $following, schoolName: $schoolName, schoolYear: $schoolYear, chatRoomIds: $chatRoomIds, profilePhoto: $profilePhoto, isMemberOfCFESAD: $isMemberOfCFESAD, isProfileVerified: $isProfileVerified}';
   }
 }
