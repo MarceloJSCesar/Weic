@@ -8,7 +8,7 @@ import '../../../views/app_view.dart';
 import '../../../config/app_textstyles.dart';
 import '../../../config/app_assetsnames.dart';
 import '../../../services/home/home_services.dart';
-import '../../../services/home/dados_essencial/dados_essencial_services.dart';
+import '../../../services/dados_essencial/dados_essencial_services.dart';
 
 class InsertEssencialData extends StatefulWidget {
   final Student student;
@@ -159,49 +159,66 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                               _passwordTextController.text.length >= 8 &&
                               _schoolYearTextController.text.length >= 3
                           ? () async {
-                              setState(() {
-                                isLoading = true;
+                              await _dadosEssenciasServices
+                                  .updatePassword(
+                                      newPassword: _passwordTextController.text)
+                                  .then((value) async {
+                                if (value == false) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      duration: Duration(seconds: 3),
+                                      content: Text(
+                                        'Palavra passe muito fraco, tente outra vez',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  final _prefs =
+                                      await SharedPreferences.getInstance();
+                                  final studentID =
+                                      _prefs.getString('STUDENT_ID');
+                                  final String _studentProfileImgUrl =
+                                      await _dadosEssenciasServices.uploadPhoto(
+                                    student: widget.student,
+                                    file: _imagePath,
+                                  );
+                                  Student student = Student(
+                                    id: widget.student.id,
+                                    email: widget.student.email,
+                                    name: _nameTextController.text,
+                                    followers: widget.student.followers,
+                                    following: widget.student.following,
+                                    profilePhoto: _studentProfileImgUrl,
+                                    schoolName: widget.student.schoolName,
+                                    isMemberOfCFESAD:
+                                        widget.student.isMemberOfCFESAD,
+                                    password: _passwordTextController.text,
+                                    isProfileVerified:
+                                        widget.student.isProfileVerified,
+                                    posts: widget.student.posts,
+                                    guests: widget.student.guests,
+                                    chatRoomIds: widget.student.chatRoomIds,
+                                    schoolYear: _schoolYearTextController.text,
+                                  );
+                                  await _homeServices
+                                      .sendEssentialStudentDataToFirebase(
+                                    student: student,
+                                  );
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (_) => AppView(
+                                        studentID: studentID as String,
+                                      ),
+                                    ),
+                                  );
+                                }
                               });
-                              final _prefs =
-                                  await SharedPreferences.getInstance();
-                              final studentID = _prefs.getString('STUDENT_ID');
-                              final String _studentProfileImgUrl =
-                                  await _dadosEssenciasServices.uploadPhoto(
-                                student: widget.student,
-                                file: _imagePath,
-                              );
-                              Student student = Student(
-                                id: widget.student.id,
-                                email: widget.student.email,
-                                name: _nameTextController.text,
-                                followers: widget.student.followers,
-                                following: widget.student.following,
-                                profilePhoto: _studentProfileImgUrl,
-                                schoolName: widget.student.schoolName,
-                                isMemberOfCFESAD:
-                                    widget.student.isMemberOfCFESAD,
-                                password: _passwordTextController.text,
-                                isProfileVerified:
-                                    widget.student.isProfileVerified,
-                                posts: widget.student.posts,
-                                guests: widget.student.guests,
-                                chatRoomIds: widget.student.chatRoomIds,
-                                schoolYear: _schoolYearTextController.text,
-                              );
-                              await _homeServices
-                                  .sendEssentialStudentDataToFirebase(
-                                student: student,
-                              );
-                              setState(() {
-                                isLoading = false;
-                              });
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (_) => AppView(
-                                    studentID: studentID as String,
-                                  ),
-                                ),
-                              );
                             }
                           : null,
                       child: Container(
