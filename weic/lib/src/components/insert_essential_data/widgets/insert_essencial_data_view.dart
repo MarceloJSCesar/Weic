@@ -1,15 +1,14 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weic/src/config/app_assetsnames.dart';
-import 'package:weic/src/config/app_textstyles.dart';
-import 'package:weic/src/models/student.dart';
-import 'package:weic/src/services/home/dados_essencial/dados_essencial_services.dart';
-import 'package:weic/src/services/home/home_services.dart';
-import 'package:weic/src/views/app_view.dart';
+import '../../../models/student.dart';
+import '../../../views/app_view.dart';
+import '../../../config/app_textstyles.dart';
+import '../../../config/app_assetsnames.dart';
+import '../../../services/home/home_services.dart';
+import '../../../services/home/dados_essencial/dados_essencial_services.dart';
 
 class InsertEssencialData extends StatefulWidget {
   final Student student;
@@ -23,10 +22,12 @@ class InsertEssencialData extends StatefulWidget {
 }
 
 class _InsertEssencialDataState extends State<InsertEssencialData> {
-  File _imagePath = File('');
   bool isLoading = false;
+  File _imagePath = File('');
   final _homeServices = HomeServices();
   final _nameTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+  final _schoolYearTextController = TextEditingController();
   final _dadosEssenciasServices = DadosEssenciaisServices();
   @override
   Widget build(BuildContext context) {
@@ -113,13 +114,50 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                 ),
               ),
             ),
+            SizedBox(height: 6),
+            TextFormField(
+              controller: _schoolYearTextController,
+              textCapitalization: TextCapitalization.words,
+              onChanged: (val) {
+                setState(() {});
+              },
+              decoration: InputDecoration(
+                labelText: 'Ano escolar',
+                hintText: 'ex: 10 ano',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 6),
+            TextFormField(
+              controller: _passwordTextController,
+              textCapitalization: TextCapitalization.words,
+              onChanged: (val) {
+                setState(() {});
+              },
+              decoration: InputDecoration(
+                labelText: 'Criar nova password',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
+                ),
+              ),
+            ),
             SizedBox(height: 16),
             isLoading == false
                 ? Container(
                     alignment: Alignment.center,
                     child: GestureDetector(
                       onTap: _imagePath.path.length > 0 &&
-                              _nameTextController.text.length > 0
+                              _nameTextController.text.length > 0 &&
+                              _passwordTextController.text.length >= 8 &&
+                              _schoolYearTextController.text.length >= 3
                           ? () async {
                               setState(() {
                                 isLoading = true;
@@ -136,18 +174,19 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                                 id: widget.student.id,
                                 email: widget.student.email,
                                 name: _nameTextController.text,
-                                password: widget.student.password,
                                 followers: widget.student.followers,
                                 following: widget.student.following,
                                 profilePhoto: _studentProfileImgUrl,
                                 schoolName: widget.student.schoolName,
                                 isMemberOfCFESAD:
                                     widget.student.isMemberOfCFESAD,
+                                password: _passwordTextController.text,
                                 isProfileVerified:
                                     widget.student.isProfileVerified,
                                 posts: widget.student.posts,
                                 guests: widget.student.guests,
                                 chatRoomIds: widget.student.chatRoomIds,
+                                schoolYear: _schoolYearTextController.text,
                               );
                               await _homeServices
                                   .sendEssentialStudentDataToFirebase(
