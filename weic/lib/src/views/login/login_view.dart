@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/login/widgets/login_bottom_text.dart';
-import 'package:weic/src/services/login/login_services.dart';
-import '../../config/app_textstyles.dart';
 import '../../config/app_decorations.dart';
+import '../../services/login/login_services.dart';
 import '../../components/login/body/login_body.dart';
 import '../../controllers/login/login_controller.dart';
+import '../../components/login/widgets/login_bottom_text.dart';
 
 class LoginView extends StatefulWidget {
   LoginView({Key? key}) : super(key: key);
