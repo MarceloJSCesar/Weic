@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'models/student.dart';
 import 'views/app_view.dart';
 import 'views/login/login_view.dart';
 import 'services/login/login_services.dart';

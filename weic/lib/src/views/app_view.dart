@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:weic/src/views/news/news_view.dart';
-import '../models/student.dart';
+import '../views/news/news_view.dart';
 import '../views/home/home_view.dart';
 import '../views/chat/chat_view.dart';
 import '../views/profile/profile_view.dart';
+import '../views/search_student/search_student_view.dart';
 
 class AppView extends StatefulWidget {
   final String studentID;
@@ -33,6 +33,7 @@ class _AppViewState extends State<AppView> {
       HomeView(studentID: widget.studentID),
       ChatView(myId: widget.studentID),
       NewsView(),
+      SearchStudentView(),
       ProfileView(studentID: widget.studentID),
     ];
     _selectPageIndex = 0;
@@ -75,6 +76,12 @@ class _AppViewState extends State<AppView> {
           BottomNavigationBarItem(
             icon: Icon(
               CupertinoIcons.news,
+              size: 25,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.search,
               size: 25,
             ),
           ),
