@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/news/widgets/news_body.dart';
-import 'package:weic/src/components/news/widgets/news_card.dart';
-import 'package:weic/src/components/news/widgets/news_card_only_title.dart';
-import 'package:weic/src/components/news/widgets/news_page_viewer.dart';
-import 'package:weic/src/config/app_textstyles.dart';
-import 'package:weic/src/models/news.dart';
-import 'package:weic/src/services/home/home_services.dart';
+import '../../models/news.dart';
+import '../../config/app_textstyles.dart';
+import '../../services/home/home_services.dart';
+import '../../components/news/widgets/news_body.dart';
 
 class NewsView extends StatelessWidget {
   const NewsView({Key? key}) : super(key: key);

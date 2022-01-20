@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'news_card.dart';
-import 'news_page_viewer.dart';
 import 'news_card_only_title.dart';
 import '../../../models/news.dart';
+import '../view/news_page_viewer.dart';
 
 class NewsBody extends StatelessWidget {
   final News? news;
