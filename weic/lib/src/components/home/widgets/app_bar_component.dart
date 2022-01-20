@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:weic/src/models/student.dart';
 import '../../../config/app_textstyles.dart';
 import '../../../config/app_assetsnames.dart';
-import '../../../config/app_decorations.dart';
 
 class AppBarComponent extends PreferredSize {
   final Student student;
