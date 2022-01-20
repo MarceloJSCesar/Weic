@@ -37,6 +37,7 @@ class NewsView extends StatelessWidget {
                         return Center(
                           child: Text('no internet'),
                         );
+                      // added shimmer instead circularProgressIndicator okay ?
                       case ConnectionState.waiting:
                         return Center(
                           child: CircularProgressIndicator(
