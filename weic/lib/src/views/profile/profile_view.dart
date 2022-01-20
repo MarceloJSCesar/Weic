@@ -4,6 +4,7 @@ import 'package:weic/src/config/app_assetsnames.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/home/home_services.dart';
+import 'package:weic/src/services/login/login_services.dart';
 import 'package:weic/src/views/login/login_view.dart';
 
 class ProfileView extends StatefulWidget {
@@ -15,8 +16,8 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final _homeServices = HomeServices();
   bool isYouFollowing = false;
+  final _homeServices = HomeServices();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -117,7 +118,8 @@ class _ProfileViewState extends State<ProfileView> {
                                   ),
                                   SnackbarTextButton(
                                     text: 'Sair',
-                                    onPressed: () {},
+                                    onPressed: () async =>
+                                        LoginServices().logoutUser(),
                                   )
                                 ],
                               ),

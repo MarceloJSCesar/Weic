@@ -78,11 +78,15 @@ class LoginServices {
 
   Future logoutUser() async {
     final _prefs = await SharedPreferences.getInstance();
-    try {
-      await _auth.auth.signOut();
-      await _prefs.remove('STUDENT_ID');
-    } catch (error) {
-      print('logout error $error');
+    if (_auth.auth.currentUser != null) {
+      try {
+        await _auth.auth.signOut();
+        await _prefs.remove('STUDENT_ID');
+      } catch (error) {
+        print('logout error $error');
+      }
+    } else {
+      return null;
     }
   }
 }
