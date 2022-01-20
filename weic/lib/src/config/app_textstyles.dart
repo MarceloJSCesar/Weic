@@ -90,4 +90,10 @@ class AppTextStyles {
     color: Colors.white,
     fontWeight: FontWeight.normal,
   );
+  //  profile
+  final TextStyle snackbarTextButtonTextStyle = GoogleFonts.notoSans(
+    fontSize: 16,
+    color: Colors.black,
+    fontWeight: FontWeight.normal,
+  );
 }
