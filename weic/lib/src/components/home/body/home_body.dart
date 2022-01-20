@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/home/widgets/app_bar_component.dart';
-import 'package:weic/src/config/app_textstyles.dart';
-import 'package:weic/src/models/student.dart';
+import '../../../models/student.dart';
 import '../../../config/app_decorations.dart';
+import '../../../config/app_textstyles.dart';
+import '../../../components/home/widgets/app_bar_component.dart';
 
 class HomeBody extends StatelessWidget {
   final Student student;
