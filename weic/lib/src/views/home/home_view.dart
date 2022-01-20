@@ -3,7 +3,6 @@ import '../../models/student.dart';
 import '../../views/login/login_view.dart';
 import '../../services/home/home_services.dart';
 import '../../components/home/body/home_body.dart';
-import '../../services/chat/allUsers/chat_all_users_services.dart';
 
 class HomeView extends StatefulWidget {
   final String studentID;
