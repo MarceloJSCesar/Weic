@@ -17,6 +17,7 @@ class SearchStudentView extends StatelessWidget {
             children: <Widget>[
               Container(
                 height: 35,
+                width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(vertical: 8.0),
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
