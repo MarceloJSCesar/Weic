@@ -3,7 +3,7 @@ import '../../../config/app_textstyles.dart';
 
 class SnackbarTextButton extends StatelessWidget with AppTextStyles {
   final String? text;
-  final Function? onPressed;
+  final onPressed;
   SnackbarTextButton({
     Key? key,
     @required this.text,
@@ -13,7 +13,7 @@ class SnackbarTextButton extends StatelessWidget with AppTextStyles {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onPressed,
+      onTap: onPressed,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Text(

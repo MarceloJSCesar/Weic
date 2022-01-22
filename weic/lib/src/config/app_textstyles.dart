@@ -93,7 +93,7 @@ class AppTextStyles {
   //  profile
   final TextStyle snackbarTextButtonTextStyle = GoogleFonts.notoSans(
     fontSize: 16,
-    color: Colors.black,
+    color: Colors.white,
     fontWeight: FontWeight.normal,
   );
   // student search

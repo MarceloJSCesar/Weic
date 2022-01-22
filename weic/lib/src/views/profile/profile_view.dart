@@ -101,7 +101,16 @@ class _ProfileViewState extends State<ProfileView> {
                             icon: Icon(Icons.menu),
                             onPressed: () => ScaffoldMessenger.of(context)
                                 .showSnackBar(SnackBar(
+                              duration: Duration(seconds: 30),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 16),
+                              backgroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              behavior: SnackBarBehavior.floating,
                               content: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   SnackbarTextButton(
@@ -114,19 +123,21 @@ class _ProfileViewState extends State<ProfileView> {
                                   ),
                                   SnackbarTextButton(
                                     text: 'Definições',
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      print('tapped');
+                                    },
                                   ),
                                   SnackbarTextButton(
                                     text: 'Sair',
                                     onPressed: () async {
-                                      setState(() {
-                                        LoginServices().logoutUser();
-                                      });
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                           builder: (_) => LoginView(),
                                         ),
                                       );
+                                      setState(() {
+                                        LoginServices().logoutUser();
+                                      });
                                     },
                                   ),
                                 ],
