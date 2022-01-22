@@ -70,9 +70,9 @@ class Student {
     );
   }
 
-  factory Student.fromDocument(Map<String, dynamic>? document) {
+  factory Student.fromDocument(dynamic document) {
     return Student(
-      id: document!['id'],
+      id: document['id'],
       name: document['name'],
       posts: document['posts'],
       email: document['email'],

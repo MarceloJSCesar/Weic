@@ -10,22 +10,22 @@ class StudentsServices {
     because user will search students by the school year and 
     show all the students according to their school year
   */
-  Future<List<Student>>? getAllStudents() async {
-    var studentIDResponse =
-        await _instance.collection('generalUsers').doc('GENERAL-USERS').get();
-    List studentsID = studentIDResponse.data()!['users'];
-    List<Student> students = [];
-    for (int i = 0; i < studentsID.length; i++) {
-      var studentDataResponse = await _instance
-          .collection('users')
-          .doc(userCollectionDocID)
-          .collection('students')
-          .doc('student ${studentsID[i]}')
-          .get();
-      students.add(Student.fromDocument(
-        studentDataResponse.data(),
-      ));
-    }
-    return students;
+  Future<List<Student>> getAllStudents({
+    required String schoolYear,
+  }) async {
+    List<Student> _students = [];
+    await _instance
+        .collection('users')
+        .doc(userCollectionDocID)
+        .collection('students')
+        .where('schoolYear', isEqualTo: schoolYear)
+        .get()
+        .then((value) => value.docs.isNotEmpty
+            ? value.docs.forEach((element) {
+                print('element:' + element.data().toString());
+                _students.add(Student.fromDocument(element.data()));
+              })
+            : null);
+    return _students;
   }
 }

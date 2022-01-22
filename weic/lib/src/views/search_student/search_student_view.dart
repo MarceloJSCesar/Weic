@@ -1,12 +1,29 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:weic/src/models/student.dart';
+import 'package:weic/src/services/students/students_services.dart';
 import '/src/config/app_textstyles.dart';
 
-class SearchStudentView extends StatelessWidget {
+class SearchStudentView extends StatefulWidget {
   const SearchStudentView({Key? key}) : super(key: key);
 
   @override
+  State<SearchStudentView> createState() => _SearchStudentViewState();
+}
+
+class _SearchStudentViewState extends State<SearchStudentView> {
+  final _studentServices = StudentsServices();
+  TextEditingController? _studentSearchTextEditingController;
+
+  @override
+  void initState() {
+    super.initState();
+    _studentSearchTextEditingController = TextEditingController();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final _studentSearchTextEditingController = TextEditingController();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -23,8 +40,13 @@ class SearchStudentView extends StatelessWidget {
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                child: TextField(
+                child: TextFormField(
                   controller: _studentSearchTextEditingController,
+                  onFieldSubmitted: (value) {
+                    setState(() {
+                      _studentSearchTextEditingController!.text = value;
+                    });
+                  },
                   style: AppTextStyles.searchStudentFieldTextStyle,
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -32,16 +54,55 @@ class SearchStudentView extends StatelessWidget {
                   ),
                 ),
               ),
-              if (_studentSearchTextEditingController.text.length > 3)
+              if (_studentSearchTextEditingController!.text.length > 3)
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[],
-                    ),
+                  child: FutureBuilder(
+                    future: _studentServices.getAllStudents(
+                        schoolYear: _studentSearchTextEditingController!.text),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Center(
+                            child: CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.black),
+                              strokeWidth: 3.0,
+                            ),
+                          );
+
+                        default:
+                          if (snapshot.hasData) {
+                            print('return value:' + snapshot.data.toString());
+                            List<Student> _students =
+                                snapshot.data as List<Student>;
+
+                            return ListView.builder(
+                              itemCount: _students.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text(_students[index].name as String),
+                                  subtitle:
+                                      Text(_students[index].email as String),
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        _students[index].profilePhoto
+                                            as String),
+                                  ),
+                                );
+                              },
+                            );
+                          } else {
+                            return Center(
+                              child: Text(
+                                'Nenhum estudanto do ${_studentSearchTextEditingController!.text}',
+                              ),
+                            );
+                          }
+                      }
+                    },
                   ),
                 ),
-              if (_studentSearchTextEditingController.text.length <= 3)
+              if (_studentSearchTextEditingController!.text.length <= 3)
                 Center(
                   child:
                       Text('Display an image here showing to search for users'),
