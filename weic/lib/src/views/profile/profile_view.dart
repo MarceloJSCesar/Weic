@@ -118,9 +118,17 @@ class _ProfileViewState extends State<ProfileView> {
                                   ),
                                   SnackbarTextButton(
                                     text: 'Sair',
-                                    onPressed: () async =>
-                                        LoginServices().logoutUser(),
-                                  )
+                                    onPressed: () async {
+                                      setState(() {
+                                        LoginServices().logoutUser();
+                                      });
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (_) => LoginView(),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ],
                               ),
                             )),
