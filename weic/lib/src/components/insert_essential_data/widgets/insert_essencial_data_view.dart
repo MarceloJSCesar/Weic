@@ -159,11 +159,17 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                               _passwordTextController.text.length >= 8 &&
                               _schoolYearTextController.text.length >= 3
                           ? () async {
+                              setState(() {
+                                isLoading = true;
+                              });
                               await _dadosEssenciasServices
                                   .updatePassword(
                                       newPassword: _passwordTextController.text)
                                   .then((value) async {
                                 if (value == false) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       duration: Duration(seconds: 3),
@@ -173,9 +179,6 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                                     ),
                                   );
                                 } else {
-                                  setState(() {
-                                    isLoading = true;
-                                  });
                                   final _prefs =
                                       await SharedPreferences.getInstance();
                                   final studentID =
