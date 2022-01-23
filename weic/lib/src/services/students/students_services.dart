@@ -18,7 +18,7 @@ class StudentsServices {
         .collection('users')
         .doc(userCollectionDocID)
         .collection('students')
-        .where('schoolYear', isEqualTo: schoolYear)
+        .where('schoolYear', isLessThanOrEqualTo: schoolYear)
         .get()
         .then((value) => value.docs.isNotEmpty
             ? value.docs.forEach((element) {
