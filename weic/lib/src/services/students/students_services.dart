@@ -10,7 +10,7 @@ class StudentsServices {
     because user will search students by the school year and 
     show all the students according to their school year
   */
-  Future<List<Student>> getAllStudents({
+  Future<List<Student>> getUserBySchoolYear({
     required String schoolYear,
   }) async {
     List<Student> _students = [];

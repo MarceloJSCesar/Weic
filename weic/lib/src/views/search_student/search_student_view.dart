@@ -57,7 +57,7 @@ class _SearchStudentViewState extends State<SearchStudentView> {
               if (_studentSearchTextEditingController!.text.length > 3)
                 Expanded(
                   child: FutureBuilder(
-                    future: _studentServices.getAllStudents(
+                    future: _studentServices.getUserBySchoolYear(
                         schoolYear: _studentSearchTextEditingController!.text),
                     builder: (context, AsyncSnapshot snapshot) {
                       switch (snapshot.connectionState) {
