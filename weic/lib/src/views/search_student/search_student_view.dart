@@ -1,12 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:weic/src/components/insert_essential_data/widgets/student_card.dart';
 import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/students/students_services.dart';
 import '/src/config/app_textstyles.dart';
 
 class SearchStudentView extends StatefulWidget {
-  const SearchStudentView({Key? key}) : super(key: key);
+  final String studentID;
+  const SearchStudentView({
+    Key? key,
+    required this.studentID,
+  }) : super(key: key);
 
   @override
   State<SearchStudentView> createState() => _SearchStudentViewState();
@@ -79,15 +84,9 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                             return ListView.builder(
                               itemCount: _students.length,
                               itemBuilder: (context, index) {
-                                return ListTile(
-                                  title: Text(_students[index].name as String),
-                                  subtitle:
-                                      Text(_students[index].email as String),
-                                  leading: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        _students[index].profilePhoto
-                                            as String),
-                                  ),
+                                return StudentCard(
+                                  myId: widget.studentID,
+                                  student: _students[index],
                                 );
                               },
                             );

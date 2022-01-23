@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:weic/src/components/chat/widgets/mensages_screen.dart';
-import 'package:weic/src/components/insert_essential_data/profile_viewer.dart';
+import 'package:weic/src/components/insert_essential_data/widgets/profile_viewer.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/latestMensage.dart';
 import 'package:weic/src/models/mensage.dart';
