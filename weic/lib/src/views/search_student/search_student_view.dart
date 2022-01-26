@@ -74,7 +74,6 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                   ),
                 ),
               ),
-              Expanded(child: Container()),
               if (_studentSearchTextEditingController!.text.length > 3)
                 Expanded(
                   child: FutureBuilder(
@@ -120,6 +119,7 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                     },
                   ),
                 ),
+              Expanded(child: Container()),
               if (_studentSearchTextEditingController!.text.length <= 3)
                 Container(
                   alignment: Alignment.center,
