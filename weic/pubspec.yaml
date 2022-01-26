@@ -61,6 +61,7 @@ flutter:
     - assets/user-profile/
     - assets/school/me.jpg
     - assets/logo/weic.png
+    - assets/search_student/
     - assets/school/diretor.jpg
     - assets/school/classmate.jpg
   # An image asset can refer to one or more resolution-specific "variants", see

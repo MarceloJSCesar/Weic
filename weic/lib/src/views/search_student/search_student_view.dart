@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weic/src/components/insert_essential_data/widgets/student_card.dart';
+import 'package:weic/src/config/app_assetsnames.dart';
 import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/students/students_services.dart';
 import '/src/config/app_textstyles.dart';
@@ -73,6 +74,7 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                   ),
                 ),
               ),
+              Expanded(child: Container()),
               if (_studentSearchTextEditingController!.text.length > 3)
                 Expanded(
                   child: FutureBuilder(
@@ -119,10 +121,13 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                   ),
                 ),
               if (_studentSearchTextEditingController!.text.length <= 3)
-                Center(
-                  child:
-                      Text('Display an image here showing to search for users'),
+                Container(
+                  alignment: Alignment.center,
+                  child: Image(
+                    image: AssetImage(AppAssetsNames.searchStudentImageUrl),
+                  ),
                 ),
+              Expanded(child: Container())
             ],
           ),
         ),
