@@ -12,20 +12,25 @@ class StudentsServices {
   */
   Future<List<Student>> getUserBySchoolYear({
     required String schoolYear,
+    required String myID,
   }) async {
     List<Student> _students = [];
     await _instance
         .collection('users')
         .doc(userCollectionDocID)
         .collection('students')
-        .where('schoolYear', isLessThanOrEqualTo: schoolYear)
+        .where('schoolYear', isEqualTo: schoolYear)
         .get()
         .then((value) => value.docs.isNotEmpty
             ? value.docs.forEach((element) {
-                print('element:' + element.data().toString());
                 _students.add(Student.fromDocument(element.data()));
               })
             : null);
-    return _students;
+    for (int i = 0; i < _students.length; i++) {
+      if (_students[i].id == myID) {
+        _students.removeAt(i);
+      }
+    }
+    return _students.length > 0 ? _students : null as List<Student>;
   }
 }

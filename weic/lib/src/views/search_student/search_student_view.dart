@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:weic/src/components/insert_essential_data/widgets/student_card.dart';
 import 'package:weic/src/models/student.dart';
@@ -38,16 +36,19 @@ class _SearchStudentViewState extends State<SearchStudentView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                height: 35,
+                height: 40,
+                alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(vertical: 8.0),
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                child: TextFormField(
+                child: TextField(
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
                   controller: _studentSearchTextEditingController,
-                  onFieldSubmitted: (value) {
+                  onSubmitted: (value) {
                     setState(() {
                       _studentSearchTextEditingController!.text = value;
                     });
@@ -56,6 +57,9 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'exemplo: 10 ano',
+                    prefix: Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                    ),
                   ),
                 ),
               ),
@@ -63,7 +67,9 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                 Expanded(
                   child: FutureBuilder(
                     future: _studentServices.getUserBySchoolYear(
-                        schoolYear: _studentSearchTextEditingController!.text),
+                      schoolYear: _studentSearchTextEditingController!.text,
+                      myID: widget.studentID,
+                    ),
                     builder: (context, AsyncSnapshot snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
@@ -77,23 +83,33 @@ class _SearchStudentViewState extends State<SearchStudentView> {
 
                         default:
                           if (snapshot.hasData) {
-                            print('return value:' + snapshot.data.toString());
                             List<Student> _students =
                                 snapshot.data as List<Student>;
 
                             return ListView.builder(
                               itemCount: _students.length,
                               itemBuilder: (context, index) {
-                                return StudentCard(
-                                  myId: widget.studentID,
-                                  student: _students[index],
-                                );
+                                print('student length: ${_students.length}');
+                                return _students.length > 0
+                                    ? StudentCard(
+                                        myId: widget.studentID,
+                                        student: _students[index],
+                                      )
+                                    : Center(
+                                        child: Text(
+                                          'Nenhum estudante do ${_studentSearchTextEditingController!.text}',
+                                          style:
+                                              AppTextStyles.titleBlackTextStyle,
+                                        ),
+                                      );
                               },
                             );
                           } else {
+                            print('no user');
                             return Center(
                               child: Text(
                                 'Nenhum estudanto do ${_studentSearchTextEditingController!.text}',
+                                style: AppTextStyles.titleBlackTextStyle,
                               ),
                             );
                           }
