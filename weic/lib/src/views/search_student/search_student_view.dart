@@ -60,6 +60,16 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                     prefix: Padding(
                       padding: const EdgeInsets.only(right: 12.0),
                     ),
+                    suffixIcon: IconButton(
+                      onPressed: () =>
+                          _studentSearchTextEditingController!.text.length > 0
+                              ? {
+                                  _studentSearchTextEditingController!.clear(),
+                                  setState(() {}),
+                                }
+                              : null,
+                      icon: Icon(Icons.clear),
+                    ),
                   ),
                 ),
               ),
@@ -89,19 +99,10 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                             return ListView.builder(
                               itemCount: _students.length,
                               itemBuilder: (context, index) {
-                                print('student length: ${_students.length}');
-                                return _students.length > 0
-                                    ? StudentCard(
-                                        myId: widget.studentID,
-                                        student: _students[index],
-                                      )
-                                    : Center(
-                                        child: Text(
-                                          'Nenhum estudante do ${_studentSearchTextEditingController!.text}',
-                                          style:
-                                              AppTextStyles.titleBlackTextStyle,
-                                        ),
-                                      );
+                                return StudentCard(
+                                  myId: widget.studentID,
+                                  student: _students[index],
+                                );
                               },
                             );
                           } else {
