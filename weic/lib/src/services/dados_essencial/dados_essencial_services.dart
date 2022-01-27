@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypton/crypton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -41,7 +42,9 @@ class DadosEssenciaisServices {
   }
 
   Future<bool?> updatePassword({required String newPassword}) async {
-    await _authInstance.currentUser?.updatePassword(newPassword).then((_) {
+    RSAKeypair rsaKeypair = RSAKeypair.fromRandom();
+    final encrypedPassword = rsaKeypair.publicKey.encrypt(newPassword);
+    await _authInstance.currentUser?.updatePassword(encrypedPassword).then((_) {
       return true;
     }).catchError((errorReturn) {
       return false;
