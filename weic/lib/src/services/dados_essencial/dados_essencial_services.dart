@@ -42,9 +42,7 @@ class DadosEssenciaisServices {
   }
 
   Future<bool?> updatePassword({required String newPassword}) async {
-    RSAKeypair rsaKeypair = RSAKeypair.fromRandom();
-    final encrypedPassword = rsaKeypair.publicKey.encrypt(newPassword);
-    await _authInstance.currentUser?.updatePassword(encrypedPassword).then((_) {
+    await _authInstance.currentUser?.updatePassword(newPassword).then((_) {
       return true;
     }).catchError((errorReturn) {
       return false;

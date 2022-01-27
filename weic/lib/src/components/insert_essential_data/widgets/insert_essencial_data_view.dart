@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:crypton/crypton.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -165,8 +166,8 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                               await _dadosEssenciasServices
                                   .updatePassword(
                                       newPassword: _passwordTextController.text)
-                                  .then((value) async {
-                                if (value == false) {
+                                  .then((password) async {
+                                if (password == 'error') {
                                   setState(() {
                                     isLoading = false;
                                   });
@@ -179,6 +180,10 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                                     ),
                                   );
                                 } else {
+                                  RSAKeypair rsaKeypair =
+                                      RSAKeypair.fromRandom();
+                                  final encrypedPassword = rsaKeypair.publicKey
+                                      .encrypt(_passwordTextController.text);
                                   final _prefs =
                                       await SharedPreferences.getInstance();
                                   final studentID =
@@ -198,7 +203,7 @@ class _InsertEssencialDataState extends State<InsertEssencialData> {
                                     schoolName: widget.student.schoolName,
                                     isMemberOfCFESAD:
                                         widget.student.isMemberOfCFESAD,
-                                    password: _passwordTextController.text,
+                                    password: encrypedPassword,
                                     isProfileVerified:
                                         widget.student.isProfileVerified,
                                     posts: widget.student.posts,
