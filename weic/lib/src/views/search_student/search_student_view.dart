@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/insert_essential_data/widgets/student_card.dart';
+import 'package:weic/src/components/profile/widgets/student_card.dart';
 import 'package:weic/src/config/app_assetsnames.dart';
 import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/students/students_services.dart';

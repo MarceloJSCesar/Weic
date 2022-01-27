@@ -1,14 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/chat/widgets/mensages_screen.dart';
-import 'package:weic/src/components/insert_essential_data/widgets/profile_viewer.dart';
-import 'package:weic/src/config/app_textstyles.dart';
-import 'package:weic/src/models/latestMensage.dart';
-import 'package:weic/src/models/mensage.dart';
-import 'package:weic/src/models/student.dart';
-import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
-import 'package:weic/src/services/home/home_services.dart';
-import 'package:weic/src/views/login/login_view.dart';
+import '../../../models/student.dart';
+import '../../../models/latestMensage.dart';
+import '../../../config/app_textstyles.dart';
+import '../../../components/chat/widgets/mensages_screen.dart';
+import '../../../components/profile/widgets/profile_viewer.dart';
 
 class StudentCard extends StatelessWidget {
   final String myId;

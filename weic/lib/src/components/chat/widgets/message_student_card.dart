@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/insert_essential_data/widgets/profile_viewer.dart';
-import 'package:weic/src/config/app_textstyles.dart';
-import 'package:weic/src/models/latestMensage.dart';
-import 'package:weic/src/models/mensage.dart';
-import 'package:weic/src/models/student.dart';
+import '../../../models/latestMensage.dart';
+import '../../../config/app_textstyles.dart';
+import '../../../components/profile/widgets/profile_viewer.dart';
 
 class MessageStudentCard extends StatelessWidget {
   final String myId;

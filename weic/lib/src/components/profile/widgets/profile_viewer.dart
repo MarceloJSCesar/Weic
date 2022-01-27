@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/config/app_assetsnames.dart';
-import 'package:weic/src/config/app_textstyles.dart';
-import 'package:weic/src/models/student.dart';
-import 'package:weic/src/services/home/home_services.dart';
-import 'package:weic/src/views/login/login_view.dart';
+import '../../../models/student.dart';
+import '../../../config/app_textstyles.dart';
+import '../../../config/app_assetsnames.dart';
+import '../../../views/login/login_view.dart';
+import '../../../services/home/home_services.dart';
 
 class ProfileViewer extends StatefulWidget {
   final String studentID;
