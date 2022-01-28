@@ -10,7 +10,6 @@ class Weic extends StatelessWidget {
 
   @override
   MaterialApp build(BuildContext context) {
-    final _loginController = LoginController();
     final _loginServices = LoginServices();
     return MaterialApp(
       debugShowCheckedModeBanner: false,

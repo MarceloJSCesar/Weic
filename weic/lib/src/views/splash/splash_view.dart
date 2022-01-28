@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weic/src/config/app_assetsnames.dart';
 
@@ -17,12 +18,15 @@ class _SplashViewState extends State<SplashView>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 1),
       vsync: this,
     );
-    _animation = Tween(begin: 0.0, end: 1.0)
-        .animate(_animationController as AnimationController);
-    _animation!.addListener(() {
+    _animation = CurvedAnimation(
+      parent: _animationController as AnimationController,
+      curve: Curves.fastOutSlowIn,
+    );
+    _animationController?.forward();
+    _animationController!.addListener(() {
       setState(() {});
     });
   }
@@ -30,34 +34,35 @@ class _SplashViewState extends State<SplashView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Expanded(child: Container()),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Image(
+      backgroundColor: Colors.black.withOpacity(_animation!.value),
+      body: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(child: Container()),
+            Column(
+              children: <Widget>[
+                Image(
                   fit: BoxFit.fill,
-                  height: _animation!.value * 140,
-                  image: AssetImage(AppAssetsNames.logoImageUrl)),
-              SizedBox(height: _animation!.value * 20),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Seja Bem-Vindo!',
-                  style: TextStyle(
-                    fontSize: _animation!.value * 22,
+                  height: _animation!.value * 350,
+                  image: AssetImage(AppAssetsNames.logoImageUrl),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Seja Bem-Vindo!',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: _animation!.value * 22,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Expanded(child: Container()),
-        ],
+              ],
+            ),
+            Expanded(child: Container()),
+          ],
+        ),
       ),
     );
   }
