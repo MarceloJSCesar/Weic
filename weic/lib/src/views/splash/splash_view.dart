@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weic/src/config/app_assetsnames.dart';
+import 'package:weic/src/views/login/login_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _SplashViewState extends State<SplashView>
     );
     _animation = CurvedAnimation(
       parent: _animationController as AnimationController,
-      curve: Curves.decelerate,
+      curve: Curves.slowMiddle,
     );
     _animationController?.forward();
     _animationController!.addListener(() {
@@ -75,21 +76,25 @@ class _SplashViewState extends State<SplashView>
               ],
             ),
             Expanded(child: Container()),
-            Container(
-              alignment: Alignment.center,
+            GestureDetector(
+              onTap: () => Navigator.of(context)
+                  .pushReplacementNamed(LoginView.loginViewKey),
               child: Container(
-                height: 50,
-                width: 130,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Color(0xFF03989e),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  'Começar',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 17,
+                child: Container(
+                  height: 50,
+                  width: 130,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF03989e),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    'Começar',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                    ),
                   ),
                 ),
               ),

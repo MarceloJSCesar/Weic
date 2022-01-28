@@ -6,6 +6,7 @@ import '../../controllers/login/login_controller.dart';
 import '../../components/login/widgets/login_bottom_text.dart';
 
 class LoginView extends StatefulWidget {
+  static const String loginViewKey = 'loginViewKey';
   LoginView({Key? key}) : super(key: key);
   _LoginViewState createState() => _LoginViewState();
 }

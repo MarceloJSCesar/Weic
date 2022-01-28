@@ -54,10 +54,13 @@ class LoginBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image(
-              width: 200,
-              fit: BoxFit.fill,
-              image: AssetImage(AppAssetsNames.logoImageUrl),
+            Hero(
+              tag: 'logo',
+              child: Image(
+                height: 200,
+                fit: BoxFit.fill,
+                image: AssetImage(AppAssetsNames.logoImageUrl),
+              ),
             ),
             SizedBox(height: 20),
             TextFormFieldComponent(

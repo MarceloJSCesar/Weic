@@ -18,6 +18,9 @@ class Weic extends StatelessWidget {
         brightness: Brightness.dark,
         backgroundColor: Colors.black,
       ),
+      routes: {
+        LoginView.loginViewKey: (_) => LoginView(),
+      },
       home: FutureBuilder(
         future: LoginServices().getLoginState(),
         builder: (context, AsyncSnapshot snapshot) {
