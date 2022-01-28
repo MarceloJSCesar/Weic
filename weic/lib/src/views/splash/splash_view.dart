@@ -91,7 +91,7 @@ class _SplashViewState extends State<SplashView>
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    'Começar',
+                    'Prosseguir',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 17,
