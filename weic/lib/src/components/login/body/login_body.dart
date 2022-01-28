@@ -56,6 +56,7 @@ class LoginBody extends StatelessWidget {
           children: <Widget>[
             Hero(
               tag: 'logo',
+              transitionOnUserGestures: true,
               child: Image(
                 height: 200,
                 fit: BoxFit.fill,

@@ -24,7 +24,7 @@ class _SplashViewState extends State<SplashView>
     );
     _animation = CurvedAnimation(
       parent: _animationController as AnimationController,
-      curve: Curves.slowMiddle,
+      curve: Curves.easeInToLinear,
     );
     _animationController?.forward();
     _animationController!.addListener(() {
@@ -46,6 +46,7 @@ class _SplashViewState extends State<SplashView>
               children: <Widget>[
                 Hero(
                   tag: 'logo',
+                  transitionOnUserGestures: true,
                   child: Image(
                     fit: BoxFit.fill,
                     height: _animation!.value * 350,
