@@ -23,7 +23,7 @@ class _SplashViewState extends State<SplashView>
     );
     _animation = CurvedAnimation(
       parent: _animationController as AnimationController,
-      curve: Curves.fastOutSlowIn,
+      curve: Curves.decelerate,
     );
     _animationController?.forward();
     _animationController!.addListener(() {
@@ -36,7 +36,7 @@ class _SplashViewState extends State<SplashView>
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(_animation!.value),
       body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
+        margin: const EdgeInsets.symmetric(horizontal: 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -54,14 +54,45 @@ class _SplashViewState extends State<SplashView>
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Seja Bem-Vindo!',
+                    'Seja Bem-Vindo !',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: _animation!.value * 22,
                     ),
                   ),
                 ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(top: 6.0),
+                  child: Text(
+                    'Um grande aplicativo que unem todos os estudantes da escola, oferecendo vários recursos, tudo em um só lugar.',
+                    style: TextStyle(
+                      color: Colors.grey[400],
+                      fontSize: _animation!.value * 19,
+                    ),
+                  ),
+                ),
               ],
+            ),
+            Expanded(child: Container()),
+            Container(
+              alignment: Alignment.center,
+              child: Container(
+                height: 50,
+                width: 130,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Color(0xFF03989e),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  'Começar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
+                  ),
+                ),
+              ),
             ),
             Expanded(child: Container()),
           ],
