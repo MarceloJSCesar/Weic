@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weic/src/views/splash/splash_view.dart';
 import 'views/app_view.dart';
 import 'views/login/login_view.dart';
 import 'services/login/login_services.dart';
@@ -30,9 +31,9 @@ class Weic extends StatelessWidget {
               );
             default:
               if (snapshot.hasError) {
-                return LoginView();
+                return SplashView();
               } else if (snapshot.data == null) {
-                return LoginView();
+                return SplashView();
               } else {
                 final bool remenberMe = snapshot.data['remenberMe'];
                 if (remenberMe == true) {
@@ -40,7 +41,7 @@ class Weic extends StatelessWidget {
                   return AppView(studentID: studentID);
                 } else {
                   _loginServices.logoutUser();
-                  return LoginView();
+                  return SplashView();
                 }
               }
           }
