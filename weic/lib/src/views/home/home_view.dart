@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/student.dart';
-import '../../views/login/login_view.dart';
+import '../../views/splash/splash_view.dart';
 import '../../services/home/home_services.dart';
 import '../../components/home/body/home_body.dart';
 
@@ -45,7 +45,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               );
             } else {
-              return LoginView();
+              return SplashView();
             }
         }
       },

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/profile/widgets/snackbar_text_button.dart';
-import 'package:weic/src/config/app_assetsnames.dart';
-import 'package:weic/src/config/app_textstyles.dart';
-import 'package:weic/src/models/student.dart';
-import 'package:weic/src/services/home/home_services.dart';
-import 'package:weic/src/services/login/login_services.dart';
-import 'package:weic/src/views/login/login_view.dart';
+import '../../models/student.dart';
+import '../../config/app_textstyles.dart';
+import '../../config/app_assetsnames.dart';
+import '../../views/login/login_view.dart';
+import '../../views/splash/splash_view.dart';
+import '../../services/home/home_services.dart';
+import '../../services/login/login_services.dart';
+import '../../components/profile/widgets/snackbar_text_button.dart';
 
 class ProfileView extends StatefulWidget {
   final String studentID;
@@ -130,11 +131,9 @@ class _ProfileViewState extends State<ProfileView> {
                                   SnackbarTextButton(
                                     text: 'Sair',
                                     onPressed: () async {
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (_) => LoginView(),
-                                        ),
-                                      );
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              LoginView.loginViewKey);
                                       setState(() {
                                         LoginServices().logoutUser();
                                       });
@@ -332,7 +331,7 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
               );
             } else {
-              return LoginView();
+              return SplashView();
             }
         }
       },
