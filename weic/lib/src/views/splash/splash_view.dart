@@ -43,10 +43,13 @@ class _SplashViewState extends State<SplashView>
             Expanded(child: Container()),
             Column(
               children: <Widget>[
-                Image(
-                  fit: BoxFit.fill,
-                  height: _animation!.value * 350,
-                  image: AssetImage(AppAssetsNames.logoImageUrl),
+                Hero(
+                  tag: 'logo',
+                  child: Image(
+                    fit: BoxFit.fill,
+                    height: _animation!.value * 350,
+                    image: AssetImage(AppAssetsNames.logoImageUrl),
+                  ),
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
