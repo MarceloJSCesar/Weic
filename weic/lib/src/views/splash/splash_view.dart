@@ -56,7 +56,7 @@ class _SplashViewState extends State<SplashView>
                   child: Text(
                     'Seja Bem-Vindo!',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: _animation!.value * 22,
                     ),
                   ),

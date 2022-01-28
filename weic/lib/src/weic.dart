@@ -13,6 +13,11 @@ class Weic extends StatelessWidget {
     final _loginServices = LoginServices();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      darkTheme: ThemeData.dark(),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        backgroundColor: Colors.black,
+      ),
       home: FutureBuilder(
         future: LoginServices().getLoginState(),
         builder: (context, AsyncSnapshot snapshot) {
