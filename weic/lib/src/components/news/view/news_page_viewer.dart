@@ -21,7 +21,7 @@ class NewsPageViewer extends StatelessWidget {
             backgroundColor: Colors.transparent,
             flexibleSpace: SafeArea(
               child: Hero(
-                tag: news.imageUrl as String,
+                tag: news.imageUrl != null ? news.imageUrl as String : '',
                 child: Container(
                   height: news.imageUrl != null ? 300 : 100,
                   width: MediaQuery.of(context).size.width,
