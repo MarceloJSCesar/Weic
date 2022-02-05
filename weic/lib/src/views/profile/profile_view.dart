@@ -102,9 +102,11 @@ class _ProfileViewState extends State<ProfileView> {
                             icon: Icon(Icons.menu),
                             onPressed: () => ScaffoldMessenger.of(context)
                                 .showSnackBar(SnackBar(
-                              duration: Duration(seconds: 30),
+                              duration: Duration(seconds: 6),
                               margin: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 16),
+                                horizontal: 16,
+                                vertical: 16,
+                              ),
                               backgroundColor: Colors.black,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),

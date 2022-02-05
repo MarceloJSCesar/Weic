@@ -12,12 +12,14 @@ class SnackbarTextButton extends StatelessWidget with AppTextStyles {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Padding(
+    return TextButton(
+      onPressed: onPressed,
+      child: Container(
+        alignment: Alignment.centerLeft,
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Text(
           text ?? "",
+          textAlign: TextAlign.left,
           style: snackbarTextButtonTextStyle,
         ),
       ),

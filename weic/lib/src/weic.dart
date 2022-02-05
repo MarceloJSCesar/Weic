@@ -3,7 +3,6 @@ import 'package:weic/src/views/splash/splash_view.dart';
 import 'views/app_view.dart';
 import 'views/login/login_view.dart';
 import 'services/login/login_services.dart';
-import 'controllers/login/login_controller.dart';
 
 class Weic extends StatelessWidget {
   const Weic({Key? key}) : super(key: key);
