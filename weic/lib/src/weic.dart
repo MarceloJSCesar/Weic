@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:weic/src/views/splash/splash_view.dart';
 import 'views/app_view.dart';
 import 'views/login/login_view.dart';
@@ -10,6 +11,10 @@ class Weic extends StatelessWidget {
   @override
   MaterialApp build(BuildContext context) {
     final _loginServices = LoginServices();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(),
