@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/login/widgets/text_field_component.dart';
+import 'package:weic/src/components/login/body/login_body.dart';
 import 'package:weic/src/config/app_textstyles.dart';
-import '../../config/app_assetsnames.dart';
 import '../../services/login/login_services.dart';
 import '../../controllers/login/login_controller.dart';
 
@@ -40,24 +39,10 @@ class _LoginViewState extends State<LoginView> {
                 borderRadius: BorderRadius.circular(12.0),
               ),
               child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Image(
-                      width: 290,
-                      fit: BoxFit.fill,
-                      image: AssetImage(AppAssetsNames.logoImageUrl),
-                    ),
-                    SizedBox(height: 16),
-                    TextFieldComponent(
-                      label: 'Email',
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFieldComponent(
-                      label: 'Password',
-                    ),
-                  ],
+                child: LoginBody(
+                  emailController: _emailController,
+                  passwordController: _passwordController,
+                  loginController: _loginController,
                 ),
               ),
             ),

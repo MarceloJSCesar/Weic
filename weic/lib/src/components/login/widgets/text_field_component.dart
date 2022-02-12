@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 
-class TextFieldComponent extends StatelessWidget {
+class TextFieldComponent extends StatefulWidget {
   final String label;
+  final bool isEmailField;
+  final bool isPasswordVisible;
+  final Function? viewPassword;
+  final TextEditingController controller;
   const TextFieldComponent({
     Key? key,
+    this.viewPassword,
     required this.label,
+    this.isEmailField = true,
+    this.isPasswordVisible = false,
+    required this.controller,
   }) : super(key: key);
 
+  @override
+  State<TextFieldComponent> createState() => _TextFieldComponentState();
+}
+
+class _TextFieldComponentState extends State<TextFieldComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,16 +30,37 @@ class TextFieldComponent extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: TextField(
+        controller: widget.controller,
+        onChanged: (v) {
+          print(widget.isPasswordVisible);
+        },
+        obscureText: widget.isEmailField ? false : widget.isPasswordVisible,
+        textInputAction:
+            widget.isEmailField ? TextInputAction.next : TextInputAction.done,
+        keyboardType: widget.isEmailField
+            ? TextInputType.emailAddress
+            : TextInputType.visiblePassword,
         style: TextStyle(
           color: Colors.white,
           fontSize: 16,
         ),
         decoration: InputDecoration(
-          hintText: label,
+          hintText: widget.label,
+          border: InputBorder.none,
           prefix: const Padding(
             padding: const EdgeInsets.only(right: 8.0),
           ),
-          border: InputBorder.none,
+          suffixIcon: widget.isEmailField
+              ? null
+              : IconButton(
+                  onPressed: () => widget.viewPassword,
+                  icon: Icon(
+                    widget.isPasswordVisible
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                    size: 18,
+                  ),
+                ),
         ),
       ),
     );
