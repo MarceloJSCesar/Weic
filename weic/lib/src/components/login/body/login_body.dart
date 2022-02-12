@@ -48,144 +48,126 @@ class LoginBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+    return Column(
+      children: [
+        TextFormFieldComponent(
+          controller: emailController,
+          hintText: 'Email',
+          saveValue: (val) => loginController.saveValue(true, val),
+          isPasswordField: false,
+          isEmailField: true,
+          // validateField: (val) => loginController.validateEmail(val),
+        ),
+        SizedBox(height: 20),
+        TextFormFieldComponent(
+          controller: passwordController,
+          hintText: 'Password',
+          isPasswordField: true,
+          isEmailField: false,
+          saveValue: (val) => loginController.saveValue(false, val),
+          //  validateField: (val) => loginController.validatePassword(val),
+          showPassword: () => loginController.viewPasswordValue(),
+          obscureText: () {
+            if (loginController.viewPassword == true) {
+              return true;
+            } else {
+              return false;
+            }
+          },
+          viewPassword: loginController.viewPassword,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Hero(
-              tag: 'logo',
-              transitionOnUserGestures: true,
-              child: Image(
-                height: 200,
-                fit: BoxFit.fill,
-                image: AssetImage(AppAssetsNames.logoImageUrl),
+            Checkbox(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(2),
+                side: BorderSide(color: Colors.black),
               ),
+              activeColor: AppColors.mainPrefixColor,
+              value: loginController.remenberMe,
+              onChanged: (value) => loginController.setRemenberMe(value),
             ),
-            SizedBox(height: 20),
-            TextFormFieldComponent(
-              controller: emailController,
-              hintText: 'Email',
-              saveValue: (val) => loginController.saveValue(true, val),
-              isPasswordField: false,
-              isEmailField: true,
-              // validateField: (val) => loginController.validateEmail(val),
-            ),
-            SizedBox(height: 20),
-            TextFormFieldComponent(
-              controller: passwordController,
-              hintText: 'Password',
-              isPasswordField: true,
-              isEmailField: false,
-              saveValue: (val) => loginController.saveValue(false, val),
-              //  validateField: (val) => loginController.validatePassword(val),
-              showPassword: () => loginController.viewPasswordValue(),
-              obscureText: () {
-                if (loginController.viewPassword == true) {
-                  return true;
-                } else {
-                  return false;
-                }
-              },
-              viewPassword: loginController.viewPassword,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Checkbox(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(2),
-                    side: BorderSide(color: Colors.black),
-                  ),
-                  activeColor: AppColors.mainPrefixColor,
-                  value: loginController.remenberMe,
-                  onChanged: (value) => loginController.setRemenberMe(value),
-                ),
-                Text(
-                  'Lembrar de mim',
-                  style: AppTextStyles.blackTextStyle,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Observer(
-              builder: (_) {
-                return loginController.isLoading == false
-                    ? ElevatedButton(
-                        style: ButtonStyle(
-                          padding: MaterialStateProperty.all<EdgeInsets>(
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                          ),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            AppColors.mainPrefixColor,
-                          ),
-                        ),
-                        onPressed: () async => validateFields() == true
-                            ? {
-                                loginController.setToLoad(),
-                                print(
-                                    'email: ${loginController.email}, password: ${loginController.password}'),
-                                await login!().then(
-                                  (value) async {
-                                    if (value != null) {
-                                      final _prefs =
-                                          await SharedPreferences.getInstance();
-                                      await _prefs.setString(
-                                        'STUDENT_ID',
-                                        value.id,
-                                      );
-                                      saveLoginState!(
-                                          loginController.remenberMe);
-                                      await HomeServices()
-                                          .getStudentEssentialData(
-                                        studentID: value.id,
-                                      )
-                                          .then((data) {
-                                        if (data == null) {
-                                          Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                              builder: (_) =>
-                                                  DadosEssenciaisView(
-                                                student: value,
-                                              ),
-                                            ),
-                                          );
-                                        } else {
-                                          Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                              builder: (_) =>
-                                                  AppView(studentID: value.id),
-                                            ),
-                                          );
-                                        }
-                                      });
-                                    } else {
-                                      showLoginErrorMsg!(context);
-                                    }
-                                  },
-                                ),
-                                loginController.setToUnload(),
-                              }
-                            : () => showLoginErrorMsg!(context),
-                        child: Text(
-                          'Entrar',
-                          style: AppTextStyles.blackTextStyle,
-                        ))
-                    : CircularProgressIndicator(
-                        color: AppColors.mainPrefixColor,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          AppColors.mainPrefixColor,
-                        ),
-                        strokeWidth: 3.0,
-                      );
-              },
+            Text(
+              'Lembrar de mim',
+              style: AppTextStyles.blackTextStyle,
             ),
           ],
-        );
-      },
+        ),
+        SizedBox(
+          height: 40,
+        ),
+        Observer(
+          builder: (_) {
+            return loginController.isLoading == false
+                ? ElevatedButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                        EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        AppColors.mainPrefixColor,
+                      ),
+                    ),
+                    onPressed: () async => validateFields() == true
+                        ? {
+                            loginController.setToLoad(),
+                            print(
+                                'email: ${loginController.email}, password: ${loginController.password}'),
+                            await login!().then(
+                              (value) async {
+                                if (value != null) {
+                                  final _prefs =
+                                      await SharedPreferences.getInstance();
+                                  await _prefs.setString(
+                                    'STUDENT_ID',
+                                    value.id,
+                                  );
+                                  saveLoginState!(loginController.remenberMe);
+                                  await HomeServices()
+                                      .getStudentEssentialData(
+                                    studentID: value.id,
+                                  )
+                                      .then((data) {
+                                    if (data == null) {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (_) => DadosEssenciaisView(
+                                            student: value,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              AppView(studentID: value.id),
+                                        ),
+                                      );
+                                    }
+                                  });
+                                } else {
+                                  showLoginErrorMsg!(context);
+                                }
+                              },
+                            ),
+                            loginController.setToUnload(),
+                          }
+                        : () => showLoginErrorMsg!(context),
+                    child: Text(
+                      'Entrar',
+                      style: AppTextStyles.blackTextStyle,
+                    ))
+                : CircularProgressIndicator(
+                    color: AppColors.mainPrefixColor,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.mainPrefixColor,
+                    ),
+                    strokeWidth: 3.0,
+                  );
+          },
+        ),
+      ],
     );
   }
 }

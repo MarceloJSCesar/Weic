@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weic/src/config/app_assetsnames.dart';
 import 'package:weic/src/views/login/login_view.dart';
@@ -56,7 +55,7 @@ class _SplashViewState extends State<SplashView>
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Seja Bem-Vindo !',
+                    'Welcome !',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: _animation!.value * 22,

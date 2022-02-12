@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../config/app_decorations.dart';
+import 'package:weic/src/config/app_textstyles.dart';
+import '../../config/app_assetsnames.dart';
 import '../../services/login/login_services.dart';
-import '../../components/login/body/login_body.dart';
 import '../../controllers/login/login_controller.dart';
-import '../../components/login/widgets/login_bottom_text.dart';
 
 class LoginView extends StatefulWidget {
   static const String loginViewKey = 'loginViewKey';
@@ -27,21 +26,52 @@ class _LoginViewState extends State<LoginView> {
   @override
   Scaffold build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              height: MediaQuery.of(context).size.height,
-              decoration: AppDecorations.mainDecoration,
-              child: Form(
-                key: _formKey,
+      backgroundColor: Colors.black,
+      body: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Column(
+          children: <Widget>[
+            Expanded(child: Container()),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.white, width: 2.5),
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              child: SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    LoginBody(
+                    Image(
+                      width: 290,
+                      fit: BoxFit.fill,
+                      image: AssetImage(AppAssetsNames.logoImageUrl),
+                    ),
+                    SizedBox(height: 16),
+                    TextField(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextField(),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(child: Container()),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                'WEIC v1.0',
+                style: AppTextStyles.chatTabTitleTextStyle,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+/*
+LoginBody(
                       formkey: _formKey,
                       login: () => _loginServices.login(
                         _emailController.text,
@@ -56,17 +86,4 @@ class _LoginViewState extends State<LoginView> {
                           _loginServices.saveLoginState(remenberMe),
                       unsaveLoginState: () => _loginServices.unsaveLoginState(),
                     ),
-                    Expanded(
-                      child: Container(),
-                    ),
-                    LoginBottomText(),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+*/
