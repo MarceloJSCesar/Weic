@@ -7,7 +7,7 @@ import '../../../config/app_textstyles.dart';
 import '../../../config/app_assetsnames.dart';
 import '../../../services/home/home_services.dart';
 import '../../../views/dados_essencial/dados_essencial_view.dart';
-import '../../../components/login/textfield/app_text_field_component.dart';
+import '../widgets/text_field_component.dart';
 
 class LoginBody extends StatelessWidget {
   final formkey;
