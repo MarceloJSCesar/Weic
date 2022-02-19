@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weic/src/components/login/body/login_body.dart';
 import 'package:weic/src/config/app_textstyles.dart';
+import 'package:weic/src/services/login/login_services.dart';
 import '../../controllers/login/login_controller.dart';
 
 class LoginView extends StatefulWidget {
@@ -11,6 +12,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   bool _isPasswordVisible = false;
+  final _loginServices = LoginServices();
   final _loginController = LoginController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -27,31 +29,49 @@ class _LoginViewState extends State<LoginView> {
       backgroundColor: Colors.black,
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        child: Column(
-          children: <Widget>[
-            Expanded(child: Container()),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: SingleChildScrollView(
-                child: LoginBody(
-                  emailController: _emailController,
-                  isPasswordVisible: _isPasswordVisible,
-                  passwordController: _passwordController,
-                  onPasswordVisibilityToggle: () {
-                    setState(() {
-                      _isPasswordVisible = !_isPasswordVisible;
-                    });
-                    print(_isPasswordVisible);
-                  },
-                ),
-              ),
-            ),
-            Expanded(child: Container()),
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                'WEIC v1.0',
-                style: AppTextStyles.chatTabTitleTextStyle,
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                children: <Widget>[
+                  Expanded(child: Container()),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: SingleChildScrollView(
+                      child: LoginBody(
+                        emailController: _emailController,
+                        isPasswordVisible: _isPasswordVisible,
+                        passwordController: _passwordController,
+                        onPasswordVisibilityToggle: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                          print(_isPasswordVisible);
+                        },
+                        login: () => _loginServices.login(
+                          _emailController.text,
+                          _passwordController.text,
+                        ),
+                        loginController: _loginController,
+                        showLoginErrorMsg: (context) =>
+                            _loginServices.showLoginMsgError(context: context),
+                        saveLoginState: (remenberMe) =>
+                            _loginServices.saveLoginState(remenberMe),
+                        unsaveLoginState: () =>
+                            _loginServices.unsaveLoginState(),
+                      ),
+                    ),
+                  ),
+                  Expanded(child: Container()),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'WEIC v1.0',
+                      style: AppTextStyles.chatTabTitleTextStyle,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

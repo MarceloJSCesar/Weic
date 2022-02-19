@@ -38,8 +38,10 @@ class LoginServices {
     } on FirebaseException catch (errorMsg) {
       if (errorMsg.code == 'weak-password') {
         print('weak password');
+        return null;
       } else if (errorMsg.code == 'email-already-in-use') {
         print('email already in use');
+        return null;
       }
     }
   }
