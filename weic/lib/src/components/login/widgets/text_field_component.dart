@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 class TextFieldComponent extends StatefulWidget {
   final String label;
   final bool isEmailField;
-  final bool isPasswordVisible;
-  final Function? viewPassword;
+  final bool? isPasswordVisible;
+  final viewPassword;
   final TextEditingController controller;
   const TextFieldComponent({
     Key? key,
     this.viewPassword,
     required this.label,
     this.isEmailField = true,
-    this.isPasswordVisible = false,
     required this.controller,
+    this.isPasswordVisible,
   }) : super(key: key);
 
   @override
@@ -31,10 +31,8 @@ class _TextFieldComponentState extends State<TextFieldComponent> {
       ),
       child: TextField(
         controller: widget.controller,
-        onChanged: (v) {
-          print(widget.isPasswordVisible);
-        },
-        obscureText: widget.isEmailField ? false : widget.isPasswordVisible,
+        obscureText:
+            widget.isEmailField ? false : widget.isPasswordVisible as bool,
         textInputAction:
             widget.isEmailField ? TextInputAction.next : TextInputAction.done,
         keyboardType: widget.isEmailField
@@ -53,9 +51,9 @@ class _TextFieldComponentState extends State<TextFieldComponent> {
           suffixIcon: widget.isEmailField
               ? null
               : IconButton(
-                  onPressed: () => widget.viewPassword,
+                  onPressed: widget.viewPassword,
                   icon: Icon(
-                    widget.isPasswordVisible
+                    widget.isPasswordVisible as bool
                         ? Icons.visibility_off
                         : Icons.visibility,
                     size: 18,

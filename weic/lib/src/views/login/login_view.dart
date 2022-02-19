@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weic/src/components/login/body/login_body.dart';
 import 'package:weic/src/config/app_textstyles.dart';
-import '../../services/login/login_services.dart';
 import '../../controllers/login/login_controller.dart';
 
 class LoginView extends StatefulWidget {
@@ -11,11 +10,10 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  bool _isPasswordVisible = false;
   final _loginController = LoginController();
-  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _loginServices = LoginServices();
 
   @override
   void initState() {
@@ -41,8 +39,14 @@ class _LoginViewState extends State<LoginView> {
               child: SingleChildScrollView(
                 child: LoginBody(
                   emailController: _emailController,
+                  isPasswordVisible: _isPasswordVisible,
                   passwordController: _passwordController,
-                  loginController: _loginController,
+                  onPasswordVisibilityToggle: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                    print(_isPasswordVisible);
+                  },
                 ),
               ),
             ),
@@ -60,20 +64,3 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 }
-/*
-LoginBody(
-                      formkey: _formKey,
-                      login: () => _loginServices.login(
-                        _emailController.text,
-                        _passwordController.text,
-                      ),
-                      emailController: _emailController,
-                      loginController: _loginController,
-                      passwordController: _passwordController,
-                      showLoginErrorMsg: (context) =>
-                          _loginServices.showLoginMsgError(context: context),
-                      saveLoginState: (remenberMe) =>
-                          _loginServices.saveLoginState(remenberMe),
-                      unsaveLoginState: () => _loginServices.unsaveLoginState(),
-                    ),
-*/
