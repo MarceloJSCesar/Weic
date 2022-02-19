@@ -30,12 +30,8 @@ class _LoginViewState extends State<LoginView> {
         child: Column(
           children: <Widget>[
             Expanded(child: Container()),
-            Container(
+            Padding(
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 2.5),
-                borderRadius: BorderRadius.circular(12.0),
-              ),
               child: SingleChildScrollView(
                 child: LoginBody(
                   emailController: _emailController,
