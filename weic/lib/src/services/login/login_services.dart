@@ -17,6 +17,7 @@ class LoginServices {
       final studentID = _prefs.getString('STUDENT_ID') ?? null;
       UserCredential? _userCredential = await _auth.auth
           .signInWithEmailAndPassword(email: email!, password: password!);
+
       return Student(
         name: '',
         email: email,
@@ -38,10 +39,8 @@ class LoginServices {
     } on FirebaseException catch (errorMsg) {
       if (errorMsg.code == 'weak-password') {
         print('weak password');
-        return null;
       } else if (errorMsg.code == 'email-already-in-use') {
         print('email already in use');
-        return null;
       }
     }
   }

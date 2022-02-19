@@ -31,8 +31,11 @@ class _TextFieldComponentState extends State<TextFieldComponent> {
       ),
       child: TextField(
         controller: widget.controller,
-        obscureText:
-            widget.isEmailField ? false : widget.isPasswordVisible as bool,
+        obscureText: widget.isEmailField
+            ? false
+            : widget.isPasswordVisible as bool
+                ? false
+                : true,
         textInputAction:
             widget.isEmailField ? TextInputAction.next : TextInputAction.done,
         keyboardType: widget.isEmailField
@@ -42,6 +45,9 @@ class _TextFieldComponentState extends State<TextFieldComponent> {
           color: Colors.white,
           fontSize: 16,
         ),
+        onChanged: (e) {
+          print(e);
+        },
         decoration: InputDecoration(
           hintText: widget.label,
           border: InputBorder.none,
