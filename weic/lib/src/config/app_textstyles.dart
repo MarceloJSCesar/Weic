@@ -34,7 +34,7 @@ class AppTextStyles {
   );
   static final TextStyle homeNoticiasTitleTextStyle = GoogleFonts.notoSans(
     fontSize: 20,
-    color: Colors.black,
+    color: Colors.white,
     fontWeight: FontWeight.w600,
   );
   static final TextStyle homeNoticiasCardTitleTextStyle = GoogleFonts.notoSans(
