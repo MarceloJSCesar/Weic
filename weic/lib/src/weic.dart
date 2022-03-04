@@ -20,7 +20,7 @@ class Weic extends StatelessWidget {
       darkTheme: ThemeData.dark(),
       theme: ThemeData(
         brightness: Brightness.dark,
-        backgroundColor: Colors.black,
+        //backgroundColor: Colors.black,
       ),
       routes: {
         LoginView.loginViewKey: (_) => LoginView(),
@@ -47,6 +47,7 @@ class Weic extends StatelessWidget {
                 return SplashView();
               } else {
                 final bool remenberMe = snapshot.data['remenberMe'];
+                print(snapshot.data['remenberMe']);
                 if (remenberMe == true) {
                   final String studentID = snapshot.data['studentID'];
                   return AppView(studentID: studentID);

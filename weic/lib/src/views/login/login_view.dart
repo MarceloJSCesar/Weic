@@ -107,6 +107,8 @@ class _LoginViewState extends State<LoginView> {
                                             );
                                             _loginController.setRemenberMe(
                                                 _loginController.remenberMe);
+                                            await _prefs.setBool('remenberMe',
+                                                _loginController.remenberMe);
                                             await HomeServices()
                                                 .getStudentEssentialData(
                                               studentID: value.id as String,

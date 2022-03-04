@@ -58,8 +58,10 @@ class LoginBody extends StatelessWidget {
                 ),
                 activeColor: AppColors.mainPrefixColor,
                 value: loginController.remenberMe,
-                onChanged: (value) =>
-                    loginController.setRemenberMe(value as bool),
+                onChanged: (value) {
+                  loginController.setRemenberMe(value as bool);
+                  print(loginController.remenberMe);
+                },
               ),
               Text(
                 'Lembrar de mim',
