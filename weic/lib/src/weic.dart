@@ -11,6 +11,7 @@ class Weic extends StatelessWidget {
   @override
   MaterialApp build(BuildContext context) {
     final _loginServices = LoginServices();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
