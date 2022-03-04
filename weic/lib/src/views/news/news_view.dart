@@ -40,7 +40,7 @@ class NewsView extends StatelessWidget {
                         return Center(
                           child: CircularProgressIndicator(
                             valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.black),
+                                AlwaysStoppedAnimation<Color>(Colors.white),
                             strokeWidth: 3.0,
                           ),
                         );
