@@ -54,7 +54,9 @@ class _SplashViewState extends State<SplashView>
                   transitionOnUserGestures: true,
                   child: Image(
                     fit: BoxFit.fill,
-                    height: _animation!.value * 350,
+                    height: (_animation!.value *
+                            MediaQuery.of(context).size.width) -
+                        MediaQuery.of(context).size.width * 0.10,
                     image: AssetImage(AppAssetsNames.logoImageUrl),
                   ),
                 ),
