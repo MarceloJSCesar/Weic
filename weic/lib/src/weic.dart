@@ -35,7 +35,7 @@ class Weic extends StatelessWidget {
               return Scaffold(
                 body: Center(
                   child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     strokeWidth: 3.0,
                   ),
                 ),

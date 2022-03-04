@@ -41,7 +41,7 @@ class _ProfileViewState extends State<ProfileView> {
                 appBar: AppBar(
                   elevation: 0.0,
                   centerTitle: false,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.black,
                   title: student.isMemberOfCFESAD == true
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -69,7 +69,7 @@ class _ProfileViewState extends State<ProfileView> {
                               padding: const EdgeInsets.all(2),
                               decoration: BoxDecoration(
                                 color: Colors.black,
-                                border: Border.all(color: Colors.black),
+                                border: Border.all(color: Colors.white),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
@@ -86,7 +86,7 @@ class _ProfileViewState extends State<ProfileView> {
                           padding: const EdgeInsets.all(2),
                           decoration: BoxDecoration(
                             color: Colors.black,
-                            border: Border.all(color: Colors.black),
+                            border: Border.all(color: Colors.white),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
@@ -98,7 +98,7 @@ class _ProfileViewState extends State<ProfileView> {
                     student.id == widget.studentID
                         ? IconButton(
                             iconSize: 27,
-                            color: Colors.black,
+                            color: Colors.white,
                             icon: Icon(Icons.menu),
                             onPressed: () => ScaffoldMessenger.of(context)
                                 .showSnackBar(SnackBar(
@@ -107,7 +107,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 horizontal: 16,
                                 vertical: 16,
                               ),
-                              backgroundColor: Colors.black,
+                              backgroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -148,7 +148,7 @@ class _ProfileViewState extends State<ProfileView> {
                         : Container(),
                   ],
                 ),
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.black,
                 body: CustomScrollView(
                   slivers: <Widget>[
                     SliverToBoxAdapter(
@@ -186,7 +186,7 @@ class _ProfileViewState extends State<ProfileView> {
                           SizedBox(height: 10),
                           Card(
                             elevation: 6,
-                            color: Colors.black,
+                            color: Colors.white,
                             margin: const EdgeInsets.symmetric(horizontal: 16),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -284,7 +284,7 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                           Container(
                             margin: const EdgeInsets.symmetric(horizontal: 16),
-                            alignment: Alignment.centerLeft,
+                            alignment: Alignment.center,
                             child: SingleChildScrollView(
                               child: Column(
                                 mainAxisAlignment: student.posts != null &&
@@ -318,8 +318,9 @@ class _ProfileViewState extends State<ProfileView> {
                                                     .size
                                                     .width /
                                                 2,
-                                            image: AssetImage(AppAssetsNames
-                                                .noPostYetImageUrl),
+                                            image: AssetImage(
+                                              AppAssetsNames.noPostYetImageUrl,
+                                            ),
                                           ),
                                         ),
                                 ],

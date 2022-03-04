@@ -52,6 +52,7 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: PageView(
         allowImplicitScrolling: true,
         clipBehavior: Clip.antiAlias,

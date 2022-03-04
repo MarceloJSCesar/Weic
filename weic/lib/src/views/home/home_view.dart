@@ -29,7 +29,7 @@ class _HomeViewState extends State<HomeView> {
           case ConnectionState.waiting:
             return Center(
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 strokeWidth: 3.0,
               ),
             );

@@ -63,11 +63,11 @@ class AppTextStyles {
   );
   static final TextStyle studentNameTextStyle = GoogleFonts.notoSans(
     fontSize: 16,
-    color: Colors.black,
+    color: Colors.white,
   );
   static final TextStyle cardFollowsTextStyle = GoogleFonts.notoSans(
     fontSize: 17,
-    color: Colors.white,
+    color: Colors.black,
     fontWeight: FontWeight.normal,
   );
   static final TextStyle cardNumFollowsTextStyle = GoogleFonts.notoSans(
@@ -76,7 +76,7 @@ class AppTextStyles {
   );
   static final TextStyle profileTitleTextStyle = GoogleFonts.notoSans(
     fontSize: 20,
-    color: Colors.black,
+    color: Colors.white,
     fontWeight: FontWeight.bold,
   );
   // chat view
