@@ -45,12 +45,12 @@ class AppTextStyles {
   static final TextStyle homeViewerNoticiasTitleTextStyle =
       GoogleFonts.notoSans(
     fontSize: 17,
-    color: Colors.black,
+    color: Colors.white,
     fontWeight: FontWeight.w600,
   );
   static final TextStyle homeViewerNoticiasBodyTextStyle = GoogleFonts.notoSans(
     fontSize: 16,
-    color: Colors.black.withOpacity(0.6),
+    color: Colors.white.withOpacity(0.6),
   );
   static final TextStyle dadosEssenciaisButtonTextStyle = GoogleFonts.notoSans(
     fontSize: 16,

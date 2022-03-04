@@ -11,6 +11,7 @@ class NewsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeServices = HomeServices();
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.all(16),
