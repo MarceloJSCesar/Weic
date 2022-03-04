@@ -27,7 +27,10 @@ class StudentCard extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(student.name as String),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(student.name as String),
+            ),
             Row(
               children: <Widget>[
                 Expanded(

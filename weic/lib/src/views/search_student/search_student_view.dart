@@ -29,7 +29,7 @@ class _SearchStudentViewState extends State<SearchStudentView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -42,7 +42,7 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(vertical: 8.0),
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: Colors.grey[700],
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: TextField(
@@ -124,6 +124,9 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                 Container(
                   alignment: Alignment.center,
                   child: Image(
+                    fit: BoxFit.fill,
+                    height: MediaQuery.of(context).size.width -
+                        MediaQuery.of(context).size.width * 0.40,
                     image: AssetImage(AppAssetsNames.searchStudentImageUrl),
                   ),
                 ),

@@ -99,7 +99,7 @@ class AppTextStyles {
   // student search
   static final TextStyle searchStudentFieldTextStyle = GoogleFonts.notoSans(
     fontSize: 16,
-    color: Colors.black,
+    color: Colors.white,
     fontWeight: FontWeight.normal,
   );
 }
