@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:weic/src/config/app_textstyles.dart';
+
+import '../../config/app_textstyles.dart';
 
 class ChatView extends StatefulWidget {
   final String myId;
@@ -22,20 +22,21 @@ class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        centerTitle: false,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 12.0),
-          child: Text(
-            'Chat',
-            style: AppTextStyles.homeNoticiasTitleTextStyle,
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'Chat',
+                style: AppTextStyles.homeNoticiasTitleTextStyle,
+              ),
+            ],
           ),
         ),
-        backgroundColor: Colors.white,
-        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
-      backgroundColor: Colors.white,
     );
   }
 }

@@ -21,7 +21,6 @@ class Weic extends StatelessWidget {
       darkTheme: ThemeData.dark(),
       theme: ThemeData(
         brightness: Brightness.dark,
-        //backgroundColor: Colors.black,
       ),
       routes: {
         LoginView.loginViewKey: (_) => LoginView(),
