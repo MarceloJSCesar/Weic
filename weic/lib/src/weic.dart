@@ -47,7 +47,6 @@ class Weic extends StatelessWidget {
                 return SplashView();
               } else {
                 final bool remenberMe = snapshot.data['remenberMe'];
-                print(snapshot.data['remenberMe']);
                 if (remenberMe == true) {
                   final String studentID = snapshot.data['studentID'];
                   return AppView(studentID: studentID);

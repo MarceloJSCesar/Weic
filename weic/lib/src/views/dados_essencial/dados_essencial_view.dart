@@ -17,7 +17,7 @@ class _DadosEssenciaisViewState extends State<DadosEssenciaisView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: InsertEssencialData(student: widget.student),
       ),
