@@ -42,7 +42,7 @@ class NewsPageViewer extends StatelessWidget {
                             bottomLeft: Radius.circular(16),
                             bottomRight: Radius.circular(16),
                           ),
-                          color: Colors.black.withOpacity(0.5),
+                          color: Colors.white.withOpacity(0.2),
                         ),
                   child: Container(
                     decoration: BoxDecoration(

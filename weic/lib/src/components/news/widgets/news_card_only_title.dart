@@ -16,12 +16,14 @@ class NewsCardOnlyTitle extends StatelessWidget {
       height: 80,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.5),
+        color: Colors.white.withOpacity(0.15),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Text(
-        news.title.toString(),
-        style: AppTextStyles.homeNoticiasCardTitleTextStyle,
+      child: FittedBox(
+        child: Text(
+          news.title.toString(),
+          style: AppTextStyles.homeNoticiasCardTitleTextStyle,
+        ),
       ),
     );
   }
