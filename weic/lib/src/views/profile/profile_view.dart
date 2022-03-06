@@ -170,8 +170,8 @@ class _ProfileViewState extends State<ProfileView> {
                                       style: AppTextStyles.studentNameTextStyle,
                                     ),
                                     Image(
-                                      height: 30,
-                                      width: 30,
+                                      height: 35,
+                                      width: 35,
                                       fit: BoxFit.fill,
                                       image: AssetImage(
                                         AppAssetsNames.verifiedLogoImageUrl,
@@ -312,12 +312,14 @@ class _ProfileViewState extends State<ProfileView> {
                                       : Container(
                                           alignment: Alignment.center,
                                           child: Image(
-                                            height: 200,
                                             fit: BoxFit.fill,
-                                            width: MediaQuery.of(context)
+                                            height: MediaQuery.of(context)
                                                     .size
-                                                    .width /
-                                                2,
+                                                    .width -
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.20,
                                             image: AssetImage(
                                               AppAssetsNames.noPostYetImageUrl,
                                             ),
