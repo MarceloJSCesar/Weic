@@ -50,9 +50,10 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                   textInputAction: TextInputAction.done,
                   controller: _studentSearchTextEditingController,
                   onSubmitted: (value) {
-                    setState(() {
-                      _studentSearchTextEditingController!.text = value;
-                    });
+                    setState(() {});
+                  },
+                  onChanged: (value) {
+                    setState(() {});
                   },
                   style: AppTextStyles.searchStudentFieldTextStyle,
                   decoration: InputDecoration(
