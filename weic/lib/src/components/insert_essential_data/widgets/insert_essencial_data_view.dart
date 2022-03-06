@@ -26,8 +26,7 @@ class InsertEssencialData extends StatefulWidget {
 }
 
 class _InsertEssencialDataState extends State<InsertEssencialData>
-    with DadosEssenciaisServices {
-  User? _user;
+    with DadosEssenciaisServices, AppTextStyles {
   Timer? _timer;
   bool? _canResendEmail;
   bool isLoading = false;
@@ -35,6 +34,7 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
   File _imagePath = File('');
   final _homeServices = HomeServices();
   final _instance = FirebaseAuth.instance;
+  final _user = FirebaseAuth.instance.currentUser;
   final _nameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
   final _schoolYearTextController = TextEditingController();
@@ -43,16 +43,15 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
   @override
   void initState() {
     super.initState();
-    _user = _instance.currentUser;
     _isEmailVerified = _instance.currentUser!.emailVerified;
     if (_isEmailVerified == false) {
       sendEmailVerification(user: _user as User);
 
       _timer = Timer.periodic(
         Duration(seconds: 3),
-        (timer) async {
-          print('hmmm');
-          await FirebaseAuth.instance.currentUser!.reload();
+        (_) async {
+          await _user!.reload();
+          print('reloaded');
           setState(() {
             _isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
           });
@@ -103,11 +102,6 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
                 Divider(),
                 TextButton(
                   style: ButtonStyle(
-                    textStyle: MaterialStateProperty.all(
-                      TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
                     backgroundColor: MaterialStateProperty.all(Colors.blue),
                   ),
                   onPressed: _canResendEmail == false
@@ -116,15 +110,13 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
                           await sendEmailVerification(user: _user as User);
                           setState(() {});
                         },
-                  child: Text('Reenviar email'),
+                  child: Text(
+                    'Reenviar email',
+                    style: essentialDataResendEmailButtonTextStyle,
+                  ),
                 ),
                 TextButton(
                   style: ButtonStyle(
-                    textStyle: MaterialStateProperty.all(
-                      TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
                     backgroundColor: MaterialStateProperty.all(Colors.red),
                   ),
                   onPressed: _canResendEmail == false
@@ -134,7 +126,10 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
                           Navigator.pushReplacementNamed(
                               context, LoginView.loginViewKey);
                         },
-                  child: Text('Cancelar'),
+                  child: Text(
+                    'Cancelar',
+                    style: essentialDataCancelButtonTextStyle,
+                  ),
                 ),
               ],
             ),
@@ -208,6 +203,7 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
                   Divider(),
                   TextFormField(
                     controller: _nameTextController,
+                    textInputAction: TextInputAction.next,
                     textCapitalization: TextCapitalization.words,
                     onChanged: (val) {
                       setState(() {});
@@ -226,6 +222,7 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
                   SizedBox(height: 6),
                   TextFormField(
                     controller: _schoolYearTextController,
+                    textInputAction: TextInputAction.next,
                     textCapitalization: TextCapitalization.words,
                     onChanged: (val) {
                       setState(() {});
@@ -244,6 +241,7 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
                   SizedBox(height: 6),
                   TextFormField(
                     controller: _passwordTextController,
+                    textInputAction: TextInputAction.done,
                     textCapitalization: TextCapitalization.words,
                     onChanged: (val) {
                       setState(() {});

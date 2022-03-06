@@ -102,4 +102,16 @@ class AppTextStyles {
     color: Colors.white,
     fontWeight: FontWeight.normal,
   );
+  // essential_data
+  final TextStyle essentialDataCancelButtonTextStyle = GoogleFonts.notoSans(
+    fontSize: 16,
+    color: Colors.white,
+    fontWeight: FontWeight.normal,
+  );
+  final TextStyle essentialDataResendEmailButtonTextStyle =
+      GoogleFonts.notoSans(
+    fontSize: 16,
+    color: Colors.black,
+    fontWeight: FontWeight.normal,
+  );
 }
