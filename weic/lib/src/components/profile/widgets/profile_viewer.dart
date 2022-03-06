@@ -44,7 +44,7 @@ class _ProfileViewerState extends State<ProfileViewer> {
                 appBar: AppBar(
                   elevation: 0.0,
                   centerTitle: false,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.black,
                   title: student.isMemberOfCFESAD == true
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -56,7 +56,7 @@ class _ProfileViewerState extends State<ProfileViewer> {
                               padding: const EdgeInsets.all(2),
                               decoration: BoxDecoration(
                                 color: Colors.transparent,
-                                border: Border.all(color: Colors.black),
+                                border: Border.all(color: Colors.white),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
@@ -71,8 +71,8 @@ class _ProfileViewerState extends State<ProfileViewer> {
                               alignment: Alignment.center,
                               padding: const EdgeInsets.all(2),
                               decoration: BoxDecoration(
-                                color: Colors.black,
-                                border: Border.all(color: Colors.black),
+                                color: Colors.transparent,
+                                border: Border.all(color: Colors.white),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
@@ -88,8 +88,8 @@ class _ProfileViewerState extends State<ProfileViewer> {
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(2),
                           decoration: BoxDecoration(
-                            color: Colors.black,
-                            border: Border.all(color: Colors.black),
+                            color: Colors.transparent,
+                            border: Border.all(color: Colors.white),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
@@ -101,7 +101,7 @@ class _ProfileViewerState extends State<ProfileViewer> {
                     isProfileViewer == false
                         ? IconButton(
                             iconSize: 27,
-                            color: Colors.black,
+                            color: Colors.white,
                             icon: Icon(Icons.menu),
                             onPressed: () {},
                           )
@@ -109,11 +109,11 @@ class _ProfileViewerState extends State<ProfileViewer> {
                   ],
                   leading: IconButton(
                     icon: Icon(Icons.arrow_back),
-                    color: Colors.black,
+                    color: Colors.white,
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ),
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.black,
                 body: CustomScrollView(
                   slivers: <Widget>[
                     SliverToBoxAdapter(
@@ -151,7 +151,7 @@ class _ProfileViewerState extends State<ProfileViewer> {
                           SizedBox(height: 10),
                           Card(
                             elevation: 6,
-                            color: Colors.black,
+                            color: Colors.white,
                             margin: const EdgeInsets.symmetric(horizontal: 16),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
