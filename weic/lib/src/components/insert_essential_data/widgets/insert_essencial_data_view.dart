@@ -178,11 +178,13 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
                     children: <Widget>[
                       TextButton.icon(
                         onPressed: () async {
-                          XFile? xFileImage = await _dadosEssenciasServices
+                          File? image = await _dadosEssenciasServices
                               .takePhotoFromCamera();
-                          setState(() {
-                            _imagePath = File(xFileImage!.path);
-                          });
+                          if (image != null) {
+                            setState(() {
+                              _imagePath = image;
+                            });
+                          }
                         },
                         icon: Text('Camera'),
                         label: Icon(Icons.camera),
@@ -191,10 +193,11 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
                         onPressed: () async {
                           File? image = await _dadosEssenciasServices
                               .pickPhotoFromGalery();
-
-                          setState(() {
-                            _imagePath = image as File;
-                          });
+                          if (image != null) {
+                            setState(() {
+                              _imagePath = image;
+                            });
+                          }
                         },
                         icon: Text('Galeria'),
                         label: Icon(Icons.photo_library),
