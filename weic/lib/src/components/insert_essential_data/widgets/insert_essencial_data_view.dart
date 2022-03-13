@@ -189,10 +189,11 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
                       ),
                       TextButton.icon(
                         onPressed: () async {
-                          XFile? xFileImage = await _dadosEssenciasServices
+                          File? image = await _dadosEssenciasServices
                               .pickPhotoFromGalery();
+
                           setState(() {
-                            _imagePath = File(xFileImage!.path);
+                            _imagePath = image as File;
                           });
                         },
                         icon: Text('Galeria'),

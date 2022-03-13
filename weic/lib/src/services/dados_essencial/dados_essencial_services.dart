@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:weic/src/models/student.dart';
@@ -18,13 +19,18 @@ class DadosEssenciaisServices {
     return imageSource;
   }
 
-  Future<XFile?> pickPhotoFromGalery() async {
+  Future<File?> pickPhotoFromGalery() async {
     XFile? imageSource = await _imagePicker.pickImage(
       source: ImageSource.gallery,
       maxHeight: 300,
       maxWidth: 300,
     );
-    return imageSource;
+    if (imageSource != null) {
+      File? croppedImg = await cropImage(imgFile: imageSource);
+      return croppedImg;
+    } else {
+      return null;
+    }
   }
 
   Future<String> uploadPhoto({
@@ -46,6 +52,7 @@ class DadosEssenciaisServices {
     }).catchError((errorReturn) {
       return false;
     });
+    return null;
   }
 
   Future checkEmailVerification(
@@ -53,5 +60,41 @@ class DadosEssenciaisServices {
     await user.reload();
     isEmailVerified = user.emailVerified;
     if (isEmailVerified) timer!.cancel();
+  }
+
+  Future<File?> cropImage({required XFile imgFile}) async {
+    File? croppedFile = await ImageCropper().cropImage(
+        sourcePath: imgFile.path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
+        androidUiSettings: AndroidUiSettings(
+            toolbarTitle: 'Ajuste da imagem',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        iosUiSettings: IOSUiSettings(
+          title: 'Cropper',
+        ));
+    if (croppedFile != null) {
+      return croppedFile;
+    }
+    return null;
   }
 }
