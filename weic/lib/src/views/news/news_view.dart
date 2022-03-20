@@ -1,5 +1,5 @@
-import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../models/news.dart';
 import '../../config/app_textstyles.dart';
 import '../../services/home/home_services.dart';
@@ -38,24 +38,23 @@ class NewsView extends StatelessWidget {
                         );
                       // added shimmer instead circularProgressIndicator okay ?
                       case ConnectionState.waiting:
-                        return Container(
-                          padding: const EdgeInsets.all(4.0),
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height - 220,
-                          child: Shimmer.fromColors(
-                            baseColor: Colors.grey.shade400,
-                            highlightColor: Colors.grey.shade200,
-                            child: ListView.builder(
-                              itemCount: 10,
-                              itemBuilder: (context, index) => Container(
+                        return Shimmer.fromColors(
+                          baseColor: Colors.transparent,
+                          highlightColor: Colors.grey[400] as Color,
+                          child: ListView.builder(
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              return Container(
                                 height: 300,
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
                                 width: MediaQuery.of(context).size.width - 16,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
-                                  color: Colors.red.shade400,
+                                  color: Colors.yellow[800] as Color,
                                 ),
-                              ),
-                            ),
+                              );
+                            },
                           ),
                         );
                       default:
