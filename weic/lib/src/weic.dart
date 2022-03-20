@@ -48,8 +48,12 @@ class Weic extends StatelessWidget {
               } else {
                 final bool remenberMe = snapshot.data['remenberMe'];
                 if (remenberMe == true) {
-                  final String studentID = snapshot.data['studentID'];
-                  return AppView(studentID: studentID);
+                  final String studentID = snapshot.data['studentID'] != null
+                      ? snapshot.data['studentID']
+                      : '';
+                  return studentID.length == 0
+                      ? LoginView()
+                      : AppView(studentID: studentID);
                 } else {
                   _loginServices.logoutUser();
                   return SplashView();

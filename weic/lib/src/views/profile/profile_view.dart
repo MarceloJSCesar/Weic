@@ -102,7 +102,7 @@ class _ProfileViewState extends State<ProfileView> {
                             icon: Icon(Icons.menu),
                             onPressed: () => ScaffoldMessenger.of(context)
                                 .showSnackBar(SnackBar(
-                              duration: Duration(seconds: 6),
+                              duration: Duration(seconds: 3),
                               margin: const EdgeInsets.symmetric(
                                 horizontal: 16,
                                 vertical: 16,
