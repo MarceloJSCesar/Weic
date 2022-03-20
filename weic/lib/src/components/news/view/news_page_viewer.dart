@@ -24,7 +24,7 @@ class NewsPageViewer extends StatelessWidget {
               child: Hero(
                 tag: news.imageUrl != null ? news.imageUrl as String : '',
                 child: Container(
-                  height: news.imageUrl != null ? 300 : 100,
+                  height: news.imageUrl != null ? 300 : 130,
                   width: MediaQuery.of(context).size.width,
                   decoration: news.imageUrl != null
                       ? BoxDecoration(
@@ -54,7 +54,10 @@ class NewsPageViewer extends StatelessWidget {
                     ),
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      margin: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       child: Text(
                         '${news.title}',
                         textAlign: TextAlign.start,

@@ -12,8 +12,8 @@ class NewsCardOnlyTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
       height: 80,
+      alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.15),
