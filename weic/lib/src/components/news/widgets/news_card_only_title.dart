@@ -13,7 +13,6 @@ class NewsCardOnlyTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.15),

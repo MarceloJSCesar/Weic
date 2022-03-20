@@ -35,8 +35,11 @@ class NewsBody extends StatelessWidget {
                 ),
               ),
             ),
-            child: NewsCardOnlyTitle(
-              news: news as News,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: NewsCardOnlyTitle(
+                news: news as News,
+              ),
             ),
           ),
       ],
