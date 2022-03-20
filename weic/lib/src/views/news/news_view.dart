@@ -1,3 +1,4 @@
+import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import '../../models/news.dart';
 import '../../config/app_textstyles.dart';
