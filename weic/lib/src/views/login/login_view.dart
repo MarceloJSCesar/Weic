@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:simple_connection_checker/simple_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weic/src/components/login/body/login_body.dart';
 import 'package:weic/src/services/login/login_services.dart';
