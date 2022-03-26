@@ -11,9 +11,11 @@ import '../views/search_student/search_student_view.dart';
 
 class AppView extends StatefulWidget {
   final String studentID;
+  final bool isConnectedToInternet;
   const AppView({
     Key? key,
     required this.studentID,
+    required this.isConnectedToInternet,
   }) : super(key: key);
 
   @override
@@ -53,13 +55,33 @@ class _AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: PageView(
-        allowImplicitScrolling: true,
-        clipBehavior: Clip.antiAlias,
-        controller: _pageController,
-        children: _pages!,
-        physics: NeverScrollableScrollPhysics(),
-      ),
+      body: widget.isConnectedToInternet == false
+          ? Center(
+              child: Container(
+                width: 150,
+                height: 150,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  'Sem conexão com a internet',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.7),
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            )
+          : PageView(
+              allowImplicitScrolling: true,
+              clipBehavior: Clip.antiAlias,
+              controller: _pageController,
+              children: _pages!,
+              physics: NeverScrollableScrollPhysics(),
+            ),
       bottomNavigationBar: CupertinoTabBar(
         items: [
           BottomNavigationBarItem(

@@ -1,12 +1,42 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:simple_connection_checker/simple_connection_checker.dart';
 import 'package:weic/src/views/splash/splash_view.dart';
 import 'views/app_view.dart';
 import 'views/login/login_view.dart';
 import 'services/login/login_services.dart';
 
-class Weic extends StatelessWidget {
+class Weic extends StatefulWidget {
   const Weic({Key? key}) : super(key: key);
+
+  @override
+  State<Weic> createState() => _WeicState();
+}
+
+class _WeicState extends State<Weic> {
+  StreamSubscription? _streamSubscription;
+  bool? _isConnectedToInternet;
+
+  @override
+  void initState() {
+    super.initState();
+    SimpleConnectionChecker _simpleConnectionChecker = SimpleConnectionChecker()
+      ..setLookUpAddress('pub.dev');
+    _streamSubscription =
+        _simpleConnectionChecker.onConnectionChange.listen((connection) {
+      setState(() {
+        _isConnectedToInternet = connection;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _streamSubscription?.cancel();
+    super.dispose();
+  }
 
   @override
   MaterialApp build(BuildContext context) {
@@ -53,7 +83,10 @@ class Weic extends StatelessWidget {
                       : '';
                   return studentID.length == 0
                       ? LoginView()
-                      : AppView(studentID: studentID);
+                      : AppView(
+                          studentID: studentID,
+                          isConnectedToInternet: _isConnectedToInternet as bool,
+                        );
                 } else {
                   _loginServices.logoutUser();
                   return SplashView();
