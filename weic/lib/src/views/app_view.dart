@@ -82,53 +82,67 @@ class _AppViewState extends State<AppView> {
               children: _pages!,
               physics: NeverScrollableScrollPhysics(),
             ),
-      bottomNavigationBar: CupertinoTabBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.home,
-              size: 25,
+      bottomNavigationBar: widget.isConnectedToInternet == false
+          ? CupertinoTabBar(
+              items: [
+                BottomNavigationBarItem(
+                  icon: Container(
+                    color: Colors.black,
+                  ),
+                ),
+                BottomNavigationBarItem(
+                    icon: Container(
+                  color: Colors.black,
+                )),
+              ],
+            )
+          : CupertinoTabBar(
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    CupertinoIcons.home,
+                    size: 25,
+                  ),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    CupertinoIcons.chat_bubble,
+                    size: 25,
+                  ),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    CupertinoIcons.news,
+                    size: 25,
+                  ),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    CupertinoIcons.search,
+                    size: 25,
+                  ),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    CupertinoIcons.person,
+                    size: 25,
+                  ),
+                ),
+              ],
+              border: Border(
+                top: BorderSide(color: Colors.transparent, width: 0.0),
+              ),
+              backgroundColor: Colors.black,
+              activeColor: Colors.lightBlue,
+              inactiveColor: Colors.grey,
+              currentIndex: _selectPageIndex!,
+              onTap: (selectedPageIndex) {
+                setState(() {
+                  _selectPageIndex = selectedPageIndex;
+                  _pageController!.jumpToPage(selectedPageIndex);
+                });
+              },
             ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.chat_bubble,
-              size: 25,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.news,
-              size: 25,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.search,
-              size: 25,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.person,
-              size: 25,
-            ),
-          ),
-        ],
-        border: Border(
-          top: BorderSide(color: Colors.transparent, width: 0.0),
-        ),
-        backgroundColor: Colors.black,
-        activeColor: Colors.lightBlue,
-        inactiveColor: Colors.grey,
-        currentIndex: _selectPageIndex!,
-        onTap: (selectedPageIndex) {
-          setState(() {
-            _selectPageIndex = selectedPageIndex;
-            _pageController!.jumpToPage(selectedPageIndex);
-          });
-        },
-      ),
     );
   }
 }

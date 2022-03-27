@@ -21,10 +21,10 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  bool? _isConnectedToInternet;
   bool _isPasswordVisible = false;
-  StreamSubscription? _streamSubscription;
+  bool? _isConnectedToInternet;
   final _loginServices = LoginServices();
+  StreamSubscription? _streamSubscription;
   final _loginController = LoginController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final _emailController = TextEditingController();
@@ -44,12 +44,6 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
-  @override
-  void dispose() {
-    _streamSubscription?.cancel();
-    super.dispose();
-  }
-
   bool? validateFields() {
     if (_emailController.text.isEmpty ||
         _emailController.text.trim().length <= 10 ||
@@ -59,6 +53,12 @@ class _LoginViewState extends State<LoginView> {
     } else {
       return true;
     }
+  }
+
+  @override
+  void dispose() {
+    _streamSubscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -179,8 +179,11 @@ class _LoginViewState extends State<LoginView> {
                                                             studentID: value.id
                                                                 as String,
                                                             isConnectedToInternet:
-                                                                _isConnectedToInternet
-                                                                    as bool,
+                                                                _isConnectedToInternet !=
+                                                                        null
+                                                                    ? _isConnectedToInternet
+                                                                        as bool
+                                                                    : false,
                                                           ),
                                                         ),
                                                       );
