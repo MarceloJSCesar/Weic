@@ -81,7 +81,10 @@ class NewsPageViewer extends StatelessWidget {
                     ),
                     Divider(),
                     Text(
-                      '${news.description}',
+                      '${news.description}'
+                          .replaceAll(RegExp(r'[**]'), '')
+                          .replaceAll(RegExp(r'[{}]'), '')
+                          .replaceAll(RegExp('[0-9]'), ''),
                       style: AppTextStyles.homeViewerNoticiasBodyTextStyle,
                     ),
                   ],
