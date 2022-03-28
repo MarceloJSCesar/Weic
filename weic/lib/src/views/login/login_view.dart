@@ -178,12 +178,6 @@ class _LoginViewState extends State<LoginView> {
                                                               AppView(
                                                             studentID: value.id
                                                                 as String,
-                                                            isConnectedToInternet:
-                                                                _isConnectedToInternet !=
-                                                                        null
-                                                                    ? _isConnectedToInternet
-                                                                        as bool
-                                                                    : false,
                                                           ),
                                                         ),
                                                       );

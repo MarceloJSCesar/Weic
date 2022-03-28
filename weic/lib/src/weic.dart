@@ -85,7 +85,6 @@ class _WeicState extends State<Weic> {
                       ? LoginView()
                       : AppView(
                           studentID: studentID,
-                          isConnectedToInternet: _isConnectedToInternet as bool,
                         );
                 } else {
                   _loginServices.logoutUser();

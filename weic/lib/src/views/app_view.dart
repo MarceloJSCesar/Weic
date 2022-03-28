@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:simple_connection_checker/simple_connection_checker.dart';
 import '../views/news/news_view.dart';
 import '../views/home/home_view.dart';
 import '../views/chat/chat_view.dart';
@@ -11,11 +13,9 @@ import '../views/search_student/search_student_view.dart';
 
 class AppView extends StatefulWidget {
   final String studentID;
-  final bool isConnectedToInternet;
   const AppView({
     Key? key,
     required this.studentID,
-    required this.isConnectedToInternet,
   }) : super(key: key);
 
   @override
@@ -25,12 +25,22 @@ class AppView extends StatefulWidget {
 class _AppViewState extends State<AppView> {
   List<Widget>? _pages;
   int? _selectPageIndex;
+  bool? _isConnectedToInternet;
   PageController? _pageController;
+  StreamSubscription? _streamSubscription;
   String defaultLocale = Platform.localeName;
 
   @override
   void initState() {
     super.initState();
+    SimpleConnectionChecker _simpleConnectionChecker = SimpleConnectionChecker()
+      ..setLookUpAddress('pub.dev');
+    _streamSubscription =
+        _simpleConnectionChecker.onConnectionChange.listen((connection) {
+      setState(() {
+        _isConnectedToInternet = connection;
+      });
+    });
     _pages = [
       HomeView(studentID: widget.studentID),
       ChatView(myId: widget.studentID),
@@ -55,7 +65,7 @@ class _AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: widget.isConnectedToInternet == false
+      body: _isConnectedToInternet == false
           ? Center(
               child: Container(
                 width: 150,
@@ -82,7 +92,7 @@ class _AppViewState extends State<AppView> {
               children: _pages!,
               physics: NeverScrollableScrollPhysics(),
             ),
-      bottomNavigationBar: widget.isConnectedToInternet == false
+      bottomNavigationBar: _isConnectedToInternet == false
           ? CupertinoTabBar(
               items: [
                 BottomNavigationBarItem(

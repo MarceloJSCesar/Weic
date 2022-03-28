@@ -384,7 +384,6 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
                                                 builder: (_) => AppView(
                                                   studentID:
                                                       studentID as String,
-                                                  isConnectedToInternet: true,
                                                 ),
                                               ),
                                             );
