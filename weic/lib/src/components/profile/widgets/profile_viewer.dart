@@ -20,9 +20,9 @@ class ProfileViewer extends StatefulWidget {
 }
 
 class _ProfileViewerState extends State<ProfileViewer> {
-  final _homeServices = HomeServices();
   bool isYouFollowing = false;
   bool isProfileViewer = true;
+  final _homeServices = HomeServices();
   final _studentServices = StudentsServices();
   @override
   Widget build(BuildContext context) {

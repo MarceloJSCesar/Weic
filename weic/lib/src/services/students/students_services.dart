@@ -123,4 +123,21 @@ class StudentsServices {
       return null;
     }
   }
+
+  Future visitingStudentProfile(
+      {required String studentID, required String myID}) async {
+    try {
+      await _instance
+          .collection('users')
+          .doc(userCollectionDocID)
+          .collection('students')
+          .doc('student $studentID')
+          .update({
+        'guests': FieldValue.arrayUnion([myID]),
+      });
+    } catch (error) {
+      print('Error on visitingStudentProfile: $error');
+      return null;
+    }
+  }
 }

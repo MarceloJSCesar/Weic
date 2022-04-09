@@ -5,6 +5,7 @@ import '../../../models/latestMensage.dart';
 import '../../../config/app_textstyles.dart';
 import '../../../components/chat/widgets/mensages_screen.dart';
 import '../../../components/profile/widgets/profile_viewer.dart';
+import '../../../services/students/students_services.dart';
 
 class StudentCard extends StatelessWidget {
   final String myId;
@@ -17,6 +18,7 @@ class StudentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _studentServices = StudentsServices();
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
@@ -85,7 +87,7 @@ class StudentCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) => ProfileViewer(
@@ -93,6 +95,10 @@ class StudentCard extends StatelessWidget {
                               studentID: student.id as String,
                             ),
                           ),
+                        );
+                        await _studentServices.visitingStudentProfile(
+                          studentID: student.id as String,
+                          myID: myId,
                         );
                       },
                       child: Text(
