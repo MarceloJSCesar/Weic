@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../models/student.dart';
 import '../../../config/app_textstyles.dart';
 import '../../../config/app_assetsnames.dart';
+import '../../../services/students/students_services.dart';
 import '../../../views/login/login_view.dart';
 import '../../../services/home/home_services.dart';
 
@@ -22,6 +23,7 @@ class _ProfileViewerState extends State<ProfileViewer> {
   final _homeServices = HomeServices();
   bool isYouFollowing = false;
   bool isProfileViewer = true;
+  final _studentServices = StudentsServices();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -194,10 +196,26 @@ class _ProfileViewerState extends State<ProfileViewer> {
                                   ),
                                   student.id != widget.myID
                                       ? GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              isYouFollowing = !isYouFollowing;
-                                            });
+                                          onTap: () async {
+                                            if (isYouFollowing == false) {
+                                              await _studentServices
+                                                  .followStudent(
+                                                studentID: widget.studentID,
+                                                myID: widget.myID,
+                                              );
+                                              setState(() {
+                                                isYouFollowing = true;
+                                              });
+                                            } else {
+                                              await _studentServices
+                                                  .unfollowStudent(
+                                                studentID: widget.studentID,
+                                                myID: widget.myID,
+                                              );
+                                              setState(() {
+                                                isYouFollowing = false;
+                                              });
+                                            }
                                           },
                                           child: Container(
                                             height: 30,
