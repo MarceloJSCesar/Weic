@@ -42,6 +42,9 @@ class _ProfileViewerState extends State<ProfileViewer> {
           default:
             if (snapshot.hasData) {
               final student = Student.fromDocument(snapshot.data);
+              student.followers!.contains(widget.myID) == true
+                  ? isYouFollowing = true
+                  : isYouFollowing = false;
               return Scaffold(
                 appBar: AppBar(
                   elevation: 0.0,
