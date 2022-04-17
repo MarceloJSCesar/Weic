@@ -96,10 +96,12 @@ class StudentCard extends StatelessWidget {
                             ),
                           ),
                         );
-                        await _studentServices.visitingStudentProfile(
-                          studentID: student.id as String,
-                          myID: myId,
-                        );
+                        student.guests!.contains(myId)
+                            ? print('already a guest')
+                            : await _studentServices.visitingStudentProfile(
+                                studentID: student.id as String,
+                                myID: myId,
+                              );
                       },
                       child: Text(
                         'Ver Perfil',
