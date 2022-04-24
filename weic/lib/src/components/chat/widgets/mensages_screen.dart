@@ -1,20 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:weic/src/components/chat/widgets/card_message.dart';
-import 'package:weic/src/components/chat/widgets/message_student_card.dart';
 import 'package:weic/src/config/app_textstyles.dart';
-import 'package:weic/src/models/latestMensage.dart';
 import 'package:weic/src/models/mensage.dart';
-import 'package:weic/src/models/student.dart';
 import 'package:weic/src/services/chat/allUsers/chat_all_users_services.dart';
 
 class MensagesScreen extends StatelessWidget {
   final String myId;
-  final LatestMensage latestMensage;
+  final Mensage mensage;
   const MensagesScreen({
     Key? key,
     required this.myId,
-    required this.latestMensage,
+    required this.mensage,
   }) : super(key: key);
 
   @override
@@ -46,10 +42,12 @@ class MensagesScreen extends StatelessWidget {
                   style: AppTextStyles.homeNoticiasTitleTextStyle,
                 ),
               ),
+              /*
               MessageStudentCard(
                 myId: myId,
                 latestMensage: latestMensage,
               ),
+              */
             ],
           ),
         ),
@@ -57,6 +55,7 @@ class MensagesScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
+          /*
           Expanded(
             child: StreamBuilder(
               stream: _instance
@@ -183,6 +182,7 @@ class MensagesScreen extends StatelessWidget {
               },
             ),
           ),
+          */
           Container(
             height: 50,
             child: Row(
@@ -212,10 +212,9 @@ class MensagesScreen extends StatelessWidget {
                   icon: Icon(Icons.send),
                   color: Colors.black,
                   onPressed: () async =>
-                      await _chatAllUsersServices.sendPrivateMessage(
+                      await _chatAllUsersServices.sendFirstPrivateMessage(
                     mensage: _textController.text,
-                    senderStudentId: myId,
-                    msg: latestMensage,
+                    msg: mensage,
                   ),
                 ),
               ],

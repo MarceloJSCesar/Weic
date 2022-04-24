@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class Student {
@@ -10,12 +9,12 @@ class Student {
   List? following;
   List? followers;
   String? password;
-  List? chatRoomIds;
   String? schoolName;
   String? schoolYear;
   String? profilePhoto;
   bool? isMemberOfCFESAD;
   bool? isProfileVerified;
+  List<String>? chatRoomIds;
 
   Student({
     this.id,
