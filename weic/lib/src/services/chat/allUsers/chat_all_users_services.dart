@@ -11,18 +11,18 @@ class ChatAllUsersService {
     required Mensage msg,
   }) async {
     try {
-      final String chatRoomId =
-          createChatRoomId(msg.senderId as String, msg.receiverId as String);
-      await createChatRoomCollection(chatRoomId: msg as String);
-      final Map<String, dynamic> message = {
-        'message': msg.mensage,
-        'senderId': msg.senderId,
-        'chatRoomId': chatRoomId,
-        'timestamp': msg.timestamp,
-        'receiverId': msg.receiverId,
-        'receiverProfilePhoto': msg.receiverPhoto,
-        'isReceiverProfileVerified': msg.receiverProfileVerified,
-      };
+      // final String chatRoomId =
+      //     createChatRoomId(msg.senderId as String, msg.receiverId as String);
+      // await createChatRoomCollection(chatRoomId: msg as String);
+      // final Map<String, dynamic> message = {
+      //   'message': msg.mensage,
+      //   'senderId': msg.senderId,
+      //   'chatRoomId': chatRoomId,
+      //   'timestamp': msg.timestamp,
+      //   'receiverId': msg.receiverId,
+      //   'receiverProfilePhoto': msg.receiverPhoto,
+      //   'isReceiverProfileVerified': msg.receiverProfileVerified,
+      // };
       await _instance
           .collection('users')
           .doc(userCollectionDocID)
@@ -45,15 +45,15 @@ class ChatAllUsersService {
     required String receiverStudentId,
   }) async {
     try {
-      final Map<String, dynamic> message = {
-        'timestamp': msg.timestamp,
-        'senderId': msg.senderId,
-        'receiverId': msg.receiverId,
-        'isReceiverProfileVerified': msg.receiverProfileVerified,
-        'receiverProfilePhoto': msg.receiverProfilePhoto,
-        'message': msg.mensage,
-        'chatRoomId': msg.chatRoomId,
-      };
+      // final Map<String, dynamic> message = {
+      //   'timestamp': msg.timestamp,
+      //   'senderId': msg.senderId,
+      //   'receiverId': msg.receiverId,
+      //   'isReceiverProfileVerified': msg.receiverProfileVerified,
+      //   'receiverProfilePhoto': msg.receiverProfilePhoto,
+      //   'message': msg.mensage,
+      //   'chatRoomId': msg.chatRoomId,
+      // };
     } catch (errormsg) {
       print('errormsg: $errormsg');
     }

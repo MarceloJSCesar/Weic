@@ -3,10 +3,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
-import 'package:weic/src/models/mensage.dart';
 import 'package:weic/src/models/student.dart';
 import 'dart:convert';
-import '../../models/news.dart';
 
 class HomeServices {
   final String userCollectionDocID = '-1-2-22-weic-MarceloCesar-';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/models/mensage.dart';
 
 class CardMessage extends StatelessWidget {
   final bool isMe;

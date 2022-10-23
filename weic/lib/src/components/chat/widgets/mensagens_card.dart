@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/latestMensage.dart';
-import 'package:weic/src/models/mensage.dart';
-import 'package:weic/src/models/student.dart';
 
 class MensagesCard extends StatelessWidget {
   final String myId;

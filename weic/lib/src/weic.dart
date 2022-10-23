@@ -17,7 +17,7 @@ class Weic extends StatefulWidget {
 
 class _WeicState extends State<Weic> {
   StreamSubscription? _streamSubscription;
-  bool? _isConnectedToInternet;
+  bool? isConnectedToInternet;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _WeicState extends State<Weic> {
     _streamSubscription =
         _simpleConnectionChecker.onConnectionChange.listen((connection) {
       setState(() {
-        _isConnectedToInternet = connection;
+        isConnectedToInternet = connection;
       });
     });
   }

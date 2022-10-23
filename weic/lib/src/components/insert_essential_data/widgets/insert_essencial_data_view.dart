@@ -315,7 +315,7 @@ class _InsertEssencialDataState extends State<InsertEssencialData>
                                                     _passwordTextController
                                                         .text)
                                             .then((password) async {
-                                          if (password == 'error') {
+                                          if ((password ?? '') == 'error') {
                                             setState(() {
                                               isLoading = false;
                                             });

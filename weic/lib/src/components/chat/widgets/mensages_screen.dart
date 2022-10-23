@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:weic/src/config/app_textstyles.dart';
 import 'package:weic/src/models/mensage.dart';
@@ -15,7 +14,6 @@ class MensagesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _instance = FirebaseFirestore.instance;
     final _textController = TextEditingController();
     final _chatAllUsersServices = ChatAllUsersService();
     return Scaffold(

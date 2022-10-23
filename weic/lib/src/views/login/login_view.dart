@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_connection_checker/simple_connection_checker.dart';
 import 'package:weic/src/components/login/body/login_body.dart';
@@ -26,7 +25,6 @@ class _LoginViewState extends State<LoginView> {
   final _loginServices = LoginServices();
   StreamSubscription? _streamSubscription;
   final _loginController = LoginController();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
